@@ -84,7 +84,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      9 min read
+      10 min read
     
 </span></p>
 
@@ -370,66 +370,29 @@ Consider the following:</p>
     
     
 <div class="cell border-box-sizing code_cell rendered">
+<details class="description">
+      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
+        <p></p>
 <div class="input">
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span> <span class="o">+</span> <span class="n">random_date</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">random_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s1">'2011-09-18'</span><span class="p">,</span> <span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1">'</span><span class="p">)</span>
+<span class="c1"># datetime = datetime +/- timedelta </span>
+<span class="n">new_date</span> <span class="o">=</span> <span class="n">random_date</span> <span class="o">+</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="c1"># timedelta = datetime +/- datetime</span>
+<span class="n">other_date</span> <span class="o">=</span> <span class="n">new_date</span> <span class="o">-</span> <span class="n">random_date</span>
+<span class="c1"># datetime = timedelta + datetime</span>
+<span class="n">yet_another_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=-</span><span class="mi">10</span><span class="p">)</span> <span class="o">+</span> <span class="n">random_date</span>
+<span class="c1"># ERROR = timedelta - datetime</span>
+<span class="c1"># bad_value = datetime.timedelta(days=-10) - random_date</span>
 </pre></div>
 
     </div>
 </div>
 </div>
 
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>datetime.datetime(2011, 9, 28, 0, 0)</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    
-
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">random_date</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>datetime.datetime(2011, 9, 8, 0, 0)</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
+    </details>
 </div>
     
 
@@ -439,7 +402,7 @@ Consider the following:</p>
 <p></p>
 <div class="footnotes"><p id="fn-1">1. I'm going to try my best to show the provenance of as much insight as I can here.  I had no idea when the injury reports came out, so I googled it.  Don't be ashamed to do likewise if there's something you need to know!<a href="#fnref-1" class="footnote footnotes">↩</a></p></div>
 <div class="footnotes"><p id="fn-2">2. ...and sincerely apologize to Adam Silver next time we run into him for the extra traffic on the <a href="https://nba.com">nba.com</a> servers.<a href="#fnref-2" class="footnote footnotes">↩</a></p></div>
-<div class="footnotes"><p id="fn-3">3. Ideally we<a href="#fnref-3" class="footnote footnotes">↩</a></p></div>
+<div class="footnotes"><p id="fn-3">3. Ideally we would <em><a href="https://www.geeksforgeeks.org/python-list-comprehensions-vs-generator-expressions/">generate</a></em> the list versus building it all at once, but conceptually it<a href="#fnref-3" class="footnote footnotes">↩</a></p></div>
 
 </div>
 </div>
