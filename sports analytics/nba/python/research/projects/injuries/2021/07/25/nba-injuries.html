@@ -325,7 +325,10 @@ Consider the following:</p>
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
 
+<span class="c1"># Random_date is a datetime object</span>
 <span class="n">random_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s1">'2011-09-18'</span><span class="p">,</span> <span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1">'</span><span class="p">)</span>
+<span class="c1"># Let's create a new datetime object by subtracting a timedelta object</span>
+<span class="c1"># Note that we're using the "days" parameter.  Try experimenting with other values!</span>
 <span class="n">new_date</span> <span class="o">=</span> <span class="n">random_date</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Ten days before </span><span class="si">{</span><span class="n">random_date</span><span class="si">}</span><span class="s2"> is </span><span class="si">{</span><span class="n">new_date</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
@@ -390,8 +393,8 @@ Consider the following:</p>
 <div class="text_cell_render border-box-sizing rendered_html">
 <p></p>
 <div class="footnotes"><p id="fn-1">1. I'm going to try my best to show the provenance of as much insight as I can here.  I had no idea when the injury reports came out, so I googled it.  Don't be ashamed to do likewise if there's something you need to know!<a href="#fnref-1" class="footnote footnotes">↩</a></p></div>
-<div class="footnotes"><p id="fn-2">2. ...and sincerely apologize to Adam Silver next time we run into him for the extra traffic on the &lt;a href=<a href="#fnref-2" class="footnote footnotes">↩</a></p></div>
-<div class="footnotes"><p id="fn-3">3. Ideally we'd &lt;a href=<a href="#fnref-3" class="footnote footnotes">↩</a></p></div>
+<div class="footnotes"><p id="fn-2">2. ...and sincerely apologize to Adam Silver next time we run into him for the extra traffic on the <a href="https://nba.com">nba.com</a> servers.<a href="#fnref-2" class="footnote footnotes">↩</a></p></div>
+<div class="footnotes"><p id="fn-3">3. Ideally we<a href="#fnref-3" class="footnote footnotes">↩</a></p></div>
 
 </div>
 </div>
