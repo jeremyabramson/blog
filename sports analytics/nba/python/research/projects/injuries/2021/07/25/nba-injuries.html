@@ -84,7 +84,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      10 min read
+      11 min read
     
 </span></p>
 
@@ -361,7 +361,7 @@ Consider the following:</p>
 <p></p>
 <div class="flash flash-success">
     <svg class="octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2.5 1.75a.25.25 0 01.25-.25h8.5a.25.25 0 01.25.25v7.736a.75.75 0 101.5 0V1.75A1.75 1.75 0 0011.25 0h-8.5A1.75 1.75 0 001 1.75v11.5c0 .966.784 1.75 1.75 1.75h3.17a.75.75 0 000-1.5H2.75a.25.25 0 01-.25-.25V1.75zM4.75 4a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-4.5zM4 7.75A.75.75 0 014.75 7h2a.75.75 0 010 1.5h-2A.75.75 0 014 7.75zm11.774 3.537a.75.75 0 00-1.048-1.074L10.7 14.145 9.281 12.72a.75.75 0 00-1.062 1.058l1.943 1.95a.75.75 0 001.055.008l4.557-4.45z"></path></svg>
-    <strong>Tip: </strong>Adding or subtracting two <code>datetime</code> objects produces a <code>timedelta</code> object.  Adding or subtracting a <code>timedelta</code> from a <code>datetime</code> produces a <code>datetime</code>.  Adding a <code>datetime</code> to a <code>timedelta</code> produces a <code>datetime</code>, but subtracting a <code>datetime</code> object <em>from</em> a <code>timedelta</code> gives an error.
+    <strong>Tip: </strong>Adding or subtracting <code>datetime</code> and <code>timedelta</code> objects from each other can be tricky.  Expand the code below to see examples of what is valid, and what returns an error.  Try playing with <em>negative</em> <code>timedelta</code> values!
 </div>
 
 </div>
@@ -378,7 +378,42 @@ Consider the following:</p>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">random_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s1">'2011-09-18'</span><span class="p">,</span> <span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1">'</span><span class="p">)</span>
-<span class="c1"># datetime = datetime +/- timedelta </span>
+<span class="n">another_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s1">'2021-01-1'</span><span class="p">,</span> <span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1">'</span><span class="p">)</span>
+<span class="n">ten_days_hence</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="c1"># datetime - datetime = timedelta</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'******: datetime - datetime = timedelta'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'A </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">random_date</span><span class="p">)</span><span class="si">}</span><span class="s1"> - a </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">another_date</span><span class="p">)</span><span class="si">}</span><span class="s1"> is a </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">random_date</span> <span class="o">-</span> <span class="n">another_date</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'i.e. </span><span class="si">{</span><span class="n">random_date</span><span class="si">}</span><span class="s1"> - </span><span class="si">{</span><span class="n">another_date</span><span class="si">}</span><span class="s1"> = </span><span class="si">{</span><span class="n">random_date</span> <span class="o">-</span> <span class="n">another_date</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+
+<span class="c1"># datetime + datetime = Error!</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'******: datetime + datetime = Error!'</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'A </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">random_date</span><span class="p">)</span><span class="si">}</span><span class="s1"> + a </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">another_date</span><span class="p">)</span><span class="si">}</span><span class="s1"> is a </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">random_date</span> <span class="o">+</span> <span class="n">another_date</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"You can't add </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">random_date</span><span class="p">)</span><span class="si">=}</span><span class="s2"> and </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">another_date</span><span class="p">)</span><span class="si">=}</span><span class="s2">"</span><span class="p">)</span>
+
+<span class="c1"># datetime +/- timedelta = datetime</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'******: datetime +/- timedelta = datetime'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'A </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">random_date</span><span class="p">)</span><span class="si">}</span><span class="s1"> +/- a </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">ten_days_hence</span><span class="p">)</span><span class="si">}</span><span class="s1"> is a </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">random_date</span> <span class="o">-</span> <span class="n">ten_days_hence</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'i.e. </span><span class="si">{</span><span class="n">random_date</span><span class="si">}</span><span class="s1"> - </span><span class="si">{</span><span class="n">ten_days_hence</span><span class="si">}</span><span class="s1"> = </span><span class="si">{</span><span class="n">random_date</span> <span class="o">-</span> <span class="n">ten_days_hence</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'i.e. </span><span class="si">{</span><span class="n">random_date</span><span class="si">}</span><span class="s1"> + </span><span class="si">{</span><span class="n">ten_days_hence</span><span class="si">}</span><span class="s1"> = </span><span class="si">{</span><span class="n">random_date</span> <span class="o">+</span> <span class="n">ten_days_hence</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+
+<span class="c1"># timedelta + datetime = datetime</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'******: timedelta + datetime = datetime'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'A </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">ten_days_hence</span><span class="p">)</span><span class="si">}</span><span class="s1"> + a </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">random_date</span><span class="p">)</span><span class="si">}</span><span class="s1"> is a </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">ten_days_hence</span> <span class="o">+</span> <span class="n">random_date</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'i.e. </span><span class="si">{</span><span class="n">ten_days_hence</span><span class="si">}</span><span class="s1"> + </span><span class="si">{</span><span class="n">random_date</span><span class="si">}</span><span class="s1"> = </span><span class="si">{</span><span class="n">ten_days_hence</span> <span class="o">+</span> <span class="n">random_date</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+
+<span class="c1"># timedelta - datetime = Error!</span>
+<span class="nb">print</span><span class="p">(</span><span class="s1">'******: # timedelta - datetime = Error!'</span><span class="p">)</span>
+<span class="k">try</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'A </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">ten_days_hence</span><span class="p">)</span><span class="si">}</span><span class="s1"> - a </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">random_date</span><span class="p">)</span><span class="si">}</span><span class="s1"> is a </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">ten_days_hence</span> <span class="o">-</span> <span class="n">random_date</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+<span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"You can't subtract </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">ten_days_hence</span><span class="p">)</span><span class="si">=}</span><span class="s2"> - </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">random_date</span><span class="p">)</span><span class="si">=}</span><span class="s2">"</span><span class="p">)</span>
+
+
+
+
 <span class="n">new_date</span> <span class="o">=</span> <span class="n">random_date</span> <span class="o">+</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 <span class="c1"># timedelta = datetime +/- datetime</span>
 <span class="n">other_date</span> <span class="o">=</span> <span class="n">new_date</span> <span class="o">-</span> <span class="n">random_date</span>
@@ -393,6 +428,33 @@ Consider the following:</p>
 </div>
 
     </details>
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>******: datetime - datetime = timedelta
+A &lt;class 'datetime.datetime'&gt; - a &lt;class 'datetime.datetime'&gt; is a &lt;class 'datetime.timedelta'&gt;
+i.e. 2011-09-18 00:00:00 - 2021-01-01 00:00:00 = -3393 days, 0:00:00
+******: datetime + datetime = Error!
+You can't add type(random_date)=&lt;class 'datetime.datetime'&gt; and type(another_date)=&lt;class 'datetime.datetime'&gt;
+******: datetime +/- timedelta = datetime
+A &lt;class 'datetime.datetime'&gt; +/- a &lt;class 'datetime.timedelta'&gt; is a &lt;class 'datetime.datetime'&gt;
+i.e. 2011-09-18 00:00:00 - 10 days, 0:00:00 = 2011-09-08 00:00:00
+i.e. 2011-09-18 00:00:00 + 10 days, 0:00:00 = 2011-09-28 00:00:00
+******: timedelta + datetime = datetime
+A &lt;class 'datetime.timedelta'&gt; + a &lt;class 'datetime.datetime'&gt; is a &lt;class 'datetime.datetime'&gt;
+i.e. 10 days, 0:00:00 + 2011-09-18 00:00:00 = 2011-09-28 00:00:00
+******: # timedelta - datetime = Error!
+You can't subtract type(ten_days_hence)=&lt;class 'datetime.timedelta'&gt; - type(random_date)=&lt;class 'datetime.datetime'&gt;
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
 </div>
     
 
@@ -402,7 +464,7 @@ Consider the following:</p>
 <p></p>
 <div class="footnotes"><p id="fn-1">1. I'm going to try my best to show the provenance of as much insight as I can here.  I had no idea when the injury reports came out, so I googled it.  Don't be ashamed to do likewise if there's something you need to know!<a href="#fnref-1" class="footnote footnotes">↩</a></p></div>
 <div class="footnotes"><p id="fn-2">2. ...and sincerely apologize to Adam Silver next time we run into him for the extra traffic on the <a href="https://nba.com">nba.com</a> servers.<a href="#fnref-2" class="footnote footnotes">↩</a></p></div>
-<div class="footnotes"><p id="fn-3">3. Ideally we would <em><a href="https://www.geeksforgeeks.org/python-list-comprehensions-vs-generator-expressions/">generate</a></em> the list versus building it all at once, but conceptually it<a href="#fnref-3" class="footnote footnotes">↩</a></p></div>
+<div class="footnotes"><p id="fn-3">3. Ideally we would <em><a href="https://www.geeksforgeeks.org/python-list-comprehensions-vs-generator-expressions/">generate</a></em> the list versus building it all at once, but conceptually it's the same thing<a href="#fnref-3" class="footnote footnotes">↩</a></p></div>
 
 </div>
 </div>
