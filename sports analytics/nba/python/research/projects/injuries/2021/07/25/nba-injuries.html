@@ -84,7 +84,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      8 min read
+      9 min read
     
 </span></p>
 
@@ -148,12 +148,17 @@ window.onload = wrap_img;
 <a href="#Downloading-The-Injury-Reports">Downloading The Injury Reports </a>
 <ul>
 <li class="toc-entry toc-h2"><a href="#Decoding-the-Filename-Schema-From-the-URL">Decoding the Filename Schema From the URL </a></li>
+<li class="toc-entry toc-h2">
+<a href="#Building-a-URL-List-to-Download-(Finding-Gamedays?)">Building a URL List to Download (Finding Gamedays?) </a>
+<ul>
+<li class="toc-entry toc-h3">
+<a href="#Using-datetime.timedelta-to-Construct-A-List-of-Dates">Using datetime.timedelta to Construct A List of Dates </a>
+<ul>
+<li class="toc-entry toc-h4"><a href="#Code">Code </a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h1">
-<a href="#Downloading-The-Injury-Reports">Downloading The Injury Reports </a>
-<ul>
-<li class="toc-entry toc-h2"><a href="#Decoding-the-Filename-Schema-From-the-URL">Decoding the Filename Schema From the URL </a></li>
+</ul>
+</li>
 <li class="toc-entry toc-h2"><a href="#Not-quite-the-second-thing">Not quite the second thing </a></li>
 <li class="toc-entry toc-h2"><a href="#Markdown-Shortcuts">Markdown Shortcuts </a></li>
 <li class="toc-entry toc-h2">
@@ -235,15 +240,22 @@ From Basketball Analytics Legend <a href="https://twitter.com/EdKupfer">Ed Kupfe
 </div>
 </center>
 
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
 <h2 id="Decoding-the-Filename-Schema-From-the-URL">
 <a class="anchor" href="#Decoding-the-Filename-Schema-From-the-URL" aria-hidden="true"><span class="octicon octicon-link"></span></a>Decoding the Filename Schema From the URL<a class="anchor-link" href="#Decoding-the-Filename-Schema-From-the-URL"> </a>
 </h2>
 <p>Luckily, the naming schema of the reports is relatively simple to decode.
-Our example is:</p>
+Our example URL is:</p>
 <p><code>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2021-04-23_01PM.pdf</code></p>
 <p>Looks like there's 4 parts to the URL:</p>
 <ol>
-<li>A boilerplate URL: <code>https://ak-static.cms.nba.com/referee/injury/Injury-Report_</code>
+<li>Some boilerplate: <code>https://ak-static.cms.nba.com/referee/injury/Injury-Report_</code>
 </li>
 <li>A date: <code>2021-04-23</code>
 </li>
@@ -253,12 +265,6 @@ Our example is:</p>
 </li>
 </ol>
 <p>We're only interested in the middle two (the date and the time), as the boilerplate URL and the file extension won't change.  From googling<sup id="fnref-1" class="footnote-ref"><a href="#fn-1">1</a></sup> <code>"nba injury report"</code> and clicking on <a href="https://official.nba.com/nba-injury-report-2020-21-season/">the second link</a> it seems like the times may be <code>1:30 PM</code>, <code>5:30 PM</code> and <code>8:30 PM</code>.</p>
-<p>That's actually slightly more complicated than we might like, because there's no central page with links to all valid reports to scrape (at least that I'm aware of).</p>
-<p>That being the case, we have two options to get the reports:</p>
-<ol>
-<li>Get a copy of the NBA schedule, and try to download reports for days when we know there's a game</li>
-<li>Just start downloading </li>
-</ol>
 
 </div>
 </div>
@@ -266,62 +272,126 @@ Our example is:</p>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Downloading-The-Injury-Reports">
-<a class="anchor" href="#Downloading-The-Injury-Reports" aria-hidden="true"><span class="octicon octicon-link"></span></a>Downloading The Injury Reports<a class="anchor-link" href="#Downloading-The-Injury-Reports"> </a>
-</h1>
-<p>Before we can actually do anything interesting with the injury reports, we need to download them.
-From Basketball Analytics Legend <a href="https://twitter.com/EdKupfer">Ed Kupfer</a>'s tweet, we know the location of at least <em>one</em> report:
-
-</p>
-<center>
-    <div class="jekyll-twitter-plugin">
-<blockquote class="twitter-tweet">
-<p lang="en" dir="ltr">If somebody wants a project, scrape the data from the NBA injury report PDFs from the last few seasons. Just change the date in the URL. <a href="https://t.co/SnKpFXPrRl">https://t.co/SnKpFXPrRl</a></p>— Ed Kupfer (@EdKupfer) <a href="https://twitter.com/EdKupfer/status/1385682808174256129?ref_src=twsrc%5Etfw">April 23, 2021</a>
-</blockquote>
-<script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
-</div>
-</center>
-
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Decoding-the-Filename-Schema-From-the-URL">
-<a class="anchor" href="#Decoding-the-Filename-Schema-From-the-URL" aria-hidden="true"><span class="octicon octicon-link"></span></a>Decoding the Filename Schema From the URL<a class="anchor-link" href="#Decoding-the-Filename-Schema-From-the-URL"> </a>
+<h2 id="Building-a-URL-List-to-Download-(Finding-Gamedays?)">
+<a class="anchor" href="#Building-a-URL-List-to-Download-(Finding-Gamedays?)" aria-hidden="true"><span class="octicon octicon-link"></span></a>Building a URL List to Download (Finding Gamedays?)<a class="anchor-link" href="#Building-a-URL-List-to-Download-(Finding-Gamedays?)"> </a>
 </h2>
-<p>Luckily, the naming schema of the reports is relatively simple to decode.
-Our example is:</p>
-<p><code>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2021-04-23_01PM.pdf</code></p>
-<p>Looks like there's 4 parts to the URL:</p>
+<p>Google helped us sort out what we might use for the <code>time</code> portion of the URL, but for the date is actually a little more complicated than we might like.
+Since, to the best of my knowledge, there's no "central" page that has links to each report, we'll need to know the date for every report we want to download.
+According to the <a href="https://official.nba.com/nba-injury-report-2020-21-season/">official NBA annoucement</a>, the dates we're interested in are actually the day <em>before</em> game days, except on the second days of back-to-backs.
+In this case, presumably the injury report comes out the day of the game.</p>
+<p>This all sounds complicated, and if there's one thing I've learned about projects like this it's that nothing saps effort like complication and extra effort that doesn't "feel" like it's in the service of what we're trying to  accomplish.</p>
+<p>Having said all that, it seems we've got two options:</p>
 <ol>
-<li>A boilerplate URL: <code>https://ak-static.cms.nba.com/referee/injury/Injury-Report_</code>
-</li>
-<li>A date: <code>2021-04-23</code>
-</li>
-<li>A time: <code>01PM</code>
-</li>
-<li>The file extension: <code>.pdf</code>
-</li>
+<li>Get a copy of the NBA schedule, and try to download reports for days we know there's a game</li>
+<li>Just start downloading [a range of?] dates and see what we get</li>
 </ol>
-<p>We're only interested in the middle two (the date and the time), as the boilerplate URL and the file extension won't change.  From googling<sup id="fnref-2" class="footnote-ref"><a href="#fn-2">2</a></sup> <code>"nba injury report"</code> and clicking on <a href="https://official.nba.com/nba-injury-report-2020-21-season/">the second link</a> it seems like the times may be <code>1:30 PM</code>, <code>5:30 PM</code> and <code>8:30 PM</code>.</p>
-<p>That's actually slightly more complicated than we might like, because there's no central page with links to all valid reports to scrape (at least that I'm aware of).</p>
-<p>That being the case, we have two options to get the reports:</p>
-<ol>
-<li>Get a copy of the NBA schedule, and try to download reports for days when we know there's a game</li>
-<li>Just start downloading </li>
-</ol>
+<p>There's nothing wrong with taking a stab at option 1 here, but we this project is about injury reports, not the NBA schedule, so let's just choose option two<sup id="fnref-2" class="footnote-ref"><a href="#fn-2">2</a></sup>.</p>
 
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Using-datetime.timedelta-to-Construct-A-List-of-Dates">
+<a class="anchor" href="#Using-datetime.timedelta-to-Construct-A-List-of-Dates" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using <code>datetime.timedelta</code> to Construct A List of Dates<a class="anchor-link" href="#Using-datetime.timedelta-to-Construct-A-List-of-Dates"> </a>
+</h3>
+<p>Programmatically dealing with dates can be <a href="https://xkcd.com/1179/">frustrating</a>, and doing so in Python is no exception.
+Despite that, it seems relatively obvious that we need to deal with <code>date</code>-like objects here, not just <code>string</code> or <code>numeric</code> representations of the dates themselves.
+(Trying to "subtract" a day from <code>01-01-2021</code> without some internal representation of the calendar seems problematic).</p>
+<p>Thinking at a high level, it seems like what we might want to do is build<sup id="fnref-3" class="footnote-ref"><a href="#fn-3">3</a></sup> a list of dates, starting at, say, today — or some other reasonable choice, like the end of the NBA season — and work backward until...well, it's not exactly clear how far back we need to go.
+But the notion still seems reasonable: start today and count backward day by day, creating a new date each time.
+Luckily, Python has exactly the thing we need to do this: the <code>timedelta</code> object.</p>
+<p>For our purposes, a <code>timedelta</code> object is simply something that allows us to perform arithmetic on <code>datetime</code> objects.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="Code">
+<a class="anchor" href="#Code" aria-hidden="true"><span class="octicon octicon-link"></span></a>Code<a class="anchor-link" href="#Code"> </a>
+</h4>
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+
+<span class="n">random_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s1">'2011-09-18'</span><span class="p">,</span> <span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1">'</span><span class="p">)</span>
+<span class="n">new_date</span> <span class="o">=</span> <span class="n">random_date</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Ten days before </span><span class="si">{</span><span class="n">random_date</span><span class="si">}</span><span class="s2"> is </span><span class="si">{</span><span class="n">new_date</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>Ten days before 2011-09-18 00:00:00 is 2011-09-08 00:00:00
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">random_date</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>datetime.datetime(2011, 9, 8, 0, 0)</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p></p>
 <div class="footnotes"><p id="fn-1">1. I'm going to try my best to show the provenance of as much insight as I can here.  I had no idea when the injury reports came out, so I googled it.  Don't be ashamed to do likewise if there's something you need to know!<a href="#fnref-1" class="footnote footnotes">↩</a></p></div>
+<div class="footnotes"><p id="fn-2">2. ...and sincerely apologize to Adam Silver next time we run into him for the extra traffic on the &lt;a href=<a href="#fnref-2" class="footnote footnotes">↩</a></p></div>
+<div class="footnotes"><p id="fn-3">3. Ideally we'd &lt;a href=<a href="#fnref-3" class="footnote footnotes">↩</a></p></div>
 
 </div>
 </div>
@@ -1158,11 +1228,11 @@ Our example is:</p>
 And another {% fn 2 %}
 {{ 'This is the footnote.' | fndetail: 1 }}
 {{ 'This is the other footnote. You can even have a [link](www.github.com)!' | fndetail: 2 }}</code></pre>
-<p>For example, here is a footnote <sup id="fnref-3" class="footnote-ref"><a href="#fn-3">3</a></sup>.</p>
-<p>And another <sup id="fnref-4" class="footnote-ref"><a href="#fn-4">4</a></sup></p>
+<p>For example, here is a footnote <sup id="fnref-10" class="footnote-ref"><a href="#fn-10">10</a></sup>.</p>
+<p>And another <sup id="fnref-11" class="footnote-ref"><a href="#fn-11">11</a></sup></p>
 <p></p>
-<div class="footnotes"><p id="fn-3">3. This is the footnote.<a href="#fnref-3" class="footnote footnotes">↩</a></p></div>
-<div class="footnotes"><p id="fn-4">4. This is the other footnote. You can even have a <a href="www.github.com">link</a>!<a href="#fnref-4" class="footnote footnotes">↩</a></p></div>
+<div class="footnotes"><p id="fn-10">10. This is the footnote.<a href="#fnref-10" class="footnote footnotes">↩</a></p></div>
+<div class="footnotes"><p id="fn-11">11. This is the other footnote. You can even have a <a href="www.github.com">link</a>!<a href="#fnref-11" class="footnote footnotes">↩</a></p></div>
 
 </div>
 </div>
