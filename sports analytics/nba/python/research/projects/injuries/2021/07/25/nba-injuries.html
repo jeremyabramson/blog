@@ -4,20 +4,20 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="twitter:card" content="summary_large_image" /><!-- Begin Jekyll SEO tag v2.6.1 -->
-<title>This is the title | fastpages</title>
+<title>NBA Injury Report Sports Analytics Project (Part 1) | fastpages</title>
 <meta name="generator" content="Jekyll v4.1.1" />
-<meta property="og:title" content="This is the title" />
+<meta property="og:title" content="NBA Injury Report Sports Analytics Project (Part 1)" />
 <meta property="og:locale" content="en_US" />
-<meta name="description" content="Pretty sure this is a blockquote" />
-<meta property="og:description" content="Pretty sure this is a blockquote" />
-<link rel="canonical" href="https://jeremyabramson.github.io/blog/jupyter/stuff/things/more%20stuff/2021/07/25/nba-injuries.html" />
-<meta property="og:url" content="https://jeremyabramson.github.io/blog/jupyter/stuff/things/more%20stuff/2021/07/25/nba-injuries.html" />
+<meta name="description" content="Introduction and setup for how to structure a complete sports analytics project" />
+<meta property="og:description" content="Introduction and setup for how to structure a complete sports analytics project" />
+<link rel="canonical" href="https://jeremyabramson.github.io/blog/sports%20analytics/nba/python/research/projects/injuries/2021/07/25/nba-injuries.html" />
+<meta property="og:url" content="https://jeremyabramson.github.io/blog/sports%20analytics/nba/python/research/projects/injuries/2021/07/25/nba-injuries.html" />
 <meta property="og:site_name" content="fastpages" />
 <meta property="og:image" content="https://jeremyabramson.github.io/blog/images/chart-preview.png" />
 <meta property="og:type" content="article" />
 <meta property="article:published_time" content="2021-07-25T00:00:00-05:00" />
 <script type="application/ld+json">
-{"datePublished":"2021-07-25T00:00:00-05:00","url":"https://jeremyabramson.github.io/blog/jupyter/stuff/things/more%20stuff/2021/07/25/nba-injuries.html","@type":"BlogPosting","image":"https://jeremyabramson.github.io/blog/images/chart-preview.png","headline":"This is the title","dateModified":"2021-07-25T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://jeremyabramson.github.io/blog/jupyter/stuff/things/more%20stuff/2021/07/25/nba-injuries.html"},"description":"Pretty sure this is a blockquote","@context":"https://schema.org"}</script>
+{"datePublished":"2021-07-25T00:00:00-05:00","url":"https://jeremyabramson.github.io/blog/sports%20analytics/nba/python/research/projects/injuries/2021/07/25/nba-injuries.html","@type":"BlogPosting","image":"https://jeremyabramson.github.io/blog/images/chart-preview.png","headline":"NBA Injury Report Sports Analytics Project (Part 1)","dateModified":"2021-07-25T00:00:00-05:00","mainEntityOfPage":{"@type":"WebPage","@id":"https://jeremyabramson.github.io/blog/sports%20analytics/nba/python/research/projects/injuries/2021/07/25/nba-injuries.html"},"description":"Introduction and setup for how to structure a complete sports analytics project","@context":"https://schema.org"}</script>
 <!-- End Jekyll SEO tag -->
 <link rel="stylesheet" href="/blog/assets/css/style.css"><link type="application/atom+xml" rel="alternate" href="https://jeremyabramson.github.io/blog/feed.xml" title="fastpages" /><link rel="shortcut icon" type="image/x-icon" href="/blog/images/favicon.ico"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Primer/15.2.0/primer.css" integrity="sha512-xTz2ys4coGAOz8vuV1NcQBkgVmKhsSEtjbqyMJbBHRplFuvKIUo6xhLHpAyPt9mfR6twHJgn9OgVLuqOvjeBhg==" crossorigin="anonymous" />
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" integrity="sha512-1PKOgIY59xJ8Co8+NE6FZ+LOAZKjy+KY8iq0G4B3CyeY6wYHN3yt9PW0XpSriVlkMXe40PTKnXrLnZ9+fkDaog==" crossorigin="anonymous" />
@@ -76,8 +76,8 @@ window.onload = wrap_img;
         <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
 
   <header class="post-header">
-    <h1 class="post-title p-name" itemprop="name headline">This is the title</h1>
-<p class="page-description">Pretty sure this is a blockquote</p>
+    <h1 class="post-title p-name" itemprop="name headline">NBA Injury Report Sports Analytics Project (Part 1)</h1>
+<p class="page-description">Introduction and setup for how to structure a complete sports analytics project</p>
 <p class="post-meta post-meta-title"><time class="dt-published" datetime="2021-07-25T00:00:00-05:00" itemprop="datePublished">
         Jul 25, 2021
       </time>
@@ -91,16 +91,22 @@ window.onload = wrap_img;
     
       <p class="category-tags"><i class="fas fa-tags category-tags-icon"></i> 
       
-        <a class="category-tags-link" href="/blog/categories/#jupyter">jupyter</a>
+        <a class="category-tags-link" href="/blog/categories/#sports%20analytics">sports analytics</a>
          
       
-        <a class="category-tags-link" href="/blog/categories/#stuff">stuff</a>
+        <a class="category-tags-link" href="/blog/categories/#nba">nba</a>
          
       
-        <a class="category-tags-link" href="/blog/categories/#things">things</a>
+        <a class="category-tags-link" href="/blog/categories/#python">python</a>
          
       
-        <a class="category-tags-link" href="/blog/categories/#more%20stuff">more stuff</a>
+        <a class="category-tags-link" href="/blog/categories/#research">research</a>
+         
+      
+        <a class="category-tags-link" href="/blog/categories/#projects">projects</a>
+         
+      
+        <a class="category-tags-link" href="/blog/categories/#injuries">injuries</a>
         
       
       </p>
@@ -133,8 +139,10 @@ window.onload = wrap_img;
   <div class="post-content e-content" itemprop="articleBody">
     <ul class="section-nav">
 <li class="toc-entry toc-h1">
-<a href="#The-first-thing-in-the-TOC?">The first thing in the TOC? </a>
+<a href="#Introduction">Introduction </a>
 <ul>
+<li class="toc-entry toc-h2"><a href="#Problem-Scope">Problem Scope </a></li>
+<li class="toc-entry toc-h2"><a href="#Technology">Technology </a></li>
 <li class="toc-entry toc-h2"><a href="#Not-quite-the-second-thing">Not quite the second thing </a></li>
 <li class="toc-entry toc-h2"><a href="#Markdown-Shortcuts">Markdown Shortcuts </a></li>
 <li class="toc-entry toc-h2">
@@ -180,10 +188,30 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="The-first-thing-in-the-TOC?">
-<a class="anchor" href="#The-first-thing-in-the-TOC?" aria-hidden="true"><span class="octicon octicon-link"></span></a>The first thing in the TOC?<a class="anchor-link" href="#The-first-thing-in-the-TOC?"> </a>
+<h1 id="Introduction">
+<a class="anchor" href="#Introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction<a class="anchor-link" href="#Introduction"> </a>
 </h1>
 <p>This is a first thing, I'd imagine</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Problem-Scope">
+<a class="anchor" href="#Problem-Scope" aria-hidden="true"><span class="octicon octicon-link"></span></a>Problem Scope<a class="anchor-link" href="#Problem-Scope"> </a>
+</h2>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Technology">
+<a class="anchor" href="#Technology" aria-hidden="true"><span class="octicon octicon-link"></span></a>Technology<a class="anchor-link" href="#Technology"> </a>
+</h2>
+<p>So, I'm typing stuff here, if you didn't notice.</p>
 
 </div>
 </div>
@@ -1036,7 +1064,7 @@ And another {% fn 2 %}
   </div>
 <!-- from https://github.com/utterance/utterances -->
 <script src="https://utteranc.es/client.js" repo="jeremyabramson/blog" issue-term="title" label="blogpost-comment" theme="github-light" crossorigin="anonymous" async>
-</script><a class="u-url" href="/blog/jupyter/stuff/things/more%20stuff/2021/07/25/nba-injuries.html" hidden></a>
+</script><a class="u-url" href="/blog/sports%20analytics/nba/python/research/projects/injuries/2021/07/25/nba-injuries.html" hidden></a>
 </article>
       </div>
     </main><footer class="site-footer h-card">
