@@ -84,7 +84,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      5 min read
+      6 min read
     
 </span></p>
 
@@ -142,7 +142,11 @@ window.onload = wrap_img;
 <a href="#Introduction">Introduction </a>
 <ul>
 <li class="toc-entry toc-h2"><a href="#Problem-Scope">Problem Scope </a></li>
-<li class="toc-entry toc-h2"><a href="#Technology">Technology </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h1">
+<a href="#Downloading-The-Injury-Reports">Downloading The Injury Reports </a>
+<ul>
 <li class="toc-entry toc-h2"><a href="#Not-quite-the-second-thing">Not quite the second thing </a></li>
 <li class="toc-entry toc-h2"><a href="#Markdown-Shortcuts">Markdown Shortcuts </a></li>
 <li class="toc-entry toc-h2">
@@ -208,10 +212,52 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Technology">
-<a class="anchor" href="#Technology" aria-hidden="true"><span class="octicon octicon-link"></span></a>Technology<a class="anchor-link" href="#Technology"> </a>
-</h2>
-<p>So, I'm typing stuff here, if you didn't notice.</p>
+<h1 id="Downloading-The-Injury-Reports">
+<a class="anchor" href="#Downloading-The-Injury-Reports" aria-hidden="true"><span class="octicon octicon-link"></span></a>Downloading The Injury Reports<a class="anchor-link" href="#Downloading-The-Injury-Reports"> </a>
+</h1>
+<p>Before we can actually do anything interesting with the injury reports, we need to download them.
+From Basketball Analytics Legend <a href="https://twitter.com/EdKupfer">Ed Kupfer</a>'s tweet, we know the location of at least <em>one</em> report:
+
+</p>
+<center>
+    <div class="jekyll-twitter-plugin">
+<blockquote class="twitter-tweet">
+<p lang="en" dir="ltr">If somebody wants a project, scrape the data from the NBA injury report PDFs from the last few seasons. Just change the date in the URL. <a href="https://t.co/SnKpFXPrRl">https://t.co/SnKpFXPrRl</a></p>— Ed Kupfer (@EdKupfer) <a href="https://twitter.com/EdKupfer/status/1385682808174256129?ref_src=twsrc%5Etfw">April 23, 2021</a>
+</blockquote>
+<script async="" src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+</div>
+</center>
+
+Luckily, the naming schema of the reports is relatively simple to decode.
+Our example is:
+<p><code>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2021-04-23_01PM.pdf</code></p>
+<p>Looks like there's 4 parts to the URL:</p>
+<ol>
+<li>A boilerplate URL: <code>https://ak-static.cms.nba.com/referee/injury/Injury-Report_</code>
+</li>
+<li>A date: <code>2021-04-23</code>
+</li>
+<li>A time: <code>01PM</code>
+</li>
+<li>The file extension: <code>.pdf</code>
+</li>
+</ol>
+<p>We're only interested in the middle two (the date and the time), as the boilerplate URL and the file extension won't change.  From googling<sup id="fnref-1" class="footnote-ref"><a href="#fn-1">1</a></sup> <code>"nba injury report"</code> and clicking on <a href="https://official.nba.com/nba-injury-report-2020-21-season/">the second link</a> it seems like the times may be <code>1:30 PM</code>, <code>5:30 PM</code> and <code>8:30 PM</code>.</p>
+<p>That's actually slightly more complicated than we might like, because there's no central page with links to all valid reports to scrape (at least that I'm aware of).</p>
+<p>That being the case, we have two options to get the reports:</p>
+<ol>
+<li>Get a copy of the NBA schedule, and try to download reports for days when we know there's a game</li>
+<li>Just start downloading </li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p></p>
+<div class="footnotes"><p id="fn-1">1. I'm going to try my best to show the provenance of as much insight as I can here.  I had no idea when the injury reports came out, so I googled it.  Don't be ashamed to do likewise if there's something you need to know!<a href="#fnref-1" class="footnote footnotes">↩</a></p></div>
 
 </div>
 </div>
