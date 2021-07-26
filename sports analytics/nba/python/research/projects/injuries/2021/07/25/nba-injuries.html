@@ -275,17 +275,16 @@ Our example URL is:</p>
 <h2 id="Building-a-URL-List-to-Download-(Finding-Gamedays?)">
 <a class="anchor" href="#Building-a-URL-List-to-Download-(Finding-Gamedays?)" aria-hidden="true"><span class="octicon octicon-link"></span></a>Building a URL List to Download (Finding Gamedays?)<a class="anchor-link" href="#Building-a-URL-List-to-Download-(Finding-Gamedays?)"> </a>
 </h2>
-<p>Google helped us sort out what we might use for the <code>time</code> portion of the URL, but for the date is actually a little more complicated than we might like.
-Since, to the best of my knowledge, there's no "central" page that has links to each report, we'll need to know the date for every report we want to download.
-According to the <a href="https://official.nba.com/nba-injury-report-2020-21-season/">official NBA annoucement</a>, the dates we're interested in are actually the day <em>before</em> game days, except on the second days of back-to-backs.
-In this case, presumably the injury report comes out the day of the game.</p>
-<p>This all sounds complicated, and if there's one thing I've learned about projects like this it's that nothing saps effort like complication and extra effort that doesn't "feel" like it's in the service of what we're trying to  accomplish.</p>
-<p>Having said all that, it seems we've got two options:</p>
+<p>Google helped us sort out what we might use for the <code>time</code> portion of the URL, but the <code>date</code> part is actually a little more complicated than we might like.
+Since, to the best of my knowledge, there's no "central" page that has links to each report, we'll need to know the date for <em>every</em> report we want to download.
+According to the <a href="https://official.nba.com/nba-injury-report-2020-21-season/">official NBA annoucement</a>, the dates we're interested in are actually the day <em>before</em> game days, except on the second days of back-to-backs, in which case presumably the injury report comes out the day of the game.</p>
+<p>This all sounds complicated, and if there's one thing I've learned about projects like this it's that nothing saps enthusiasm like complication and extra effort that doesn't "feel" like it's in the service of what we're trying to  accomplish.</p>
+<p>So, given what we know, it seems as if we have two options:</p>
 <ol>
 <li>Get a copy of the NBA schedule, and try to download reports for days we know there's a game</li>
 <li>Just start downloading [a range of?] dates and see what we get</li>
 </ol>
-<p>There's nothing wrong with taking a stab at option 1 here, but we this project is about injury reports, not the NBA schedule, so let's just choose option two<sup id="fnref-2" class="footnote-ref"><a href="#fn-2">2</a></sup>.</p>
+<p>There's nothing wrong with taking a stab at option 1 here, but we this project is about injury reports, not the NBA schedule, so let's just choose option 2<sup id="fnref-2" class="footnote-ref"><a href="#fn-2">2</a></sup>.</p>
 
 </div>
 </div>
@@ -300,9 +299,10 @@ In this case, presumably the injury report comes out the day of the game.</p>
 Despite that, it seems relatively obvious that we need to deal with <code>date</code>-like objects here, not just <code>string</code> or <code>numeric</code> representations of the dates themselves.
 (Trying to "subtract" a day from <code>01-01-2021</code> without some internal representation of the calendar seems problematic).</p>
 <p>Thinking at a high level, it seems like what we might want to do is build<sup id="fnref-3" class="footnote-ref"><a href="#fn-3">3</a></sup> a list of dates, starting at, say, today — or some other reasonable choice, like the end of the NBA season — and work backward until...well, it's not exactly clear how far back we need to go.
-But the notion still seems reasonable: start today and count backward day by day, creating a new date each time.
+But the notion still seems reasonable: start at a date and count backward day by day, creating a new date each time.
 Luckily, Python has exactly the thing we need to do this: the <code>timedelta</code> object.</p>
-<p>For our purposes, a <code>timedelta</code> object is simply something that allows us to perform arithmetic on <code>datetime</code> objects.</p>
+<p>For our purposes, a <code>timedelta</code> object is simply something that allows us to perform arithmetic on <code>datetime</code> objects.
+Consider the following:</p>
 
 </div>
 </div>
