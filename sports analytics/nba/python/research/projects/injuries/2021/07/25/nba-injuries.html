@@ -84,7 +84,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      11 min read
+      21 min read
     
 </span></p>
 
@@ -151,12 +151,7 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h2">
 <a href="#Building-a-URL-List-to-Download-(Finding-Gamedays?)">Building a URL List to Download (Finding Gamedays?) </a>
 <ul>
-<li class="toc-entry toc-h3">
-<a href="#Using-datetime.timedelta-to-Construct-A-List-of-Dates">Using datetime.timedelta to Construct A List of Dates </a>
-<ul>
-<li class="toc-entry toc-h4"><a href="#Code">Code </a></li>
-</ul>
-</li>
+<li class="toc-entry toc-h3"><a href="#Using-datetime.timedelta-to-Construct-A-List-of-Dates">Using datetime.timedelta to Construct A List of Dates </a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h2"><a href="#Not-quite-the-second-thing">Not quite the second thing </a></li>
@@ -284,7 +279,7 @@ According to the <a href="https://official.nba.com/nba-injury-report-2020-21-sea
 <li>Get a copy of the NBA schedule, and try to download reports for days we know there's a game</li>
 <li>Just start downloading [a range of?] dates and see what we get</li>
 </ol>
-<p>There's nothing wrong with taking a stab at option 1 here, but we this project is about injury reports, not the NBA schedule, so let's just choose option 2<sup id="fnref-2" class="footnote-ref"><a href="#fn-2">2</a></sup>.</p>
+<p>There's nothing wrong with taking a stab at option 1 here, but this project is about injury reports, not the NBA schedule, so we'll start with option 2<sup id="fnref-2" class="footnote-ref"><a href="#fn-2">2</a></sup>.</p>
 
 </div>
 </div>
@@ -304,15 +299,6 @@ Luckily, Python has exactly the thing we need to do this: the <code>timedelta</c
 <p>For our purposes, a <code>timedelta</code> object is simply something that allows us to perform arithmetic on <code>datetime</code> objects.
 Consider the following:</p>
 
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="Code">
-<a class="anchor" href="#Code" aria-hidden="true"><span class="octicon octicon-link"></span></a>Code<a class="anchor-link" href="#Code"> </a>
-</h4>
 </div>
 </div>
 </div>
@@ -367,6 +353,650 @@ Consider the following:</p>
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>The 2021 NBA season <a href="https://www.youtube.com/watch?v=9O920AD-teU">ended on July 20th</a>, and from manual testing, <a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2021-07-20_08PM.pdf">https://ak-static.cms.nba.com/referee/injury/Injury-Report_2021-07-20_08PM.pdf</a> is a valid link (the next day, unsurprisingly, is not).
+So let's start there, and count backward until we reach the day <em>before</em> the <a href="https://en.wikipedia.org/wiki/2020%E2%80%9321_NBA_season">start</a> of the season, which would be December 21st, 2020.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">season_start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s1">'2020-12-21'</span><span class="p">,</span> <span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1">'</span><span class="p">)</span>
+<span class="n">season_end</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s1">'2021-07-20'</span><span class="p">,</span> <span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1">'</span><span class="p">)</span>
+<span class="n">season_duration</span> <span class="o">=</span> <span class="n">season_end</span> <span class="o">-</span> <span class="n">season_start</span>
+<span class="c1"># season_duraction is a timedelta object</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">season_duration</span><span class="si">=}</span><span class="s1"> is of type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">season_duration</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>season_duration=datetime.timedelta(days=211) is of type &lt;class 'datetime.timedelta'&gt;
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now, to construct our list of dates is actually a little tricky.
+Unfortunately, we can't just "increment" <code>season_start</code> until it reaches <code>season_end</code> (that would be too easy).
+We basically have to turn our <code>season_duration</code> — which is a <code>timedelta</code> object — into a <code>range</code>, and then we iterate over <em>that</em>, subtracting a day for each value in the range.</p>
+<p>To do this, we use the <code>.days</code> attribute of the <code>timedelta</code> object.
+That gives us an <code>integer</code> representation of the how many days are between the two dates used to create the <code>timedelta</code> in the first place.
+We then convert this integral number of days <em>back</em> into a <code>timedelta</code>, which we subtract from our <code>season_end</code> variable.
+Confused?  Hopefully the code will help clarify:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">season_dates</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+<span class="c1"># Convert the timedelta into an integral range, from 0 to the number of days in season_duration (211)</span>
+<span class="k">for</span> <span class="n">day_number</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">season_duration</span><span class="o">.</span><span class="n">days</span><span class="p">):</span>
+    <span class="c1"># Subtract day_number of days from our season endpoint (after converting to a timedelta)</span>
+    <span class="n">gameday</span> <span class="o">=</span> <span class="n">season_end</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">day_number</span><span class="p">)</span>
+    <span class="c1"># Append this new datetime to our list</span>
+    <span class="n">season_dates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gameday</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'season_dates spans from </span><span class="si">{</span><span class="n">season_dates</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1"> to </span><span class="si">{</span><span class="n">season_dates</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s1"> with length </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">season_dates</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>season_dates spans from 2021-07-20 00:00:00 to 2020-12-22 00:00:00 with length 211
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Uh oh, we're off by one, and a day short!
+Makes sense, since we're only iterating 211 times, so we lose one of the endpoints.
+Fixing that, and converting the above to a list comprehension, we get:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">season_dates</span> <span class="o">=</span> <span class="p">[</span><span class="n">season_end</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">day_number</span><span class="p">)</span> <span class="k">for</span> <span class="n">day_number</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">season_duration</span><span class="o">.</span><span class="n">days</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'season_dates spans from </span><span class="si">{</span><span class="n">season_dates</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1"> to </span><span class="si">{</span><span class="n">season_dates</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s1"> with length </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">season_dates</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>season_dates spans from 2021-07-20 00:00:00 to 2020-12-21 00:00:00 with length 212
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">daterange</span><span class="p">(</span><span class="n">date1</span><span class="p">,</span> <span class="n">date2</span><span class="p">):</span>
+    <span class="k">for</span> <span class="n">n</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="nb">int</span> <span class="p">((</span><span class="n">date2</span> <span class="o">-</span> <span class="n">date1</span><span class="p">)</span><span class="o">.</span><span class="n">days</span><span class="p">)</span><span class="o">+</span><span class="mi">1</span><span class="p">):</span>
+        <span class="k">yield</span> <span class="n">date1</span> <span class="o">+</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">n</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">thing</span> <span class="ow">in</span> <span class="n">daterange</span><span class="p">(</span><span class="n">season_start</span><span class="p">,</span> <span class="n">season_end</span><span class="p">):</span>
+    <span class="nb">print</span><span class="p">(</span><span class="n">thing</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>2020-12-21 00:00:00
+2020-12-22 00:00:00
+2020-12-23 00:00:00
+2020-12-24 00:00:00
+2020-12-25 00:00:00
+2020-12-26 00:00:00
+2020-12-27 00:00:00
+2020-12-28 00:00:00
+2020-12-29 00:00:00
+2020-12-30 00:00:00
+2020-12-31 00:00:00
+2021-01-01 00:00:00
+2021-01-02 00:00:00
+2021-01-03 00:00:00
+2021-01-04 00:00:00
+2021-01-05 00:00:00
+2021-01-06 00:00:00
+2021-01-07 00:00:00
+2021-01-08 00:00:00
+2021-01-09 00:00:00
+2021-01-10 00:00:00
+2021-01-11 00:00:00
+2021-01-12 00:00:00
+2021-01-13 00:00:00
+2021-01-14 00:00:00
+2021-01-15 00:00:00
+2021-01-16 00:00:00
+2021-01-17 00:00:00
+2021-01-18 00:00:00
+2021-01-19 00:00:00
+2021-01-20 00:00:00
+2021-01-21 00:00:00
+2021-01-22 00:00:00
+2021-01-23 00:00:00
+2021-01-24 00:00:00
+2021-01-25 00:00:00
+2021-01-26 00:00:00
+2021-01-27 00:00:00
+2021-01-28 00:00:00
+2021-01-29 00:00:00
+2021-01-30 00:00:00
+2021-01-31 00:00:00
+2021-02-01 00:00:00
+2021-02-02 00:00:00
+2021-02-03 00:00:00
+2021-02-04 00:00:00
+2021-02-05 00:00:00
+2021-02-06 00:00:00
+2021-02-07 00:00:00
+2021-02-08 00:00:00
+2021-02-09 00:00:00
+2021-02-10 00:00:00
+2021-02-11 00:00:00
+2021-02-12 00:00:00
+2021-02-13 00:00:00
+2021-02-14 00:00:00
+2021-02-15 00:00:00
+2021-02-16 00:00:00
+2021-02-17 00:00:00
+2021-02-18 00:00:00
+2021-02-19 00:00:00
+2021-02-20 00:00:00
+2021-02-21 00:00:00
+2021-02-22 00:00:00
+2021-02-23 00:00:00
+2021-02-24 00:00:00
+2021-02-25 00:00:00
+2021-02-26 00:00:00
+2021-02-27 00:00:00
+2021-02-28 00:00:00
+2021-03-01 00:00:00
+2021-03-02 00:00:00
+2021-03-03 00:00:00
+2021-03-04 00:00:00
+2021-03-05 00:00:00
+2021-03-06 00:00:00
+2021-03-07 00:00:00
+2021-03-08 00:00:00
+2021-03-09 00:00:00
+2021-03-10 00:00:00
+2021-03-11 00:00:00
+2021-03-12 00:00:00
+2021-03-13 00:00:00
+2021-03-14 00:00:00
+2021-03-15 00:00:00
+2021-03-16 00:00:00
+2021-03-17 00:00:00
+2021-03-18 00:00:00
+2021-03-19 00:00:00
+2021-03-20 00:00:00
+2021-03-21 00:00:00
+2021-03-22 00:00:00
+2021-03-23 00:00:00
+2021-03-24 00:00:00
+2021-03-25 00:00:00
+2021-03-26 00:00:00
+2021-03-27 00:00:00
+2021-03-28 00:00:00
+2021-03-29 00:00:00
+2021-03-30 00:00:00
+2021-03-31 00:00:00
+2021-04-01 00:00:00
+2021-04-02 00:00:00
+2021-04-03 00:00:00
+2021-04-04 00:00:00
+2021-04-05 00:00:00
+2021-04-06 00:00:00
+2021-04-07 00:00:00
+2021-04-08 00:00:00
+2021-04-09 00:00:00
+2021-04-10 00:00:00
+2021-04-11 00:00:00
+2021-04-12 00:00:00
+2021-04-13 00:00:00
+2021-04-14 00:00:00
+2021-04-15 00:00:00
+2021-04-16 00:00:00
+2021-04-17 00:00:00
+2021-04-18 00:00:00
+2021-04-19 00:00:00
+2021-04-20 00:00:00
+2021-04-21 00:00:00
+2021-04-22 00:00:00
+2021-04-23 00:00:00
+2021-04-24 00:00:00
+2021-04-25 00:00:00
+2021-04-26 00:00:00
+2021-04-27 00:00:00
+2021-04-28 00:00:00
+2021-04-29 00:00:00
+2021-04-30 00:00:00
+2021-05-01 00:00:00
+2021-05-02 00:00:00
+2021-05-03 00:00:00
+2021-05-04 00:00:00
+2021-05-05 00:00:00
+2021-05-06 00:00:00
+2021-05-07 00:00:00
+2021-05-08 00:00:00
+2021-05-09 00:00:00
+2021-05-10 00:00:00
+2021-05-11 00:00:00
+2021-05-12 00:00:00
+2021-05-13 00:00:00
+2021-05-14 00:00:00
+2021-05-15 00:00:00
+2021-05-16 00:00:00
+2021-05-17 00:00:00
+2021-05-18 00:00:00
+2021-05-19 00:00:00
+2021-05-20 00:00:00
+2021-05-21 00:00:00
+2021-05-22 00:00:00
+2021-05-23 00:00:00
+2021-05-24 00:00:00
+2021-05-25 00:00:00
+2021-05-26 00:00:00
+2021-05-27 00:00:00
+2021-05-28 00:00:00
+2021-05-29 00:00:00
+2021-05-30 00:00:00
+2021-05-31 00:00:00
+2021-06-01 00:00:00
+2021-06-02 00:00:00
+2021-06-03 00:00:00
+2021-06-04 00:00:00
+2021-06-05 00:00:00
+2021-06-06 00:00:00
+2021-06-07 00:00:00
+2021-06-08 00:00:00
+2021-06-09 00:00:00
+2021-06-10 00:00:00
+2021-06-11 00:00:00
+2021-06-12 00:00:00
+2021-06-13 00:00:00
+2021-06-14 00:00:00
+2021-06-15 00:00:00
+2021-06-16 00:00:00
+2021-06-17 00:00:00
+2021-06-18 00:00:00
+2021-06-19 00:00:00
+2021-06-20 00:00:00
+2021-06-21 00:00:00
+2021-06-22 00:00:00
+2021-06-23 00:00:00
+2021-06-24 00:00:00
+2021-06-25 00:00:00
+2021-06-26 00:00:00
+2021-06-27 00:00:00
+2021-06-28 00:00:00
+2021-06-29 00:00:00
+2021-06-30 00:00:00
+2021-07-01 00:00:00
+2021-07-02 00:00:00
+2021-07-03 00:00:00
+2021-07-04 00:00:00
+2021-07-05 00:00:00
+2021-07-06 00:00:00
+2021-07-07 00:00:00
+2021-07-08 00:00:00
+2021-07-09 00:00:00
+2021-07-10 00:00:00
+2021-07-11 00:00:00
+2021-07-12 00:00:00
+2021-07-13 00:00:00
+2021-07-14 00:00:00
+2021-07-15 00:00:00
+2021-07-16 00:00:00
+2021-07-17 00:00:00
+2021-07-18 00:00:00
+2021-07-19 00:00:00
+2021-07-20 00:00:00
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">season_dates</span> <span class="o">=</span> <span class="p">[</span><span class="n">season_end</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">gameday</span><span class="p">)</span> <span class="k">for</span> <span class="n">gameday</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">season_duration</span><span class="o">.</span><span class="n">days</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>[datetime.datetime(2021, 7, 20, 0, 0),
+ datetime.datetime(2021, 7, 19, 0, 0),
+ datetime.datetime(2021, 7, 18, 0, 0),
+ datetime.datetime(2021, 7, 17, 0, 0),
+ datetime.datetime(2021, 7, 16, 0, 0),
+ datetime.datetime(2021, 7, 15, 0, 0),
+ datetime.datetime(2021, 7, 14, 0, 0),
+ datetime.datetime(2021, 7, 13, 0, 0),
+ datetime.datetime(2021, 7, 12, 0, 0),
+ datetime.datetime(2021, 7, 11, 0, 0),
+ datetime.datetime(2021, 7, 10, 0, 0),
+ datetime.datetime(2021, 7, 9, 0, 0),
+ datetime.datetime(2021, 7, 8, 0, 0),
+ datetime.datetime(2021, 7, 7, 0, 0),
+ datetime.datetime(2021, 7, 6, 0, 0),
+ datetime.datetime(2021, 7, 5, 0, 0),
+ datetime.datetime(2021, 7, 4, 0, 0),
+ datetime.datetime(2021, 7, 3, 0, 0),
+ datetime.datetime(2021, 7, 2, 0, 0),
+ datetime.datetime(2021, 7, 1, 0, 0),
+ datetime.datetime(2021, 6, 30, 0, 0),
+ datetime.datetime(2021, 6, 29, 0, 0),
+ datetime.datetime(2021, 6, 28, 0, 0),
+ datetime.datetime(2021, 6, 27, 0, 0),
+ datetime.datetime(2021, 6, 26, 0, 0),
+ datetime.datetime(2021, 6, 25, 0, 0),
+ datetime.datetime(2021, 6, 24, 0, 0),
+ datetime.datetime(2021, 6, 23, 0, 0),
+ datetime.datetime(2021, 6, 22, 0, 0),
+ datetime.datetime(2021, 6, 21, 0, 0),
+ datetime.datetime(2021, 6, 20, 0, 0),
+ datetime.datetime(2021, 6, 19, 0, 0),
+ datetime.datetime(2021, 6, 18, 0, 0),
+ datetime.datetime(2021, 6, 17, 0, 0),
+ datetime.datetime(2021, 6, 16, 0, 0),
+ datetime.datetime(2021, 6, 15, 0, 0),
+ datetime.datetime(2021, 6, 14, 0, 0),
+ datetime.datetime(2021, 6, 13, 0, 0),
+ datetime.datetime(2021, 6, 12, 0, 0),
+ datetime.datetime(2021, 6, 11, 0, 0),
+ datetime.datetime(2021, 6, 10, 0, 0),
+ datetime.datetime(2021, 6, 9, 0, 0),
+ datetime.datetime(2021, 6, 8, 0, 0),
+ datetime.datetime(2021, 6, 7, 0, 0),
+ datetime.datetime(2021, 6, 6, 0, 0),
+ datetime.datetime(2021, 6, 5, 0, 0),
+ datetime.datetime(2021, 6, 4, 0, 0),
+ datetime.datetime(2021, 6, 3, 0, 0),
+ datetime.datetime(2021, 6, 2, 0, 0),
+ datetime.datetime(2021, 6, 1, 0, 0),
+ datetime.datetime(2021, 5, 31, 0, 0),
+ datetime.datetime(2021, 5, 30, 0, 0),
+ datetime.datetime(2021, 5, 29, 0, 0),
+ datetime.datetime(2021, 5, 28, 0, 0),
+ datetime.datetime(2021, 5, 27, 0, 0),
+ datetime.datetime(2021, 5, 26, 0, 0),
+ datetime.datetime(2021, 5, 25, 0, 0),
+ datetime.datetime(2021, 5, 24, 0, 0),
+ datetime.datetime(2021, 5, 23, 0, 0),
+ datetime.datetime(2021, 5, 22, 0, 0),
+ datetime.datetime(2021, 5, 21, 0, 0),
+ datetime.datetime(2021, 5, 20, 0, 0),
+ datetime.datetime(2021, 5, 19, 0, 0),
+ datetime.datetime(2021, 5, 18, 0, 0),
+ datetime.datetime(2021, 5, 17, 0, 0),
+ datetime.datetime(2021, 5, 16, 0, 0),
+ datetime.datetime(2021, 5, 15, 0, 0),
+ datetime.datetime(2021, 5, 14, 0, 0),
+ datetime.datetime(2021, 5, 13, 0, 0),
+ datetime.datetime(2021, 5, 12, 0, 0),
+ datetime.datetime(2021, 5, 11, 0, 0),
+ datetime.datetime(2021, 5, 10, 0, 0),
+ datetime.datetime(2021, 5, 9, 0, 0),
+ datetime.datetime(2021, 5, 8, 0, 0),
+ datetime.datetime(2021, 5, 7, 0, 0),
+ datetime.datetime(2021, 5, 6, 0, 0),
+ datetime.datetime(2021, 5, 5, 0, 0),
+ datetime.datetime(2021, 5, 4, 0, 0),
+ datetime.datetime(2021, 5, 3, 0, 0),
+ datetime.datetime(2021, 5, 2, 0, 0),
+ datetime.datetime(2021, 5, 1, 0, 0),
+ datetime.datetime(2021, 4, 30, 0, 0),
+ datetime.datetime(2021, 4, 29, 0, 0),
+ datetime.datetime(2021, 4, 28, 0, 0),
+ datetime.datetime(2021, 4, 27, 0, 0),
+ datetime.datetime(2021, 4, 26, 0, 0),
+ datetime.datetime(2021, 4, 25, 0, 0),
+ datetime.datetime(2021, 4, 24, 0, 0),
+ datetime.datetime(2021, 4, 23, 0, 0),
+ datetime.datetime(2021, 4, 22, 0, 0),
+ datetime.datetime(2021, 4, 21, 0, 0),
+ datetime.datetime(2021, 4, 20, 0, 0),
+ datetime.datetime(2021, 4, 19, 0, 0),
+ datetime.datetime(2021, 4, 18, 0, 0),
+ datetime.datetime(2021, 4, 17, 0, 0),
+ datetime.datetime(2021, 4, 16, 0, 0),
+ datetime.datetime(2021, 4, 15, 0, 0),
+ datetime.datetime(2021, 4, 14, 0, 0),
+ datetime.datetime(2021, 4, 13, 0, 0),
+ datetime.datetime(2021, 4, 12, 0, 0),
+ datetime.datetime(2021, 4, 11, 0, 0),
+ datetime.datetime(2021, 4, 10, 0, 0),
+ datetime.datetime(2021, 4, 9, 0, 0),
+ datetime.datetime(2021, 4, 8, 0, 0),
+ datetime.datetime(2021, 4, 7, 0, 0),
+ datetime.datetime(2021, 4, 6, 0, 0),
+ datetime.datetime(2021, 4, 5, 0, 0),
+ datetime.datetime(2021, 4, 4, 0, 0),
+ datetime.datetime(2021, 4, 3, 0, 0),
+ datetime.datetime(2021, 4, 2, 0, 0),
+ datetime.datetime(2021, 4, 1, 0, 0),
+ datetime.datetime(2021, 3, 31, 0, 0),
+ datetime.datetime(2021, 3, 30, 0, 0),
+ datetime.datetime(2021, 3, 29, 0, 0),
+ datetime.datetime(2021, 3, 28, 0, 0),
+ datetime.datetime(2021, 3, 27, 0, 0),
+ datetime.datetime(2021, 3, 26, 0, 0),
+ datetime.datetime(2021, 3, 25, 0, 0),
+ datetime.datetime(2021, 3, 24, 0, 0),
+ datetime.datetime(2021, 3, 23, 0, 0),
+ datetime.datetime(2021, 3, 22, 0, 0),
+ datetime.datetime(2021, 3, 21, 0, 0),
+ datetime.datetime(2021, 3, 20, 0, 0),
+ datetime.datetime(2021, 3, 19, 0, 0),
+ datetime.datetime(2021, 3, 18, 0, 0),
+ datetime.datetime(2021, 3, 17, 0, 0),
+ datetime.datetime(2021, 3, 16, 0, 0),
+ datetime.datetime(2021, 3, 15, 0, 0),
+ datetime.datetime(2021, 3, 14, 0, 0),
+ datetime.datetime(2021, 3, 13, 0, 0),
+ datetime.datetime(2021, 3, 12, 0, 0),
+ datetime.datetime(2021, 3, 11, 0, 0),
+ datetime.datetime(2021, 3, 10, 0, 0),
+ datetime.datetime(2021, 3, 9, 0, 0),
+ datetime.datetime(2021, 3, 8, 0, 0),
+ datetime.datetime(2021, 3, 7, 0, 0),
+ datetime.datetime(2021, 3, 6, 0, 0),
+ datetime.datetime(2021, 3, 5, 0, 0),
+ datetime.datetime(2021, 3, 4, 0, 0),
+ datetime.datetime(2021, 3, 3, 0, 0),
+ datetime.datetime(2021, 3, 2, 0, 0),
+ datetime.datetime(2021, 3, 1, 0, 0),
+ datetime.datetime(2021, 2, 28, 0, 0),
+ datetime.datetime(2021, 2, 27, 0, 0),
+ datetime.datetime(2021, 2, 26, 0, 0),
+ datetime.datetime(2021, 2, 25, 0, 0),
+ datetime.datetime(2021, 2, 24, 0, 0),
+ datetime.datetime(2021, 2, 23, 0, 0),
+ datetime.datetime(2021, 2, 22, 0, 0),
+ datetime.datetime(2021, 2, 21, 0, 0),
+ datetime.datetime(2021, 2, 20, 0, 0),
+ datetime.datetime(2021, 2, 19, 0, 0),
+ datetime.datetime(2021, 2, 18, 0, 0),
+ datetime.datetime(2021, 2, 17, 0, 0),
+ datetime.datetime(2021, 2, 16, 0, 0),
+ datetime.datetime(2021, 2, 15, 0, 0),
+ datetime.datetime(2021, 2, 14, 0, 0),
+ datetime.datetime(2021, 2, 13, 0, 0),
+ datetime.datetime(2021, 2, 12, 0, 0),
+ datetime.datetime(2021, 2, 11, 0, 0),
+ datetime.datetime(2021, 2, 10, 0, 0),
+ datetime.datetime(2021, 2, 9, 0, 0),
+ datetime.datetime(2021, 2, 8, 0, 0),
+ datetime.datetime(2021, 2, 7, 0, 0),
+ datetime.datetime(2021, 2, 6, 0, 0),
+ datetime.datetime(2021, 2, 5, 0, 0),
+ datetime.datetime(2021, 2, 4, 0, 0),
+ datetime.datetime(2021, 2, 3, 0, 0),
+ datetime.datetime(2021, 2, 2, 0, 0),
+ datetime.datetime(2021, 2, 1, 0, 0),
+ datetime.datetime(2021, 1, 31, 0, 0),
+ datetime.datetime(2021, 1, 30, 0, 0),
+ datetime.datetime(2021, 1, 29, 0, 0),
+ datetime.datetime(2021, 1, 28, 0, 0),
+ datetime.datetime(2021, 1, 27, 0, 0),
+ datetime.datetime(2021, 1, 26, 0, 0),
+ datetime.datetime(2021, 1, 25, 0, 0),
+ datetime.datetime(2021, 1, 24, 0, 0),
+ datetime.datetime(2021, 1, 23, 0, 0),
+ datetime.datetime(2021, 1, 22, 0, 0),
+ datetime.datetime(2021, 1, 21, 0, 0),
+ datetime.datetime(2021, 1, 20, 0, 0),
+ datetime.datetime(2021, 1, 19, 0, 0),
+ datetime.datetime(2021, 1, 18, 0, 0),
+ datetime.datetime(2021, 1, 17, 0, 0),
+ datetime.datetime(2021, 1, 16, 0, 0),
+ datetime.datetime(2021, 1, 15, 0, 0),
+ datetime.datetime(2021, 1, 14, 0, 0),
+ datetime.datetime(2021, 1, 13, 0, 0),
+ datetime.datetime(2021, 1, 12, 0, 0),
+ datetime.datetime(2021, 1, 11, 0, 0),
+ datetime.datetime(2021, 1, 10, 0, 0),
+ datetime.datetime(2021, 1, 9, 0, 0),
+ datetime.datetime(2021, 1, 8, 0, 0),
+ datetime.datetime(2021, 1, 7, 0, 0),
+ datetime.datetime(2021, 1, 6, 0, 0),
+ datetime.datetime(2021, 1, 5, 0, 0),
+ datetime.datetime(2021, 1, 4, 0, 0),
+ datetime.datetime(2021, 1, 3, 0, 0),
+ datetime.datetime(2021, 1, 2, 0, 0),
+ datetime.datetime(2021, 1, 1, 0, 0),
+ datetime.datetime(2020, 12, 31, 0, 0),
+ datetime.datetime(2020, 12, 30, 0, 0),
+ datetime.datetime(2020, 12, 29, 0, 0),
+ datetime.datetime(2020, 12, 28, 0, 0),
+ datetime.datetime(2020, 12, 27, 0, 0),
+ datetime.datetime(2020, 12, 26, 0, 0),
+ datetime.datetime(2020, 12, 25, 0, 0),
+ datetime.datetime(2020, 12, 24, 0, 0),
+ datetime.datetime(2020, 12, 23, 0, 0),
+ datetime.datetime(2020, 12, 22, 0, 0),
+ datetime.datetime(2020, 12, 21, 0, 0)]</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
     
     
 <div class="cell border-box-sizing code_cell rendered">
