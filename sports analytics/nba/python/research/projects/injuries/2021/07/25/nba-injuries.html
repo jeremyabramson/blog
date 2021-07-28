@@ -84,7 +84,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      22 min read
+      15 min read
     
 </span></p>
 
@@ -154,6 +154,12 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#Using-datetime.timedelta-to-Construct-A-List-of-Dates">Using datetime.timedelta to Construct A List of Dates </a></li>
 </ul>
 </li>
+</ul>
+</li>
+<li class="toc-entry toc-h1">
+<a href="#Downloading-The-Injury-Reports">Downloading The Injury Reports </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#Constructing-an-Injury-Report-URL">Constructing an Injury Report URL </a></li>
 <li class="toc-entry toc-h2"><a href="#Not-quite-the-second-thing">Not quite the second thing </a></li>
 <li class="toc-entry toc-h2"><a href="#Markdown-Shortcuts">Markdown Shortcuts </a></li>
 <li class="toc-entry toc-h2">
@@ -309,13 +315,13 @@ Consider the following:</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">datetime</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
 
 <span class="c1"># Random_date is a datetime object</span>
-<span class="n">random_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s1">'2011-09-18'</span><span class="p">,</span> <span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1">'</span><span class="p">)</span>
+<span class="n">random_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s1">'2011-09-18'</span><span class="p">,</span> <span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1">'</span><span class="p">)</span>
 <span class="c1"># Let's create a new datetime object by subtracting a timedelta object</span>
 <span class="c1"># Note that we're using the "days" parameter.  Try experimenting with other values!</span>
-<span class="n">new_date</span> <span class="o">=</span> <span class="n">random_date</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+<span class="n">new_date</span> <span class="o">=</span> <span class="n">random_date</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Ten days before </span><span class="si">{</span><span class="n">random_date</span><span class="si">}</span><span class="s2"> is </span><span class="si">{</span><span class="n">new_date</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
 </pre></div>
@@ -369,8 +375,8 @@ So let's start there, and count backward until we reach the day <em>before</em> 
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">season_start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s1">'2020-12-21'</span><span class="p">,</span> <span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1">'</span><span class="p">)</span>
-<span class="n">season_end</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s1">'2021-07-20'</span><span class="p">,</span> <span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1">'</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">season_start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s1">'2020-12-21'</span><span class="p">,</span> <span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1">'</span><span class="p">)</span>
+<span class="n">season_end</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s1">'2021-07-20'</span><span class="p">,</span> <span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1">'</span><span class="p">)</span>
 <span class="n">season_duration</span> <span class="o">=</span> <span class="n">season_end</span> <span class="o">-</span> <span class="n">season_start</span>
 <span class="c1"># season_duraction is a timedelta object</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">season_duration</span><span class="si">=}</span><span class="s1"> is of type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">season_duration</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
@@ -422,7 +428,7 @@ Confused?  Hopefully the code will help clarify:</p>
 <span class="c1"># Convert the timedelta into an integral range, from 0 to the number of days in season_duration (211)</span>
 <span class="k">for</span> <span class="n">day_number</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">season_duration</span><span class="o">.</span><span class="n">days</span><span class="p">):</span>
     <span class="c1"># Subtract day_number of days from our season endpoint (after converting to a timedelta)</span>
-    <span class="n">gameday</span> <span class="o">=</span> <span class="n">season_end</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">day_number</span><span class="p">)</span>
+    <span class="n">gameday</span> <span class="o">=</span> <span class="n">season_end</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">day_number</span><span class="p">)</span>
     <span class="c1"># Append this new datetime to our list</span>
     <span class="n">season_dates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gameday</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'season_dates spans from </span><span class="si">{</span><span class="n">season_dates</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1"> to </span><span class="si">{</span><span class="n">season_dates</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s1"> with length </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">season_dates</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
@@ -466,7 +472,7 @@ Fixing that, and converting the above to a list comprehension, we get:</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">season_dates</span> <span class="o">=</span> <span class="p">[</span><span class="n">season_end</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">day_number</span><span class="p">)</span> <span class="k">for</span> <span class="n">day_number</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">season_duration</span><span class="o">.</span><span class="n">days</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">season_dates</span> <span class="o">=</span> <span class="p">[</span><span class="n">season_end</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">day_number</span><span class="p">)</span> <span class="k">for</span> <span class="n">day_number</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">season_duration</span><span class="o">.</span><span class="n">days</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'season_dates spans from </span><span class="si">{</span><span class="n">season_dates</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1"> to </span><span class="si">{</span><span class="n">season_dates</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s1"> with length </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">season_dates</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
 </pre></div>
 
@@ -491,6 +497,241 @@ Fixing that, and converting the above to a list comprehension, we get:</p>
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>That's more like it.
+Finally, we have our list of dates to use in our URLs.
+On to downloading!</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h1 id="Downloading-The-Injury-Reports">
+<a class="anchor" href="#Downloading-The-Injury-Reports" aria-hidden="true"><span class="octicon octicon-link"></span></a>Downloading The Injury Reports<a class="anchor-link" href="#Downloading-The-Injury-Reports"> </a>
+</h1>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For simplicity's sake, we'll just use the <code>requests</code> module to download the PDFs sequentially.
+Later, we can see about using <em>asynchronous</em> requests to greatly speed up our downloads, but for now let's just do things one at a time.</p>
+<p>We need to do three things:</p>
+<ol>
+<li>Construct a URL from the dates we generated above</li>
+<li>Download the PDF at the URL (if it exists)</li>
+<li>Save it to disk; eventually we'll need to process the PDFs, but for now let's just store them</li>
+</ol>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Constructing-an-Injury-Report-URL">
+<a class="anchor" href="#Constructing-an-Injury-Report-URL" aria-hidden="true"><span class="octicon octicon-link"></span></a>Constructing an Injury Report URL<a class="anchor-link" href="#Constructing-an-Injury-Report-URL"> </a>
+</h2>
+<p>As we saw <a href="https://jeremyabramson.github.io/blog/sports%20analytics/nba/python/research/projects/injuries/2021/07/25/nba-injuries.html#Decoding-the-Filename-Schema-From-the-URL">above</a>, the URL has 4 parts.
+For simplicity, let's only worry about gathering the 8PM report, which is the one that's most likely to have all the relevant information for the day.</p>
+<p>As a reminder, the URL's look like this:</p>
+<blockquote>
+<p><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2021-07-20_08PM.pdf">https://ak-static.cms.nba.com/referee/injury/Injury-Report_2021-07-20_08PM.pdf</a>
+Let's define the parts of the URL that are static (for now):</p>
+</blockquote>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">url_stem</span> <span class="o">=</span> <span class="s1">'https://ak-static.cms.nba.com/referee/injury/Injury-Report_'</span>
+<span class="n">report_time</span> <span class="o">=</span> <span class="s1">'08PM'</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>And let's build an example URL, using the first date from our <code>season_dates</code> list:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">url_stem</span><span class="si">}{</span><span class="n">season_dates</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">report_time</span><span class="si">}</span><span class="s1">.pdf'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2021-07-20 00:00:00_08PM.pdf
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Almost, but not quite.
+We need to convert our date back to a string, using <code>strftime</code> ("string from time").
+We use the exact same <code>format string</code> that we used when we made the call to <code>strptime</code> ("string parse time") previously (in this case <code>'%Y-%m-%d'</code>)</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">url_stem</span><span class="si">}{</span><span class="n">datetime</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">season_dates</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2">"</span><span class="p">)</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">report_time</span><span class="si">}</span><span class="s1">.pdf'</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2021-07-20_08PM.pdf
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Success!
+Now we just need to iterate through the <code>season_dates</code> list and download each PDF, if it exists.
+We could do this lazily, with something simple like:</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
+<span class="c1"># Loop through our dates lists</span>
+<span class="k">for</span> <span class="n">gameday</span> <span class="ow">in</span> <span class="n">season_dates</span><span class="p">:</span>
+    <span class="c1"># Construct the URL and download the PDF</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">url_stem</span><span class="si">}{</span><span class="n">datetime</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">gameday</span><span class="p">,</span> <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2">"</span><span class="p">)</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">report_time</span><span class="si">}</span><span class="s1">.pdf'</span><span class="p">)</span>
+    <span class="c1"># Write to disk</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">datetime</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">gameday</span><span class="p">,</span> <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2">"</span><span class="p">)</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">report_time</span><span class="si">}</span><span class="s1">.pdf'</span><span class="p">,</span> <span class="s1">'wb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+        <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+</pre></div>
+<p>With the code above, what happens if there's no report for a specific day?
+Or if there's a network error, either with the server or our own internet?</p>
+<p>In general, it's a good idea to program a little defensively when accessing network assets, especially in cases like this where we know there won't be anything to download.
+It's easy to imagine downstream PDF process breaking when it tries to open an empty file; we could deal with it there, but it's probably better to do it here, and only write valid files.</p>
+<p>We'll assume that accessing a URL without a valid injury report PDF will return an <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">HTTP status code</a> of something other than <strong>200</strong>, which is "success" <sup id="fnref-5" class="footnote-ref"><a href="#fn-5">5</a></sup>.
+To handle this, we'll use the <code>requests</code> library's <code>raise_for_status</code> method, which can raise an exception when we get a status code that's anything other than <strong>200</strong> (which is "success").
+We can then catch that exception, and skip writing the file.</p>
+<p>Let's add that to the code above, refactor things a skosh to be a little cleaner, and bring in some code from above for clarity:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p></p>
+<div class="flash flash-warn">
+    <svg class="octicon octicon-zap octicon octicon-zap" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M10.561 1.5a.016.016 0 00-.01.004L3.286 8.571A.25.25 0 003.462 9H6.75a.75.75 0 01.694 1.034l-1.713 4.188 6.982-6.793A.25.25 0 0012.538 7H9.25a.75.75 0 01-.683-1.06l2.008-4.418.003-.006a.02.02 0 00-.004-.009.02.02 0 00-.006-.006L10.56 1.5zM9.504.43a1.516 1.516 0 012.437 1.713L10.415 5.5h2.123c1.57 0 2.346 1.909 1.22 3.004l-7.34 7.142a1.25 1.25 0 01-.871.354h-.302a1.25 1.25 0 01-1.157-1.723L5.633 10.5H3.462c-1.57 0-2.346-1.909-1.22-3.004L9.503.429z"></path></svg>
+    <strong>Important: </strong>Note that it’s not the <code>.get()</code> call that raises the exception, it’s the <code>.raise_for_status()</code> call.  So make sure you put <em>that</em> in your <code>try/except</code> block! 
+</div>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
+<span class="n">url_stem</span> <span class="o">=</span> <span class="s1">'https://ak-static.cms.nba.com/referee/injury/Injury-Report_'</span>
+<span class="n">report_time</span> <span class="o">=</span> <span class="s1">'08PM'</span>
+<span class="c1"># Loop through our dates lists</span>
+<span class="k">for</span> <span class="n">gameday</span> <span class="ow">in</span> <span class="n">season_dates</span><span class="p">:</span>
+    <span class="c1"># Construct a URL</span>
+    <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">url_stem</span><span class="si">}{</span><span class="n">datetime</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">gameday</span><span class="p">,</span> <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2">"</span><span class="p">)</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">report_time</span><span class="si">}</span><span class="s1">.pdf'</span>
+    <span class="c1"># Make the request to download the PDF</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">resp</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+    <span class="c1"># This is the exception to catch for non-200 response codes; this won't necessarily catch network errors</span>
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">HTTPError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'No valid PDF on </span><span class="si">{</span><span class="n">gameday</span><span class="si">}</span><span class="s1">, removing from list'</span><span class="p">)</span>
+        <span class="n">season_dates</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">gameday</span><span class="p">)</span>
+    <span class="c1"># The "else" block of a try/except happens if there isn't an exception</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">datetime</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">gameday</span><span class="p">,</span> <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2">"</span><span class="p">)</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">report_time</span><span class="si">}</span><span class="s1">.pdf'</span>
+        <span class="c1"># Write to disk</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Writing PDF for </span><span class="si">{</span><span class="n">gameday</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">'wb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p></p>
+<div class="footnotes"><p id="fn-5">5. From manual inspection of the HTTP headers, it looks like the <code>nba.com</code> server returns 403 Forbidden when there isn't a valid PDF<a href="#fnref-5" class="footnote footnotes">↩</a></p></div>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
@@ -533,571 +774,10 @@ Fixing that, and converting the above to a list comprehension, we get:</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">thing</span> <span class="ow">in</span> <span class="n">daterange</span><span class="p">(</span><span class="n">season_start</span><span class="p">,</span> <span class="n">season_end</span><span class="p">):</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">thing</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="c1">#    print(thing)</span>
 </pre></div>
 
     </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>2020-12-21 00:00:00
-2020-12-22 00:00:00
-2020-12-23 00:00:00
-2020-12-24 00:00:00
-2020-12-25 00:00:00
-2020-12-26 00:00:00
-2020-12-27 00:00:00
-2020-12-28 00:00:00
-2020-12-29 00:00:00
-2020-12-30 00:00:00
-2020-12-31 00:00:00
-2021-01-01 00:00:00
-2021-01-02 00:00:00
-2021-01-03 00:00:00
-2021-01-04 00:00:00
-2021-01-05 00:00:00
-2021-01-06 00:00:00
-2021-01-07 00:00:00
-2021-01-08 00:00:00
-2021-01-09 00:00:00
-2021-01-10 00:00:00
-2021-01-11 00:00:00
-2021-01-12 00:00:00
-2021-01-13 00:00:00
-2021-01-14 00:00:00
-2021-01-15 00:00:00
-2021-01-16 00:00:00
-2021-01-17 00:00:00
-2021-01-18 00:00:00
-2021-01-19 00:00:00
-2021-01-20 00:00:00
-2021-01-21 00:00:00
-2021-01-22 00:00:00
-2021-01-23 00:00:00
-2021-01-24 00:00:00
-2021-01-25 00:00:00
-2021-01-26 00:00:00
-2021-01-27 00:00:00
-2021-01-28 00:00:00
-2021-01-29 00:00:00
-2021-01-30 00:00:00
-2021-01-31 00:00:00
-2021-02-01 00:00:00
-2021-02-02 00:00:00
-2021-02-03 00:00:00
-2021-02-04 00:00:00
-2021-02-05 00:00:00
-2021-02-06 00:00:00
-2021-02-07 00:00:00
-2021-02-08 00:00:00
-2021-02-09 00:00:00
-2021-02-10 00:00:00
-2021-02-11 00:00:00
-2021-02-12 00:00:00
-2021-02-13 00:00:00
-2021-02-14 00:00:00
-2021-02-15 00:00:00
-2021-02-16 00:00:00
-2021-02-17 00:00:00
-2021-02-18 00:00:00
-2021-02-19 00:00:00
-2021-02-20 00:00:00
-2021-02-21 00:00:00
-2021-02-22 00:00:00
-2021-02-23 00:00:00
-2021-02-24 00:00:00
-2021-02-25 00:00:00
-2021-02-26 00:00:00
-2021-02-27 00:00:00
-2021-02-28 00:00:00
-2021-03-01 00:00:00
-2021-03-02 00:00:00
-2021-03-03 00:00:00
-2021-03-04 00:00:00
-2021-03-05 00:00:00
-2021-03-06 00:00:00
-2021-03-07 00:00:00
-2021-03-08 00:00:00
-2021-03-09 00:00:00
-2021-03-10 00:00:00
-2021-03-11 00:00:00
-2021-03-12 00:00:00
-2021-03-13 00:00:00
-2021-03-14 00:00:00
-2021-03-15 00:00:00
-2021-03-16 00:00:00
-2021-03-17 00:00:00
-2021-03-18 00:00:00
-2021-03-19 00:00:00
-2021-03-20 00:00:00
-2021-03-21 00:00:00
-2021-03-22 00:00:00
-2021-03-23 00:00:00
-2021-03-24 00:00:00
-2021-03-25 00:00:00
-2021-03-26 00:00:00
-2021-03-27 00:00:00
-2021-03-28 00:00:00
-2021-03-29 00:00:00
-2021-03-30 00:00:00
-2021-03-31 00:00:00
-2021-04-01 00:00:00
-2021-04-02 00:00:00
-2021-04-03 00:00:00
-2021-04-04 00:00:00
-2021-04-05 00:00:00
-2021-04-06 00:00:00
-2021-04-07 00:00:00
-2021-04-08 00:00:00
-2021-04-09 00:00:00
-2021-04-10 00:00:00
-2021-04-11 00:00:00
-2021-04-12 00:00:00
-2021-04-13 00:00:00
-2021-04-14 00:00:00
-2021-04-15 00:00:00
-2021-04-16 00:00:00
-2021-04-17 00:00:00
-2021-04-18 00:00:00
-2021-04-19 00:00:00
-2021-04-20 00:00:00
-2021-04-21 00:00:00
-2021-04-22 00:00:00
-2021-04-23 00:00:00
-2021-04-24 00:00:00
-2021-04-25 00:00:00
-2021-04-26 00:00:00
-2021-04-27 00:00:00
-2021-04-28 00:00:00
-2021-04-29 00:00:00
-2021-04-30 00:00:00
-2021-05-01 00:00:00
-2021-05-02 00:00:00
-2021-05-03 00:00:00
-2021-05-04 00:00:00
-2021-05-05 00:00:00
-2021-05-06 00:00:00
-2021-05-07 00:00:00
-2021-05-08 00:00:00
-2021-05-09 00:00:00
-2021-05-10 00:00:00
-2021-05-11 00:00:00
-2021-05-12 00:00:00
-2021-05-13 00:00:00
-2021-05-14 00:00:00
-2021-05-15 00:00:00
-2021-05-16 00:00:00
-2021-05-17 00:00:00
-2021-05-18 00:00:00
-2021-05-19 00:00:00
-2021-05-20 00:00:00
-2021-05-21 00:00:00
-2021-05-22 00:00:00
-2021-05-23 00:00:00
-2021-05-24 00:00:00
-2021-05-25 00:00:00
-2021-05-26 00:00:00
-2021-05-27 00:00:00
-2021-05-28 00:00:00
-2021-05-29 00:00:00
-2021-05-30 00:00:00
-2021-05-31 00:00:00
-2021-06-01 00:00:00
-2021-06-02 00:00:00
-2021-06-03 00:00:00
-2021-06-04 00:00:00
-2021-06-05 00:00:00
-2021-06-06 00:00:00
-2021-06-07 00:00:00
-2021-06-08 00:00:00
-2021-06-09 00:00:00
-2021-06-10 00:00:00
-2021-06-11 00:00:00
-2021-06-12 00:00:00
-2021-06-13 00:00:00
-2021-06-14 00:00:00
-2021-06-15 00:00:00
-2021-06-16 00:00:00
-2021-06-17 00:00:00
-2021-06-18 00:00:00
-2021-06-19 00:00:00
-2021-06-20 00:00:00
-2021-06-21 00:00:00
-2021-06-22 00:00:00
-2021-06-23 00:00:00
-2021-06-24 00:00:00
-2021-06-25 00:00:00
-2021-06-26 00:00:00
-2021-06-27 00:00:00
-2021-06-28 00:00:00
-2021-06-29 00:00:00
-2021-06-30 00:00:00
-2021-07-01 00:00:00
-2021-07-02 00:00:00
-2021-07-03 00:00:00
-2021-07-04 00:00:00
-2021-07-05 00:00:00
-2021-07-06 00:00:00
-2021-07-07 00:00:00
-2021-07-08 00:00:00
-2021-07-09 00:00:00
-2021-07-10 00:00:00
-2021-07-11 00:00:00
-2021-07-12 00:00:00
-2021-07-13 00:00:00
-2021-07-14 00:00:00
-2021-07-15 00:00:00
-2021-07-16 00:00:00
-2021-07-17 00:00:00
-2021-07-18 00:00:00
-2021-07-19 00:00:00
-2021-07-20 00:00:00
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    
-
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">season_dates</span> <span class="o">=</span> <span class="p">[</span><span class="n">season_end</span> <span class="o">-</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">gameday</span><span class="p">)</span> <span class="k">for</span> <span class="n">gameday</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">season_duration</span><span class="o">.</span><span class="n">days</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>[datetime.datetime(2021, 7, 20, 0, 0),
- datetime.datetime(2021, 7, 19, 0, 0),
- datetime.datetime(2021, 7, 18, 0, 0),
- datetime.datetime(2021, 7, 17, 0, 0),
- datetime.datetime(2021, 7, 16, 0, 0),
- datetime.datetime(2021, 7, 15, 0, 0),
- datetime.datetime(2021, 7, 14, 0, 0),
- datetime.datetime(2021, 7, 13, 0, 0),
- datetime.datetime(2021, 7, 12, 0, 0),
- datetime.datetime(2021, 7, 11, 0, 0),
- datetime.datetime(2021, 7, 10, 0, 0),
- datetime.datetime(2021, 7, 9, 0, 0),
- datetime.datetime(2021, 7, 8, 0, 0),
- datetime.datetime(2021, 7, 7, 0, 0),
- datetime.datetime(2021, 7, 6, 0, 0),
- datetime.datetime(2021, 7, 5, 0, 0),
- datetime.datetime(2021, 7, 4, 0, 0),
- datetime.datetime(2021, 7, 3, 0, 0),
- datetime.datetime(2021, 7, 2, 0, 0),
- datetime.datetime(2021, 7, 1, 0, 0),
- datetime.datetime(2021, 6, 30, 0, 0),
- datetime.datetime(2021, 6, 29, 0, 0),
- datetime.datetime(2021, 6, 28, 0, 0),
- datetime.datetime(2021, 6, 27, 0, 0),
- datetime.datetime(2021, 6, 26, 0, 0),
- datetime.datetime(2021, 6, 25, 0, 0),
- datetime.datetime(2021, 6, 24, 0, 0),
- datetime.datetime(2021, 6, 23, 0, 0),
- datetime.datetime(2021, 6, 22, 0, 0),
- datetime.datetime(2021, 6, 21, 0, 0),
- datetime.datetime(2021, 6, 20, 0, 0),
- datetime.datetime(2021, 6, 19, 0, 0),
- datetime.datetime(2021, 6, 18, 0, 0),
- datetime.datetime(2021, 6, 17, 0, 0),
- datetime.datetime(2021, 6, 16, 0, 0),
- datetime.datetime(2021, 6, 15, 0, 0),
- datetime.datetime(2021, 6, 14, 0, 0),
- datetime.datetime(2021, 6, 13, 0, 0),
- datetime.datetime(2021, 6, 12, 0, 0),
- datetime.datetime(2021, 6, 11, 0, 0),
- datetime.datetime(2021, 6, 10, 0, 0),
- datetime.datetime(2021, 6, 9, 0, 0),
- datetime.datetime(2021, 6, 8, 0, 0),
- datetime.datetime(2021, 6, 7, 0, 0),
- datetime.datetime(2021, 6, 6, 0, 0),
- datetime.datetime(2021, 6, 5, 0, 0),
- datetime.datetime(2021, 6, 4, 0, 0),
- datetime.datetime(2021, 6, 3, 0, 0),
- datetime.datetime(2021, 6, 2, 0, 0),
- datetime.datetime(2021, 6, 1, 0, 0),
- datetime.datetime(2021, 5, 31, 0, 0),
- datetime.datetime(2021, 5, 30, 0, 0),
- datetime.datetime(2021, 5, 29, 0, 0),
- datetime.datetime(2021, 5, 28, 0, 0),
- datetime.datetime(2021, 5, 27, 0, 0),
- datetime.datetime(2021, 5, 26, 0, 0),
- datetime.datetime(2021, 5, 25, 0, 0),
- datetime.datetime(2021, 5, 24, 0, 0),
- datetime.datetime(2021, 5, 23, 0, 0),
- datetime.datetime(2021, 5, 22, 0, 0),
- datetime.datetime(2021, 5, 21, 0, 0),
- datetime.datetime(2021, 5, 20, 0, 0),
- datetime.datetime(2021, 5, 19, 0, 0),
- datetime.datetime(2021, 5, 18, 0, 0),
- datetime.datetime(2021, 5, 17, 0, 0),
- datetime.datetime(2021, 5, 16, 0, 0),
- datetime.datetime(2021, 5, 15, 0, 0),
- datetime.datetime(2021, 5, 14, 0, 0),
- datetime.datetime(2021, 5, 13, 0, 0),
- datetime.datetime(2021, 5, 12, 0, 0),
- datetime.datetime(2021, 5, 11, 0, 0),
- datetime.datetime(2021, 5, 10, 0, 0),
- datetime.datetime(2021, 5, 9, 0, 0),
- datetime.datetime(2021, 5, 8, 0, 0),
- datetime.datetime(2021, 5, 7, 0, 0),
- datetime.datetime(2021, 5, 6, 0, 0),
- datetime.datetime(2021, 5, 5, 0, 0),
- datetime.datetime(2021, 5, 4, 0, 0),
- datetime.datetime(2021, 5, 3, 0, 0),
- datetime.datetime(2021, 5, 2, 0, 0),
- datetime.datetime(2021, 5, 1, 0, 0),
- datetime.datetime(2021, 4, 30, 0, 0),
- datetime.datetime(2021, 4, 29, 0, 0),
- datetime.datetime(2021, 4, 28, 0, 0),
- datetime.datetime(2021, 4, 27, 0, 0),
- datetime.datetime(2021, 4, 26, 0, 0),
- datetime.datetime(2021, 4, 25, 0, 0),
- datetime.datetime(2021, 4, 24, 0, 0),
- datetime.datetime(2021, 4, 23, 0, 0),
- datetime.datetime(2021, 4, 22, 0, 0),
- datetime.datetime(2021, 4, 21, 0, 0),
- datetime.datetime(2021, 4, 20, 0, 0),
- datetime.datetime(2021, 4, 19, 0, 0),
- datetime.datetime(2021, 4, 18, 0, 0),
- datetime.datetime(2021, 4, 17, 0, 0),
- datetime.datetime(2021, 4, 16, 0, 0),
- datetime.datetime(2021, 4, 15, 0, 0),
- datetime.datetime(2021, 4, 14, 0, 0),
- datetime.datetime(2021, 4, 13, 0, 0),
- datetime.datetime(2021, 4, 12, 0, 0),
- datetime.datetime(2021, 4, 11, 0, 0),
- datetime.datetime(2021, 4, 10, 0, 0),
- datetime.datetime(2021, 4, 9, 0, 0),
- datetime.datetime(2021, 4, 8, 0, 0),
- datetime.datetime(2021, 4, 7, 0, 0),
- datetime.datetime(2021, 4, 6, 0, 0),
- datetime.datetime(2021, 4, 5, 0, 0),
- datetime.datetime(2021, 4, 4, 0, 0),
- datetime.datetime(2021, 4, 3, 0, 0),
- datetime.datetime(2021, 4, 2, 0, 0),
- datetime.datetime(2021, 4, 1, 0, 0),
- datetime.datetime(2021, 3, 31, 0, 0),
- datetime.datetime(2021, 3, 30, 0, 0),
- datetime.datetime(2021, 3, 29, 0, 0),
- datetime.datetime(2021, 3, 28, 0, 0),
- datetime.datetime(2021, 3, 27, 0, 0),
- datetime.datetime(2021, 3, 26, 0, 0),
- datetime.datetime(2021, 3, 25, 0, 0),
- datetime.datetime(2021, 3, 24, 0, 0),
- datetime.datetime(2021, 3, 23, 0, 0),
- datetime.datetime(2021, 3, 22, 0, 0),
- datetime.datetime(2021, 3, 21, 0, 0),
- datetime.datetime(2021, 3, 20, 0, 0),
- datetime.datetime(2021, 3, 19, 0, 0),
- datetime.datetime(2021, 3, 18, 0, 0),
- datetime.datetime(2021, 3, 17, 0, 0),
- datetime.datetime(2021, 3, 16, 0, 0),
- datetime.datetime(2021, 3, 15, 0, 0),
- datetime.datetime(2021, 3, 14, 0, 0),
- datetime.datetime(2021, 3, 13, 0, 0),
- datetime.datetime(2021, 3, 12, 0, 0),
- datetime.datetime(2021, 3, 11, 0, 0),
- datetime.datetime(2021, 3, 10, 0, 0),
- datetime.datetime(2021, 3, 9, 0, 0),
- datetime.datetime(2021, 3, 8, 0, 0),
- datetime.datetime(2021, 3, 7, 0, 0),
- datetime.datetime(2021, 3, 6, 0, 0),
- datetime.datetime(2021, 3, 5, 0, 0),
- datetime.datetime(2021, 3, 4, 0, 0),
- datetime.datetime(2021, 3, 3, 0, 0),
- datetime.datetime(2021, 3, 2, 0, 0),
- datetime.datetime(2021, 3, 1, 0, 0),
- datetime.datetime(2021, 2, 28, 0, 0),
- datetime.datetime(2021, 2, 27, 0, 0),
- datetime.datetime(2021, 2, 26, 0, 0),
- datetime.datetime(2021, 2, 25, 0, 0),
- datetime.datetime(2021, 2, 24, 0, 0),
- datetime.datetime(2021, 2, 23, 0, 0),
- datetime.datetime(2021, 2, 22, 0, 0),
- datetime.datetime(2021, 2, 21, 0, 0),
- datetime.datetime(2021, 2, 20, 0, 0),
- datetime.datetime(2021, 2, 19, 0, 0),
- datetime.datetime(2021, 2, 18, 0, 0),
- datetime.datetime(2021, 2, 17, 0, 0),
- datetime.datetime(2021, 2, 16, 0, 0),
- datetime.datetime(2021, 2, 15, 0, 0),
- datetime.datetime(2021, 2, 14, 0, 0),
- datetime.datetime(2021, 2, 13, 0, 0),
- datetime.datetime(2021, 2, 12, 0, 0),
- datetime.datetime(2021, 2, 11, 0, 0),
- datetime.datetime(2021, 2, 10, 0, 0),
- datetime.datetime(2021, 2, 9, 0, 0),
- datetime.datetime(2021, 2, 8, 0, 0),
- datetime.datetime(2021, 2, 7, 0, 0),
- datetime.datetime(2021, 2, 6, 0, 0),
- datetime.datetime(2021, 2, 5, 0, 0),
- datetime.datetime(2021, 2, 4, 0, 0),
- datetime.datetime(2021, 2, 3, 0, 0),
- datetime.datetime(2021, 2, 2, 0, 0),
- datetime.datetime(2021, 2, 1, 0, 0),
- datetime.datetime(2021, 1, 31, 0, 0),
- datetime.datetime(2021, 1, 30, 0, 0),
- datetime.datetime(2021, 1, 29, 0, 0),
- datetime.datetime(2021, 1, 28, 0, 0),
- datetime.datetime(2021, 1, 27, 0, 0),
- datetime.datetime(2021, 1, 26, 0, 0),
- datetime.datetime(2021, 1, 25, 0, 0),
- datetime.datetime(2021, 1, 24, 0, 0),
- datetime.datetime(2021, 1, 23, 0, 0),
- datetime.datetime(2021, 1, 22, 0, 0),
- datetime.datetime(2021, 1, 21, 0, 0),
- datetime.datetime(2021, 1, 20, 0, 0),
- datetime.datetime(2021, 1, 19, 0, 0),
- datetime.datetime(2021, 1, 18, 0, 0),
- datetime.datetime(2021, 1, 17, 0, 0),
- datetime.datetime(2021, 1, 16, 0, 0),
- datetime.datetime(2021, 1, 15, 0, 0),
- datetime.datetime(2021, 1, 14, 0, 0),
- datetime.datetime(2021, 1, 13, 0, 0),
- datetime.datetime(2021, 1, 12, 0, 0),
- datetime.datetime(2021, 1, 11, 0, 0),
- datetime.datetime(2021, 1, 10, 0, 0),
- datetime.datetime(2021, 1, 9, 0, 0),
- datetime.datetime(2021, 1, 8, 0, 0),
- datetime.datetime(2021, 1, 7, 0, 0),
- datetime.datetime(2021, 1, 6, 0, 0),
- datetime.datetime(2021, 1, 5, 0, 0),
- datetime.datetime(2021, 1, 4, 0, 0),
- datetime.datetime(2021, 1, 3, 0, 0),
- datetime.datetime(2021, 1, 2, 0, 0),
- datetime.datetime(2021, 1, 1, 0, 0),
- datetime.datetime(2020, 12, 31, 0, 0),
- datetime.datetime(2020, 12, 30, 0, 0),
- datetime.datetime(2020, 12, 29, 0, 0),
- datetime.datetime(2020, 12, 28, 0, 0),
- datetime.datetime(2020, 12, 27, 0, 0),
- datetime.datetime(2020, 12, 26, 0, 0),
- datetime.datetime(2020, 12, 25, 0, 0),
- datetime.datetime(2020, 12, 24, 0, 0),
- datetime.datetime(2020, 12, 23, 0, 0),
- datetime.datetime(2020, 12, 22, 0, 0),
- datetime.datetime(2020, 12, 21, 0, 0)]</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    
-
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<details class="description">
-      <summary class="btn btn-sm" data-open="Hide Code" data-close="Show Code"></summary>
-        <p></p>
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">random_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s1">'2011-09-18'</span><span class="p">,</span> <span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1">'</span><span class="p">)</span>
-<span class="n">another_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s1">'2021-01-1'</span><span class="p">,</span> <span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1">'</span><span class="p">)</span>
-<span class="n">ten_days_hence</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-
-<span class="c1"># datetime - datetime = timedelta</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">'******: datetime - datetime = timedelta'</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'A </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">random_date</span><span class="p">)</span><span class="si">}</span><span class="s1"> - a </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">another_date</span><span class="p">)</span><span class="si">}</span><span class="s1"> is a </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">random_date</span> <span class="o">-</span> <span class="n">another_date</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'i.e. </span><span class="si">{</span><span class="n">random_date</span><span class="si">}</span><span class="s1"> - </span><span class="si">{</span><span class="n">another_date</span><span class="si">}</span><span class="s1"> = </span><span class="si">{</span><span class="n">random_date</span> <span class="o">-</span> <span class="n">another_date</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
-
-<span class="c1"># datetime + datetime = Error!</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">'******: datetime + datetime = Error!'</span><span class="p">)</span>
-<span class="k">try</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'A </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">random_date</span><span class="p">)</span><span class="si">}</span><span class="s1"> + a </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">another_date</span><span class="p">)</span><span class="si">}</span><span class="s1"> is a </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">random_date</span> <span class="o">+</span> <span class="n">another_date</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
-<span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"You can't add </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">random_date</span><span class="p">)</span><span class="si">=}</span><span class="s2"> and </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">another_date</span><span class="p">)</span><span class="si">=}</span><span class="s2">"</span><span class="p">)</span>
-
-<span class="c1"># datetime +/- timedelta = datetime</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">'******: datetime +/- timedelta = datetime'</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'A </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">random_date</span><span class="p">)</span><span class="si">}</span><span class="s1"> +/- a </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">ten_days_hence</span><span class="p">)</span><span class="si">}</span><span class="s1"> is a </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">random_date</span> <span class="o">-</span> <span class="n">ten_days_hence</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'i.e. </span><span class="si">{</span><span class="n">random_date</span><span class="si">}</span><span class="s1"> - </span><span class="si">{</span><span class="n">ten_days_hence</span><span class="si">}</span><span class="s1"> = </span><span class="si">{</span><span class="n">random_date</span> <span class="o">-</span> <span class="n">ten_days_hence</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'i.e. </span><span class="si">{</span><span class="n">random_date</span><span class="si">}</span><span class="s1"> + </span><span class="si">{</span><span class="n">ten_days_hence</span><span class="si">}</span><span class="s1"> = </span><span class="si">{</span><span class="n">random_date</span> <span class="o">+</span> <span class="n">ten_days_hence</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
-
-<span class="c1"># timedelta + datetime = datetime</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">'******: timedelta + datetime = datetime'</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'A </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">ten_days_hence</span><span class="p">)</span><span class="si">}</span><span class="s1"> + a </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">random_date</span><span class="p">)</span><span class="si">}</span><span class="s1"> is a </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">ten_days_hence</span> <span class="o">+</span> <span class="n">random_date</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'i.e. </span><span class="si">{</span><span class="n">ten_days_hence</span><span class="si">}</span><span class="s1"> + </span><span class="si">{</span><span class="n">random_date</span><span class="si">}</span><span class="s1"> = </span><span class="si">{</span><span class="n">ten_days_hence</span> <span class="o">+</span> <span class="n">random_date</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
-
-<span class="c1"># timedelta - datetime = Error!</span>
-<span class="nb">print</span><span class="p">(</span><span class="s1">'******: # timedelta - datetime = Error!'</span><span class="p">)</span>
-<span class="k">try</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'A </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">ten_days_hence</span><span class="p">)</span><span class="si">}</span><span class="s1"> - a </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">random_date</span><span class="p">)</span><span class="si">}</span><span class="s1"> is a </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">ten_days_hence</span> <span class="o">-</span> <span class="n">random_date</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
-<span class="k">except</span> <span class="ne">TypeError</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"You can't subtract </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">ten_days_hence</span><span class="p">)</span><span class="si">=}</span><span class="s2"> - </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">random_date</span><span class="p">)</span><span class="si">=}</span><span class="s2">"</span><span class="p">)</span>
-
-
-
-
-<span class="n">new_date</span> <span class="o">=</span> <span class="n">random_date</span> <span class="o">+</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
-<span class="c1"># timedelta = datetime +/- datetime</span>
-<span class="n">other_date</span> <span class="o">=</span> <span class="n">new_date</span> <span class="o">-</span> <span class="n">random_date</span>
-<span class="c1"># datetime = timedelta + datetime</span>
-<span class="n">yet_another_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=-</span><span class="mi">10</span><span class="p">)</span> <span class="o">+</span> <span class="n">random_date</span>
-<span class="c1"># ERROR = timedelta - datetime</span>
-<span class="c1"># bad_value = datetime.timedelta(days=-10) - random_date</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-    </details>
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>******: datetime - datetime = timedelta
-A &lt;class 'datetime.datetime'&gt; - a &lt;class 'datetime.datetime'&gt; is a &lt;class 'datetime.timedelta'&gt;
-i.e. 2011-09-18 00:00:00 - 2021-01-01 00:00:00 = -3393 days, 0:00:00
-******: datetime + datetime = Error!
-You can't add type(random_date)=&lt;class 'datetime.datetime'&gt; and type(another_date)=&lt;class 'datetime.datetime'&gt;
-******: datetime +/- timedelta = datetime
-A &lt;class 'datetime.datetime'&gt; +/- a &lt;class 'datetime.timedelta'&gt; is a &lt;class 'datetime.datetime'&gt;
-i.e. 2011-09-18 00:00:00 - 10 days, 0:00:00 = 2011-09-08 00:00:00
-i.e. 2011-09-18 00:00:00 + 10 days, 0:00:00 = 2011-09-28 00:00:00
-******: timedelta + datetime = datetime
-A &lt;class 'datetime.timedelta'&gt; + a &lt;class 'datetime.datetime'&gt; is a &lt;class 'datetime.datetime'&gt;
-i.e. 10 days, 0:00:00 + 2011-09-18 00:00:00 = 2011-09-28 00:00:00
-******: # timedelta - datetime = Error!
-You can't subtract type(ten_days_hence)=&lt;class 'datetime.timedelta'&gt; - type(random_date)=&lt;class 'datetime.datetime'&gt;
-</pre>
-</div>
-</div>
-
 </div>
 </div>
 
@@ -1910,7 +1590,7 @@ You can't subtract type(ten_days_hence)=&lt;class 'datetime.timedelta'&gt; - typ
 <p>Typing <code>&gt; Important: Pay attention! It's important.</code> will render this:
 </p>
 <div class="flash flash-warn">
-    <svg class="octicon octicon-zap octicon octicon-zap" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M10.561 1.5a.016.016 0 00-.01.004L3.286 8.571A.25.25 0 003.462 9H6.75a.75.75 0 01.694 1.034l-1.713 4.188 6.982-6.793A.25.25 0 0012.538 7H9.25a.75.75 0 01-.683-1.06l2.008-4.418.003-.006a.02.02 0 00-.004-.009.02.02 0 00-.006-.006L10.56 1.5zM9.504.43a1.516 1.516 0 012.437 1.713L10.415 5.5h2.123c1.57 0 2.346 1.909 1.22 3.004l-7.34 7.142a1.25 1.25 0 01-.871.354h-.302a1.25 1.25 0 01-1.157-1.723L5.633 10.5H3.462c-1.57 0-2.346-1.909-1.22-3.004L9.503.429z"></path></svg>
+    <svg class="octicon octicon-zap octicon octicon-zap octicon octicon-zap" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M10.561 1.5a.016.016 0 00-.01.004L3.286 8.571A.25.25 0 003.462 9H6.75a.75.75 0 01.694 1.034l-1.713 4.188 6.982-6.793A.25.25 0 0012.538 7H9.25a.75.75 0 01-.683-1.06l2.008-4.418.003-.006a.02.02 0 00-.004-.009.02.02 0 00-.006-.006L10.56 1.5zM9.504.43a1.516 1.516 0 012.437 1.713L10.415 5.5h2.123c1.57 0 2.346 1.909 1.22 3.004l-7.34 7.142a1.25 1.25 0 01-.871.354h-.302a1.25 1.25 0 01-1.157-1.723L5.633 10.5H3.462c-1.57 0-2.346-1.909-1.22-3.004L9.503.429z"></path></svg>
     <strong>Important: </strong>Pay attention! It’s important.
 </div>
 <p>Typing <code>&gt; Tip: This is my tip.</code> will render this:
