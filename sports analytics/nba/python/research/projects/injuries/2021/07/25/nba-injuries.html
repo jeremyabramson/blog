@@ -352,7 +352,7 @@ Consider the following:</p>
 <div class="text_cell_render border-box-sizing rendered_html">
 <p></p>
 <div class="flash flash-success">
-    <svg class="octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2.5 1.75a.25.25 0 01.25-.25h8.5a.25.25 0 01.25.25v7.736a.75.75 0 101.5 0V1.75A1.75 1.75 0 0011.25 0h-8.5A1.75 1.75 0 001 1.75v11.5c0 .966.784 1.75 1.75 1.75h3.17a.75.75 0 000-1.5H2.75a.25.25 0 01-.25-.25V1.75zM4.75 4a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-4.5zM4 7.75A.75.75 0 014.75 7h2a.75.75 0 010 1.5h-2A.75.75 0 014 7.75zm11.774 3.537a.75.75 0 00-1.048-1.074L10.7 14.145 9.281 12.72a.75.75 0 00-1.062 1.058l1.943 1.95a.75.75 0 001.055.008l4.557-4.45z"></path></svg>
+    <svg class="octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2.5 1.75a.25.25 0 01.25-.25h8.5a.25.25 0 01.25.25v7.736a.75.75 0 101.5 0V1.75A1.75 1.75 0 0011.25 0h-8.5A1.75 1.75 0 001 1.75v11.5c0 .966.784 1.75 1.75 1.75h3.17a.75.75 0 000-1.5H2.75a.25.25 0 01-.25-.25V1.75zM4.75 4a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-4.5zM4 7.75A.75.75 0 014.75 7h2a.75.75 0 010 1.5h-2A.75.75 0 014 7.75zm11.774 3.537a.75.75 0 00-1.048-1.074L10.7 14.145 9.281 12.72a.75.75 0 00-1.062 1.058l1.943 1.95a.75.75 0 001.055.008l4.557-4.45z"></path></svg>
     <strong>Tip: </strong>Adding or subtracting <code>datetime</code> and <code>timedelta</code> objects from each other can be tricky.  Expand the code below to see examples of what is valid, and what returns an error.  Try playing with <em>negative</em> <code>timedelta</code> values!
 </div>
 
@@ -610,7 +610,7 @@ Let's define the parts of the URL that are static (for now):</p>
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Almost, but not quite.
 We need to convert our date back to a string, using <code>strftime</code> ("string from time").
-We use the exact same <code>format string</code> that we used when we made the call to <code>strptime</code> ("string parse time") previously (in this case <code>'%Y-%m-%d'</code>)</p>
+We use the exact same <code>format string</code> that we used when we made the call to <code>strptime</code> ("string parse time") previously, in this case <code>'%Y-%m-%d'</code>.</p>
 
 </div>
 </div>
@@ -649,7 +649,7 @@ We use the exact same <code>format string</code> that we used when we made the c
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Success!
+<p>If you copy and paste that link into the search bar -- or click on it if you're viewing this in a notebook -- you should be greeted be the injury report for Game 6 of the NBA finals. 
 Now we just need to iterate through the <code>season_dates</code> list and download each PDF, if it exists.
 We could do this lazily, with something simple like:</p>
 <div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
@@ -664,9 +664,10 @@ We could do this lazily, with something simple like:</p>
 <p>With the code above, what happens if there's no report for a specific day?
 Or if there's a network error, either with the server or our own internet?</p>
 <p>In general, it's a good idea to program a little defensively when accessing network assets, especially in cases like this where we know there won't be anything to download.
-It's easy to imagine downstream PDF process breaking when it tries to open an empty file; we could deal with it there, but it's probably better to do it here, and only write valid files.</p>
+It's easy to imagine downstream PDF processing breaking when it tries to open an empty file.
+We could try to handle the error at that point, but it's probably better to do it here, and only write valid files<sup id="fnref-6" class="footnote-ref"><a href="#fn-6">6</a></sup>.</p>
 <p>We'll assume that accessing a URL without a valid injury report PDF will return an <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">HTTP status code</a> of something other than <strong>200</strong>, which is "success" <sup id="fnref-5" class="footnote-ref"><a href="#fn-5">5</a></sup>.
-To handle this, we'll use the <code>requests</code> library's <code>raise_for_status</code> method, which can raise an exception when we get a status code that's anything other than <strong>200</strong> (which is "success").
+To handle this, we'll use the <code>requests</code> library's <code>raise_for_status</code> method, which can raise an exception when we get a non-success status code.
 We can then catch that exception, and skip writing the file.</p>
 <p>Let's add that to the code above, refactor things a skosh to be a little cleaner, and bring in some code from above for clarity:</p>
 
@@ -679,7 +680,7 @@ We can then catch that exception, and skip writing the file.</p>
 <p></p>
 <div class="flash flash-warn">
     <svg class="octicon octicon-zap octicon octicon-zap" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M10.561 1.5a.016.016 0 00-.01.004L3.286 8.571A.25.25 0 003.462 9H6.75a.75.75 0 01.694 1.034l-1.713 4.188 6.982-6.793A.25.25 0 0012.538 7H9.25a.75.75 0 01-.683-1.06l2.008-4.418.003-.006a.02.02 0 00-.004-.009.02.02 0 00-.006-.006L10.56 1.5zM9.504.43a1.516 1.516 0 012.437 1.713L10.415 5.5h2.123c1.57 0 2.346 1.909 1.22 3.004l-7.34 7.142a1.25 1.25 0 01-.871.354h-.302a1.25 1.25 0 01-1.157-1.723L5.633 10.5H3.462c-1.57 0-2.346-1.909-1.22-3.004L9.503.429z"></path></svg>
-    <strong>Important: </strong>Note that it’s not the <code>.get()</code> call that raises the exception, it’s the <code>.raise_for_status()</code> call.  So make sure you put <em>that</em> in your <code>try/except</code> block! 
+    <strong>Important: </strong>Note that the <code>.raise_for_status()</code> call is the one that raises the exception, <strong>not</strong> the <code>.get()</code> call!  So make sure <code>raise_for_status()</code> is in your <code>try/except</code> block! 
 </div>
 
 </div>
@@ -727,7 +728,8 @@ We can then catch that exception, and skip writing the file.</p>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p></p>
-<div class="footnotes"><p id="fn-5">5. From manual inspection of the HTTP headers, it looks like the <code>nba.com</code> server returns 403 Forbidden when there isn't a valid PDF<a href="#fnref-5" class="footnote footnotes">↩</a></p></div>
+<div class="footnotes"><p id="fn-5">5. From manual inspection of the HTTP headers, it looks like nba.com returns a 403 ('Forbidden') when there isn't a valid PDF<a href="#fnref-5" class="footnote footnotes">↩</a></p></div>
+<div class="footnotes"><p id="fn-5">5. If you're thinking 'You should do both', you get a gold star!<a href="#fnref-5" class="footnote footnotes">↩</a></p></div>
 
 </div>
 </div>
@@ -737,7 +739,7 @@ We can then catch that exception, and skip writing the file.</p>
 <div class="text_cell_render border-box-sizing rendered_html">
 <p></p>
 <div class="flash flash-success">
-    <svg class="octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2.5 1.75a.25.25 0 01.25-.25h8.5a.25.25 0 01.25.25v7.736a.75.75 0 101.5 0V1.75A1.75 1.75 0 0011.25 0h-8.5A1.75 1.75 0 001 1.75v11.5c0 .966.784 1.75 1.75 1.75h3.17a.75.75 0 000-1.5H2.75a.25.25 0 01-.25-.25V1.75zM4.75 4a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-4.5zM4 7.75A.75.75 0 014.75 7h2a.75.75 0 010 1.5h-2A.75.75 0 014 7.75zm11.774 3.537a.75.75 0 00-1.048-1.074L10.7 14.145 9.281 12.72a.75.75 0 00-1.062 1.058l1.943 1.95a.75.75 0 001.055.008l4.557-4.45z"></path></svg>
+    <svg class="octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2.5 1.75a.25.25 0 01.25-.25h8.5a.25.25 0 01.25.25v7.736a.75.75 0 101.5 0V1.75A1.75 1.75 0 0011.25 0h-8.5A1.75 1.75 0 001 1.75v11.5c0 .966.784 1.75 1.75 1.75h3.17a.75.75 0 000-1.5H2.75a.25.25 0 01-.25-.25V1.75zM4.75 4a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-4.5zM4 7.75A.75.75 0 014.75 7h2a.75.75 0 010 1.5h-2A.75.75 0 014 7.75zm11.774 3.537a.75.75 0 00-1.048-1.074L10.7 14.145 9.281 12.72a.75.75 0 00-1.062 1.058l1.943 1.95a.75.75 0 001.055.008l4.557-4.45z"></path></svg>
     <strong>Tip: </strong>If you were curious, this can be converted to a <code>generator</code> with the following:
 </div>
 <div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">daterange</span><span class="p">(</span><span class="n">date1</span><span class="p">,</span> <span class="n">date2</span><span class="p">):</span>
@@ -1596,7 +1598,7 @@ We can then catch that exception, and skip writing the file.</p>
 <p>Typing <code>&gt; Tip: This is my tip.</code> will render this:
 </p>
 <div class="flash flash-success">
-    <svg class="octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2.5 1.75a.25.25 0 01.25-.25h8.5a.25.25 0 01.25.25v7.736a.75.75 0 101.5 0V1.75A1.75 1.75 0 0011.25 0h-8.5A1.75 1.75 0 001 1.75v11.5c0 .966.784 1.75 1.75 1.75h3.17a.75.75 0 000-1.5H2.75a.25.25 0 01-.25-.25V1.75zM4.75 4a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-4.5zM4 7.75A.75.75 0 014.75 7h2a.75.75 0 010 1.5h-2A.75.75 0 014 7.75zm11.774 3.537a.75.75 0 00-1.048-1.074L10.7 14.145 9.281 12.72a.75.75 0 00-1.062 1.058l1.943 1.95a.75.75 0 001.055.008l4.557-4.45z"></path></svg>
+    <svg class="octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2.5 1.75a.25.25 0 01.25-.25h8.5a.25.25 0 01.25.25v7.736a.75.75 0 101.5 0V1.75A1.75 1.75 0 0011.25 0h-8.5A1.75 1.75 0 001 1.75v11.5c0 .966.784 1.75 1.75 1.75h3.17a.75.75 0 000-1.5H2.75a.25.25 0 01-.25-.25V1.75zM4.75 4a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-4.5zM4 7.75A.75.75 0 014.75 7h2a.75.75 0 010 1.5h-2A.75.75 0 014 7.75zm11.774 3.537a.75.75 0 00-1.048-1.074L10.7 14.145 9.281 12.72a.75.75 0 00-1.062 1.058l1.943 1.95a.75.75 0 001.055.008l4.557-4.45z"></path></svg>
     <strong>Tip: </strong>This is my tip.
 </div>
 <p>Typing <code>&gt; Note: Take note of this.</code> will render this:
