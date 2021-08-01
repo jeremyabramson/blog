@@ -541,9 +541,9 @@ Later, we can see about using <em>asynchronous</em> requests to greatly speed up
 For simplicity, let's only worry about gathering the 8PM report, which is the one that's most likely to have all the relevant information for the day.</p>
 <p>As a reminder, the URL's look like this:</p>
 <blockquote>
-<p><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2021-07-20_08PM.pdf">https://ak-static.cms.nba.com/referee/injury/Injury-Report_2021-07-20_08PM.pdf</a>
-Let's define the parts of the URL that are static (for now):</p>
+<p><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2021-07-20_08PM.pdf">https://ak-static.cms.nba.com/referee/injury/Injury-Report_2021-07-20_08PM.pdf</a></p>
 </blockquote>
+<p>Let's define the parts of the URL that are static (for now):</p>
 
 </div>
 </div>
@@ -663,11 +663,11 @@ We could do this lazily, with something simple like:</p>
 </pre></div>
 <p>With the code above, what happens if there's no report for a specific day?
 Or if there's a network error, either with the server or our own internet?</p>
-<p>In general, it's a good idea to program a little defensively when accessing network assets, especially in cases like this where we know there won't be anything to download.
-It's easy to imagine downstream PDF processing breaking when it tries to open an empty file.
+<p>In general, it's a good idea to program a little defensively when accessing network assets, especially in cases like this, where there's a high likelihood of accessing an "invalid" URL, with nothing on the other end to download.
+It's easy to imagine the downstream PDF processing -- that we haven't written yet :-) -- breaking when it tries to open an empty file, for example.
 We could try to handle the error at that point, but it's probably better to do it here, and only write valid files<sup id="fnref-6" class="footnote-ref"><a href="#fn-6">6</a></sup>.</p>
 <p>We'll assume that accessing a URL without a valid injury report PDF will return an <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">HTTP status code</a> of something other than <strong>200</strong>, which is "success" <sup id="fnref-5" class="footnote-ref"><a href="#fn-5">5</a></sup>.
-To handle this, we'll use the <code>requests</code> library's <code>raise_for_status</code> method, which can raise an exception when we get a non-success status code.
+To handle this, we'll use the <code>requests</code> library's <code>raise_for_status()</code> method, which can raise an exception when we get a non-success status code.
 We can then catch that exception, and skip writing the file.</p>
 <p>Let's add that to the code above, refactor things a skosh to be a little cleaner, and bring in some code from above for clarity:</p>
 
