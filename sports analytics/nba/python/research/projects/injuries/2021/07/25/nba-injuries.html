@@ -411,7 +411,7 @@ So let's start there, and count backward until we reach the day <em>before</em> 
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now, to construct our list of dates is actually a little tricky.
+<p>Now, constructing the list of dates is actually a little tricky.
 Unfortunately, we can't just "increment" <code>season_start</code> until it reaches <code>season_end</code> (that would be too easy).
 We basically have to turn our <code>season_duration</code> — which is a <code>timedelta</code> object — into a <code>range</code>, and then we iterate over <em>that</em>, subtracting a day for each value in the range.</p>
 <p>To do this, we use the <code>.days</code> attribute of the <code>timedelta</code> object.
