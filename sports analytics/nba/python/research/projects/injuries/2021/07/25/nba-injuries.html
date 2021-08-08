@@ -213,7 +213,7 @@ window.onload = wrap_img;
 </div>
 </center>
 
-Pretty straightforward, right?
+<p>Pretty straightforward, right?</p>
 <h3 id="Setting-Goals">
 <a class="anchor" href="#Setting-Goals" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setting Goals<a class="anchor-link" href="#Setting-Goals"> </a>
 </h3>
@@ -323,22 +323,15 @@ For simplicity, let's just focus on the <code>8:30PM</code> file (it's likely to
 <h3 id="Building-a-URL-List-to-Download-(Finding-Gamedays?)">
 <a class="anchor" href="#Building-a-URL-List-to-Download-(Finding-Gamedays?)" aria-hidden="true"><span class="octicon octicon-link"></span></a>Building a URL List to Download (Finding Gamedays?)<a class="anchor-link" href="#Building-a-URL-List-to-Download-(Finding-Gamedays?)"> </a>
 </h3>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Google helped us sort out what we might use for the <code>time</code> portion of the URL, but the <code>date</code> part is actually a little more complicated than we might like.
-Since, to the best of my knowledge, there's no "central" page that has links to each report, we'll need to know the date for <em>every</em> report we want to download.
+<p>Google helped us sort out what we might use for the <code>time</code> portion of the URL, but the <code>date</code> part is actually a little more complicated than we might like, as we need to know the specific URL of each injury report we want to download.
 According to the <a href="https://official.nba.com/nba-injury-report-2020-21-season/">official NBA annoucement</a>, the dates we're interested in are actually the day <em>before</em> game days, except on the second days of back-to-backs, in which case presumably the injury report comes out the day of the game.</p>
-<p>This all sounds complicated, and if there's one thing I've learned about projects like this it's that nothing saps enthusiasm like complication and extra effort that doesn't "feel" like it's in the service of what we're trying to  accomplish.</p>
+<p>This all sounds complicated, and if there's one thing I've learned about projects like this it's that nothing saps enthusiasm like complication and extra effort that doesn't "feel" like it's in the service of what we're trying to  accomplish<sup id="fnref-3" class="footnote-ref"><a href="#fn-3">3</a></sup>.</p>
 <p>So, given what we know, it seems as if we have two options:</p>
 <ol>
 <li>Get a copy of the NBA schedule, and try to download reports for days we know there's a game</li>
 <li>Just start downloading [a range of?] dates and see what we get</li>
 </ol>
-<p>There's nothing wrong with taking a stab at option 1 here, but this project is about injury reports, not the NBA schedule, so we'll start with option 2<sup id="fnref-3" class="footnote-ref"><a href="#fn-3">3</a></sup>.</p>
+<p>There's nothing wrong with taking a stab at option 1 here, but this project is about injury reports, not the NBA schedule, so we'll start with option 2<sup id="fnref-4" class="footnote-ref"><a href="#fn-4">4</a></sup>.</p>
 
 </div>
 </div>
@@ -4069,7 +4062,7 @@ processing 2021-07-20_08PM.pdf
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p></p>
-<div class="footnotes"><p id="fn-3">3. ...and sincerely apologize to Adam Silver next time we run into him for the extra traffic on the <a href="https://nba.com">nba.com</a> servers.<a href="#fnref-3" class="footnote footnotes">↩</a></p></div>
+<div class="footnotes"><p id="fn-3">3. 'Decoding the NBA schedule' would certainly be something we could have added to our outline.  Even something as seemingly simple as 'download the PDFs' requires a number of steps that might not be readily apparent!<a href="#fnref-3" class="footnote footnotes">↩</a></p></div>
 
 </div>
 </div>
@@ -4078,7 +4071,7 @@ processing 2021-07-20_08PM.pdf
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p></p>
-<div class="footnotes"><p id="fn-4">4. Ideally we would <em><a href="https://www.geeksforgeeks.org/python-list-comprehensions-vs-generator-expressions/">generate</a></em> the list versus building it all at once, but conceptually it's the same thing<a href="#fnref-4" class="footnote footnotes">↩</a></p></div>
+<div class="footnotes"><p id="fn-4">4. ...and sincerely apologize to Adam Silver next time we run into him for the extra traffic on the <a href="https://nba.com">nba.com</a> servers.<a href="#fnref-4" class="footnote footnotes">↩</a></p></div>
 
 </div>
 </div>
@@ -4087,7 +4080,7 @@ processing 2021-07-20_08PM.pdf
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p></p>
-<div class="footnotes"><p id="fn-5">5. From manual inspection of the HTTP headers, it looks like nba.com returns a 403 ('Forbidden') when there isn't a valid PDF<a href="#fnref-5" class="footnote footnotes">↩</a></p></div>
+<div class="footnotes"><p id="fn-5">5. Ideally we would <em><a href="https://www.geeksforgeeks.org/python-list-comprehensions-vs-generator-expressions/">generate</a></em> the list versus building it all at once, but conceptually it's the same thing<a href="#fnref-5" class="footnote footnotes">↩</a></p></div>
 
 </div>
 </div>
@@ -4096,7 +4089,16 @@ processing 2021-07-20_08PM.pdf
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p></p>
-<div class="footnotes"><p id="fn-6">6. If you're thinking 'You should do both', you get a gold star!<a href="#fnref-6" class="footnote footnotes">↩</a></p></div>
+<div class="footnotes"><p id="fn-6">6. From manual inspection of the HTTP headers, it looks like nba.com returns a 403 ('Forbidden') when there isn't a valid PDF<a href="#fnref-6" class="footnote footnotes">↩</a></p></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p></p>
+<div class="footnotes"><p id="fn-7">7. If you're thinking 'You should do both', you get a gold star!<a href="#fnref-7" class="footnote footnotes">↩</a></p></div>
 
 </div>
 </div>
