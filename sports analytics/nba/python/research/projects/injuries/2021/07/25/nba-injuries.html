@@ -78,7 +78,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      39 min read
+      33 min read
     
 </span></p>
 
@@ -152,15 +152,14 @@ window.onload = wrap_img;
 <ul>
 <li class="toc-entry toc-h2"><a href="#Downloading-The-Injury-Reports">Downloading The Injury Reports </a>
 <ul>
-<li class="toc-entry toc-h3"><a href="#Building-a-URL-List-to-Download-(Finding-Gamedays?)">Building a URL List to Download (Finding Gamedays?) </a></li>
-<li class="toc-entry toc-h3"><a href="#Using-datetime.timedelta-to-Construct-A-List-of-Dates">Using datetime.timedelta to Construct A List of Dates </a></li>
-</ul>
-</li>
-</ul>
-</li>
-<li class="toc-entry toc-h1"><a href="#Downloading-The-Injury-Reports">Downloading The Injury Reports </a>
+<li class="toc-entry toc-h3"><a href="#Generate-a-List-of-URLs-to-Download">Generate a List of URLs to Download </a>
 <ul>
-<li class="toc-entry toc-h2"><a href="#Constructing-an-Injury-Report-URL">Constructing an Injury Report URL </a></li>
+<li class="toc-entry toc-h4"><a href="#Building-a-List-of-Dates:-The-Easy-Way">Building a List of Dates: The Easy Way </a></li>
+</ul>
+</li>
+<li class="toc-entry toc-h3"><a href="#Download-the-PDFs">Download the PDFs </a></li>
+</ul>
+</li>
 </ul>
 </li>
 <li class="toc-entry toc-h1"><a href="#Extracting-Tables-from-PDF-Files">Extracting Tables from PDF Files </a>
@@ -276,9 +275,7 @@ Lastly, we might want to fancy with <a href="https://www.twilio.com/blog/asynchr
 <div class="flash flash-success">
     <svg class="octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2.5 1.75a.25.25 0 01.25-.25h8.5a.25.25 0 01.25.25v7.736a.75.75 0 101.5 0V1.75A1.75 1.75 0 0011.25 0h-8.5A1.75 1.75 0 001 1.75v11.5c0 .966.784 1.75 1.75 1.75h3.17a.75.75 0 000-1.5H2.75a.25.25 0 01-.25-.25V1.75zM4.75 4a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-4.5zM4 7.75A.75.75 0 014.75 7h2a.75.75 0 010 1.5h-2A.75.75 0 014 7.75zm11.774 3.537a.75.75 0 00-1.048-1.074L10.7 14.145 9.281 12.72a.75.75 0 00-1.062 1.058l1.943 1.95a.75.75 0 001.055.008l4.557-4.45z"></path></svg>
     <strong>Tip: </strong>One thing we’ll find as we progress is that this outline, as pedantic as it may seem, is incomplete.
-</div>Digging into the above steps, we'll invariably find places where the sub-steps aren't necessarily or obviously entailed by the macro steps.
-If this gets too far out of hand — when, exactly, this happens is a bit of a judgment call — it makes sense to go back and revise the outline.
-For the sake of this blog post, I'm going to go forward with this level of granularity, and we'll see how far we can get.</li>
+</div>Digging into the above steps, we'll invariably find places where the sub-steps aren't necessarily or obviously entailed by the macro steps.  If this gets too far out of hand — when, exactly, this happens is a bit of a judgment call — it makes sense to go back and revise the outline.  For the sake of this blog post, I'm going to go forward with this level of granularity, and we'll see how far we can get.</li>
 </ol>
 </li>
 </ol>
@@ -298,8 +295,9 @@ To do that, we need to know where there are.
 After some brief googling, it seems like there really isn't a central repository for these reports, and they're just uploaded one at a time<sup id="fnref-1" class="footnote-ref"><a href="#fn-1">1</a></sup>.</p>
 <p>The one example URL from Ed's tweet looks like this:</p>
 <blockquote>
-<p><code>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2021-04-23_01PM.pdf</code>
-Looks like there's 4 parts to the URL:</p>
+<p><code>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2021-04-23_01PM.pdf</code></p>
+</blockquote>
+<p>Looks like there's 4 parts to the URL:</p>
 <ol>
 <li>Some boilerplate: <code>https://ak-static.cms.nba.com/referee/injury/Injury-Report_</code>
 </li>
@@ -310,7 +308,6 @@ Looks like there's 4 parts to the URL:</p>
 <li>The file extension: <code>.pdf</code>
 </li>
 </ol>
-</blockquote>
 <p>We're only interested in the middle two (the date and the time), as the boilerplate URL and the file extension won't change.  From googling<sup id="fnref-2" class="footnote-ref"><a href="#fn-2">2</a></sup> <code>"nba injury report"</code> and clicking on <a href="https://official.nba.com/nba-injury-report-2020-21-season/">the second link</a> it seems like the times may be <code>1:30 PM</code>, <code>5:30 PM</code> and <code>8:30 PM</code>.
 For simplicity, let's just focus on the <code>8:30PM</code> file (it's likely to be the most complete anyway).</p>
 
@@ -320,8 +317,8 @@ For simplicity, let's just focus on the <code>8:30PM</code> file (it's likely to
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Building-a-URL-List-to-Download-(Finding-Gamedays?)">
-<a class="anchor" href="#Building-a-URL-List-to-Download-(Finding-Gamedays?)" aria-hidden="true"><span class="octicon octicon-link"></span></a>Building a URL List to Download (Finding Gamedays?)<a class="anchor-link" href="#Building-a-URL-List-to-Download-(Finding-Gamedays?)"> </a>
+<h3 id="Generate-a-List-of-URLs-to-Download">
+<a class="anchor" href="#Generate-a-List-of-URLs-to-Download" aria-hidden="true"><span class="octicon octicon-link"></span></a>Generate a List of URLs to Download<a class="anchor-link" href="#Generate-a-List-of-URLs-to-Download"> </a>
 </h3>
 <p>Google helped us sort out what we might use for the <code>time</code> portion of the URL, but the <code>date</code> part is actually a little more complicated than we might like, as we need to know the specific URL of each injury report we want to download.
 According to the <a href="https://official.nba.com/nba-injury-report-2020-21-season/">official NBA annoucement</a>, the dates we're interested in are actually the day <em>before</em> game days, except on the second days of back-to-backs, in which case presumably the injury report comes out the day of the game.</p>
@@ -339,17 +336,13 @@ According to the <a href="https://official.nba.com/nba-injury-report-2020-21-sea
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h3 id="Using-datetime.timedelta-to-Construct-A-List-of-Dates">
-<a class="anchor" href="#Using-datetime.timedelta-to-Construct-A-List-of-Dates" aria-hidden="true"><span class="octicon octicon-link"></span></a>Using <code>datetime.timedelta</code> to Construct A List of Dates<a class="anchor-link" href="#Using-datetime.timedelta-to-Construct-A-List-of-Dates"> </a>
-</h3>
+<h4 id="Building-a-List-of-Dates:-The-Easy-Way">
+<a class="anchor" href="#Building-a-List-of-Dates:-The-Easy-Way" aria-hidden="true"><span class="octicon octicon-link"></span></a>Building a List of Dates: The Easy Way<a class="anchor-link" href="#Building-a-List-of-Dates:-The-Easy-Way"> </a>
+</h4>
 <p>Programmatically dealing with dates can be <a href="https://xkcd.com/1179/">frustrating</a>, and doing so in Python is no exception.
-Despite that, it seems relatively obvious that we need to deal with <code>date</code>-like objects here, not just <code>string</code> or <code>numeric</code> representations of the dates themselves.
-(Trying to "subtract" a day from <code>01-01-2021</code> without some internal representation of the calendar seems problematic).</p>
-<p>Thinking at a high level, it seems like what we might want to do is build<sup id="fnref-3" class="footnote-ref"><a href="#fn-3">3</a></sup> a list of dates, starting at, say, today — or some other reasonable choice, like the end of the NBA season — and work backward until...well, it's not exactly clear how far back we need to go.
-But the notion still seems reasonable: start at a date and count backward day by day, creating a new date each time.
-Luckily, Python has exactly the thing we need to do this: the <code>timedelta</code> object.</p>
-<p>For our purposes, a <code>timedelta</code> object is simply something that allows us to perform arithmetic on <code>datetime</code> objects.
-Consider the following:</p>
+There's a whole rabbit hole we can go down, talking about <code>timedelta</code> objects and "date arithmetic" et cetera, but let's just cut right to the chase and use <code>Pandas</code>.
+Pandas certainly has its issues, but this is one case where it'll make our lives <em>much</em> simpler.</p>
+<p>So finally...some code!</p>
 
 </div>
 </div>
@@ -361,15 +354,51 @@ Consider the following:</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span>
+</pre></div>
 
-<span class="c1"># Random_date is a datetime object</span>
-<span class="n">random_date</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s1">'2011-09-18'</span><span class="p">,</span> <span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1">'</span><span class="p">)</span>
-<span class="c1"># Let's create a new datetime object by subtracting a timedelta object</span>
-<span class="c1"># Note that we're using the "days" parameter.  Try experimenting with other values!</span>
-<span class="n">new_date</span> <span class="o">=</span> <span class="n">random_date</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="mi">10</span><span class="p">)</span>
+    </div>
+</div>
+</div>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Ten days before </span><span class="si">{</span><span class="n">random_date</span><span class="si">}</span><span class="s2"> is </span><span class="si">{</span><span class="n">new_date</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Okay, so that wasn't very satisfying.
+There's more code coming soon, I promise!</p>
+<p>We're going to use the <code>pandas.date_range</code> (<a href="https://pandas.pydata.org/docs/reference/api/pandas.date_range.html">docs</a>) function to generate, well, a range of dates.
+We'll use these dates as portion of the URL schema detailed above, but in order to do so, we need to know what range to generate.</p>
+<p>The day before the start of the NBA season until the end of the NBA season seems like a reasonable starting point.
+Determining these dates is going to take some manual effort.
+If we needed to do this for some number of seasons, we'd want to automate this, but for now, let's just copy the dates manually. 
+Perusing the <a href="https://en.wikipedia.org/wiki/2020%E2%80%9321_NBA_season">wikipedia page</a> for the 2020-2021 NBA season, it looks like the season started on December 22, 2020, and <a href="https://www.youtube.com/watch?v=9O920AD-teU">ended</a> on July 20th.
+From manual testing, <a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2021-07-20_08PM.pdf">https://ak-static.cms.nba.com/referee/injury/Injury-Report_2021-07-20_08PM.pdf</a> is a valid link, and the next day, unsurprisingly, is not.</p>
+<p>Remembering our "the injury reports can come out the day <em>before</em>" note from above, this gives us our range.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Checking the <a href="https://pandas.pydata.org/docs/reference/api/pandas.date_range.html">docs</a> for <code>pandas.date_range</code> it seems like there's a ton of parameters, but <code>start</code> and <code>end</code> look like they might be all we need.
+Now, for real this time, let's look at some code!</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">season_dates</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s1">'12-21-2020'</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">'07-20-2021'</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'The 2020-21 NBA season started on </span><span class="si">{</span><span class="n">season_dates</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1">, and ended on </span><span class="si">{</span><span class="n">season_dates</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -382,7 +411,7 @@ Consider the following:</p>
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>Ten days before 2011-09-18 00:00:00 is 2011-09-08 00:00:00
+<pre>The 2020-21 NBA season started on 2020-12-21 00:00:00, and ended on 2021-07-20 00:00:00
 </pre>
 </div>
 </div>
@@ -396,472 +425,9 @@ Consider the following:</p>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p></p>
-<div class="flash flash-success">
-    <svg class="octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2.5 1.75a.25.25 0 01.25-.25h8.5a.25.25 0 01.25.25v7.736a.75.75 0 101.5 0V1.75A1.75 1.75 0 0011.25 0h-8.5A1.75 1.75 0 001 1.75v11.5c0 .966.784 1.75 1.75 1.75h3.17a.75.75 0 000-1.5H2.75a.25.25 0 01-.25-.25V1.75zM4.75 4a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-4.5zM4 7.75A.75.75 0 014.75 7h2a.75.75 0 010 1.5h-2A.75.75 0 014 7.75zm11.774 3.537a.75.75 0 00-1.048-1.074L10.7 14.145 9.281 12.72a.75.75 0 00-1.062 1.058l1.943 1.95a.75.75 0 001.055.008l4.557-4.45z"></path></svg>
-    <strong>Tip: </strong>Adding or subtracting <code>datetime</code> and <code>timedelta</code> objects from each other can be tricky.  Expand the code below to see examples of what is valid, and what returns an error.  Try playing with <em>negative</em> <code>timedelta</code> values!
-</div>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>The 2021 NBA season <a href="https://www.youtube.com/watch?v=9O920AD-teU">ended on July 20th</a>, and from manual testing, <a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2021-07-20_08PM.pdf">https://ak-static.cms.nba.com/referee/injury/Injury-Report_2021-07-20_08PM.pdf</a> is a valid link (the next day, unsurprisingly, is not).
-So let's start there, and count backward until we reach the day <em>before</em> the <a href="https://en.wikipedia.org/wiki/2020%E2%80%9321_NBA_season">start</a> of the season, which would be December 21st, 2020.</p>
-
-</div>
-</div>
-</div>
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">season_start</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s1">'2020-12-21'</span><span class="p">,</span> <span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1">'</span><span class="p">)</span>
-<span class="n">season_end</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">strptime</span><span class="p">(</span><span class="s1">'2021-07-20'</span><span class="p">,</span> <span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1">'</span><span class="p">)</span>
-<span class="n">season_duration</span> <span class="o">=</span> <span class="n">season_end</span> <span class="o">-</span> <span class="n">season_start</span>
-<span class="c1"># season_duraction is a timedelta object</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">season_duration</span><span class="si">=}</span><span class="s1"> is of type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">season_duration</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>season_duration=datetime.timedelta(days=211) is of type &lt;class 'datetime.timedelta'&gt;
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    
-
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
-<span class="n">test</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s1">'12-21-2020'</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">'07-20-2021'</span><span class="p">)</span>
-<span class="n">test</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="o">.</span><span class="n">date</span><span class="p">()</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-
-
-<div class="output_text output_subarea output_execute_result">
-<pre>datetime.date(2020, 12, 21)</pre>
-</div>
-
-</div>
-
-</div>
-</div>
-
-</div>
-    
-
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">for</span> <span class="n">thing</span> <span class="ow">in</span> <span class="n">test</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="n">datetime</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">thing</span><span class="o">.</span><span class="n">date</span><span class="p">(),</span> <span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1">'</span><span class="p">))</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>2020-12-21
-2020-12-22
-2020-12-23
-2020-12-24
-2020-12-25
-2020-12-26
-2020-12-27
-2020-12-28
-2020-12-29
-2020-12-30
-2020-12-31
-2021-01-01
-2021-01-02
-2021-01-03
-2021-01-04
-2021-01-05
-2021-01-06
-2021-01-07
-2021-01-08
-2021-01-09
-2021-01-10
-2021-01-11
-2021-01-12
-2021-01-13
-2021-01-14
-2021-01-15
-2021-01-16
-2021-01-17
-2021-01-18
-2021-01-19
-2021-01-20
-2021-01-21
-2021-01-22
-2021-01-23
-2021-01-24
-2021-01-25
-2021-01-26
-2021-01-27
-2021-01-28
-2021-01-29
-2021-01-30
-2021-01-31
-2021-02-01
-2021-02-02
-2021-02-03
-2021-02-04
-2021-02-05
-2021-02-06
-2021-02-07
-2021-02-08
-2021-02-09
-2021-02-10
-2021-02-11
-2021-02-12
-2021-02-13
-2021-02-14
-2021-02-15
-2021-02-16
-2021-02-17
-2021-02-18
-2021-02-19
-2021-02-20
-2021-02-21
-2021-02-22
-2021-02-23
-2021-02-24
-2021-02-25
-2021-02-26
-2021-02-27
-2021-02-28
-2021-03-01
-2021-03-02
-2021-03-03
-2021-03-04
-2021-03-05
-2021-03-06
-2021-03-07
-2021-03-08
-2021-03-09
-2021-03-10
-2021-03-11
-2021-03-12
-2021-03-13
-2021-03-14
-2021-03-15
-2021-03-16
-2021-03-17
-2021-03-18
-2021-03-19
-2021-03-20
-2021-03-21
-2021-03-22
-2021-03-23
-2021-03-24
-2021-03-25
-2021-03-26
-2021-03-27
-2021-03-28
-2021-03-29
-2021-03-30
-2021-03-31
-2021-04-01
-2021-04-02
-2021-04-03
-2021-04-04
-2021-04-05
-2021-04-06
-2021-04-07
-2021-04-08
-2021-04-09
-2021-04-10
-2021-04-11
-2021-04-12
-2021-04-13
-2021-04-14
-2021-04-15
-2021-04-16
-2021-04-17
-2021-04-18
-2021-04-19
-2021-04-20
-2021-04-21
-2021-04-22
-2021-04-23
-2021-04-24
-2021-04-25
-2021-04-26
-2021-04-27
-2021-04-28
-2021-04-29
-2021-04-30
-2021-05-01
-2021-05-02
-2021-05-03
-2021-05-04
-2021-05-05
-2021-05-06
-2021-05-07
-2021-05-08
-2021-05-09
-2021-05-10
-2021-05-11
-2021-05-12
-2021-05-13
-2021-05-14
-2021-05-15
-2021-05-16
-2021-05-17
-2021-05-18
-2021-05-19
-2021-05-20
-2021-05-21
-2021-05-22
-2021-05-23
-2021-05-24
-2021-05-25
-2021-05-26
-2021-05-27
-2021-05-28
-2021-05-29
-2021-05-30
-2021-05-31
-2021-06-01
-2021-06-02
-2021-06-03
-2021-06-04
-2021-06-05
-2021-06-06
-2021-06-07
-2021-06-08
-2021-06-09
-2021-06-10
-2021-06-11
-2021-06-12
-2021-06-13
-2021-06-14
-2021-06-15
-2021-06-16
-2021-06-17
-2021-06-18
-2021-06-19
-2021-06-20
-2021-06-21
-2021-06-22
-2021-06-23
-2021-06-24
-2021-06-25
-2021-06-26
-2021-06-27
-2021-06-28
-2021-06-29
-2021-06-30
-2021-07-01
-2021-07-02
-2021-07-03
-2021-07-04
-2021-07-05
-2021-07-06
-2021-07-07
-2021-07-08
-2021-07-09
-2021-07-10
-2021-07-11
-2021-07-12
-2021-07-13
-2021-07-14
-2021-07-15
-2021-07-16
-2021-07-17
-2021-07-18
-2021-07-19
-2021-07-20
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    
-
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Now, constructing the list of dates is actually a little tricky.
-Unfortunately, we can't just "increment" <code>season_start</code> until it reaches <code>season_end</code> (that would be too easy).
-We basically have to turn our <code>season_duration</code> — which is a <code>timedelta</code> object — into an integral <code>range</code>, and then we iterate over <em>that</em>, subtracting a day for each value in the range.
-To do this, we use the <code>.days</code> attribute of the <code>timedelta</code> object.
-That gives us an <code>integer</code> representation of the how many days are between the two dates used to create the <code>timedelta</code> in the first place.
-We then convert this integral number of days <em>back</em> into a <code>timedelta</code>, which we subtract from our <code>season_end</code> variable.
-Confused?  Hopefully the code will help clarify:</p>
-
-</div>
-</div>
-</div>
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">season_dates</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
-<span class="c1"># Convert the timedelta into an integral range, from 0 to the number of days in season_duration (211)</span>
-<span class="k">for</span> <span class="n">day_number</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">season_duration</span><span class="o">.</span><span class="n">days</span><span class="p">):</span>
-    <span class="c1"># Subtract day_number of days from our season endpoint (after converting to a timedelta)</span>
-    <span class="n">gameday</span> <span class="o">=</span> <span class="n">season_end</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">day_number</span><span class="p">)</span>
-    <span class="c1"># Append this new datetime to our list</span>
-    <span class="n">season_dates</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">gameday</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'season_dates spans from </span><span class="si">{</span><span class="n">season_dates</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1"> to </span><span class="si">{</span><span class="n">season_dates</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s1"> with length </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">season_dates</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>season_dates spans from 2021-07-20 00:00:00 to 2020-12-22 00:00:00 with length 211
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    
-
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Uh oh, we're off by one, and a day short!
-Makes sense, since we're only iterating 211 times, so we lose one of the endpoints.
-Fixing that, and converting the above to a list comprehension, we get:</p>
-
-</div>
-</div>
-</div>
-    
-    
-<div class="cell border-box-sizing code_cell rendered">
-<div class="input">
-
-<div class="inner_cell">
-    <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="n">season_dates</span> <span class="o">=</span> <span class="p">[</span><span class="n">season_end</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">days</span><span class="o">=</span><span class="n">day_number</span><span class="p">)</span> <span class="k">for</span> <span class="n">day_number</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">season_duration</span><span class="o">.</span><span class="n">days</span><span class="o">+</span><span class="mi">1</span><span class="p">)]</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'season_dates spans from </span><span class="si">{</span><span class="n">season_dates</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1"> to </span><span class="si">{</span><span class="n">season_dates</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s1"> with length </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">season_dates</span><span class="p">)</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
-</pre></div>
-
-    </div>
-</div>
-</div>
-
-<div class="output_wrapper">
-<div class="output">
-
-<div class="output_area">
-
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>season_dates spans from 2021-07-20 00:00:00 to 2020-12-21 00:00:00 with length 212
-</pre>
-</div>
-</div>
-
-</div>
-</div>
-
-</div>
-    
-
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>That's more like it.
-Finally, we have our list of dates to use in our URLs.
-On to downloading!</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Downloading-The-Injury-Reports">
-<a class="anchor" href="#Downloading-The-Injury-Reports" aria-hidden="true"><span class="octicon octicon-link"></span></a>Downloading The Injury Reports<a class="anchor-link" href="#Downloading-The-Injury-Reports"> </a>
-</h1>
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>For simplicity's sake, we'll just use the <code>requests</code> module to download the PDFs sequentially.
-Later, we can see about using <em>asynchronous</em> requests to greatly speed up our downloads, but for now let's just do things one at a time.</p>
-<p>We need to do three things:</p>
-<ol>
-<li>Construct a URL from the dates we generated above</li>
-<li>Download the PDF at the URL (if it exists)</li>
-<li>Save it to disk; eventually we'll need to process the PDFs, but for now let's just store them</li>
-</ol>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Constructing-an-Injury-Report-URL">
-<a class="anchor" href="#Constructing-an-Injury-Report-URL" aria-hidden="true"><span class="octicon octicon-link"></span></a>Constructing an Injury Report URL<a class="anchor-link" href="#Constructing-an-Injury-Report-URL"> </a>
-</h2>
-<p>As we saw <a href="https://jeremyabramson.github.io/blog/sports%20analytics/nba/python/research/projects/injuries/2021/07/25/nba-injuries.html#Decoding-the-Filename-Schema-From-the-URL">above</a>, the URL has 4 parts.
+<p>(It may not look like much, but if you have <em>any</em> idea how obnoxious this would be without <code>pandas</code>, you'll be impressed!)
+But it seems like we have our list of dates, and we just need to add them to our URL schema.
+As we saw <a href="https://jeremyabramson.github.io/blog/sports%20analytics/nba/python/research/projects/injuries/2021/07/25/nba-injuries.html#Decoding-the-Filename-Schema-From-the-URL">above</a>, the URL has 4 parts.
 For simplicity, let's only worry about gathering the 8PM report, which is the one that's most likely to have all the relevant information for the day.</p>
 <p>As a reminder, the URL's look like this:</p>
 <blockquote>
@@ -925,7 +491,7 @@ For simplicity, let's only worry about gathering the 8PM report, which is the on
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2021-07-20 00:00:00_08PM.pdf
+<pre>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2020-12-21 00:00:00_08PM.pdf
 </pre>
 </div>
 </div>
@@ -940,8 +506,8 @@ For simplicity, let's only worry about gathering the 8PM report, which is the on
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Almost, but not quite!
-We need to convert our date back to a string, using <code>strftime()</code> ("string from time").
-We use the exact same <code>format string</code> that we used when we made the call to <code>strptime()</code> ("string parse time") previously, in this case <code>'%Y-%m-%d'</code>.</p>
+It looks like our <code>season_dates[0]</code> object is some sort of date-y type thing.
+Let's find out exactly:</p>
 
 </div>
 </div>
@@ -953,7 +519,7 @@ We use the exact same <code>format string</code> that we used when we made the c
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">url_stem</span><span class="si">}{</span><span class="n">datetime</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">season_dates</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2">"</span><span class="p">)</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">report_time</span><span class="si">}</span><span class="s1">.pdf'</span><span class="p">)</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">season_dates</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1"> is of type </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">season_dates</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
 </pre></div>
 
     </div>
@@ -966,7 +532,7 @@ We use the exact same <code>format string</code> that we used when we made the c
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stdout output_text">
-<pre>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2021-07-20_08PM.pdf
+<pre>2020-12-21 00:00:00 is of type &lt;class 'pandas._libs.tslibs.timestamps.Timestamp'&gt;
 </pre>
 </div>
 </div>
@@ -980,16 +546,222 @@ We use the exact same <code>format string</code> that we used when we made the c
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>If you copy and paste that link into the search bar — or click on it if you're viewing this in a notebook — you should be greeted be the injury report for Game 6 of the NBA finals. 
-Now we just need to iterate through the <code>season_dates</code> list and download each PDF, if it exists.
-We could do this lazily, with something simple like:</p>
+<p>I admit, I was expecting a standard Python <code>datetime</code> (<a href="https://docs.python.org/3/library/datetime.html#datetime.datetime">docs</a>) object.
+That being the case, let's just go ahead and try to use the standard method we use to process Python dates into strings: <code>strftime()</code>.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p></p>
+<div class="flash flash-success">
+    <svg class="octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2.5 1.75a.25.25 0 01.25-.25h8.5a.25.25 0 01.25.25v7.736a.75.75 0 101.5 0V1.75A1.75 1.75 0 0011.25 0h-8.5A1.75 1.75 0 001 1.75v11.5c0 .966.784 1.75 1.75 1.75h3.17a.75.75 0 000-1.5H2.75a.25.25 0 01-.25-.25V1.75zM4.75 4a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-4.5zM4 7.75A.75.75 0 014.75 7h2a.75.75 0 010 1.5h-2A.75.75 0 014 7.75zm11.774 3.537a.75.75 0 00-1.048-1.074L10.7 14.145 9.281 12.72a.75.75 0 00-1.062 1.058l1.943 1.95a.75.75 0 001.055.008l4.557-4.45z"></path></svg>
+    <strong>Tip: </strong>I could never remember which one was which, until I leared that <code>strftime()</code> is "string <em>from</em> time" and <code>strptime()</code> is "string <em>parse</em> time"
+</div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>From our sample URL, it looks like we need things in a <code>YYYY-MM-DD</code> format.
+Luckily, that's a relatively simple format string, but if you want to it out to be sure, <a href="https://www.strfti.me">this interactive site</a> is super cool.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">url_stem</span><span class="si">}{</span><span class="n">datetime</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">season_dates</span><span class="p">[</span><span class="mi">0</span><span class="p">],</span> <span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1">'</span><span class="p">)</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">report_time</span><span class="si">}</span><span class="s2">.pdf"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+<div class="output_subarea output_stream output_stdout output_text">
+<pre>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2020-12-21_08PM.pdf
+</pre>
+</div>
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p></p>
+<div class="flash">
+    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
+    <strong>Note: </strong>Add note about <code>from</code> imports and changing to double-quotes in <code>f-strings</code>
+</div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Success!</p>
+<p>Now, let's build a list of similarly formatted URLs.</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">season_urls</span> <span class="o">=</span> <span class="nb">list</span><span class="p">()</span>
+<span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="n">season_dates</span><span class="p">:</span>
+    <span class="n">season_urls</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">url_stem</span><span class="si">}{</span><span class="n">datetime</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">day</span><span class="p">,</span> <span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1">'</span><span class="p">)</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">report_time</span><span class="si">}</span><span class="s2">.pdf"</span><span class="p">)</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Or, if you prefer a list comprehension, which seems reasonable here:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">season_urls</span> <span class="o">=</span> <span class="p">[</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">url_stem</span><span class="si">}{</span><span class="n">datetime</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">day</span><span class="p">,</span> <span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1">'</span><span class="p">)</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">report_time</span><span class="si">}</span><span class="s2">.pdf"</span> <span class="k">for</span> <span class="n">day</span> <span class="ow">in</span> <span class="n">season_dates</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's sanity check the first five URLs:</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">season_urls</span><span class="p">[:</span><span class="mi">5</span><span class="p">]</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
+
+<div class="output_area">
+
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>['https://ak-static.cms.nba.com/referee/injury/Injury-Report_2020-12-21_08PM.pdf',
+ 'https://ak-static.cms.nba.com/referee/injury/Injury-Report_2020-12-22_08PM.pdf',
+ 'https://ak-static.cms.nba.com/referee/injury/Injury-Report_2020-12-23_08PM.pdf',
+ 'https://ak-static.cms.nba.com/referee/injury/Injury-Report_2020-12-24_08PM.pdf',
+ 'https://ak-static.cms.nba.com/referee/injury/Injury-Report_2020-12-25_08PM.pdf']</pre>
+</div>
+
+</div>
+
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Looks like we're good to go!</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h3 id="Download-the-PDFs">
+<a class="anchor" href="#Download-the-PDFs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Download the PDFs<a class="anchor-link" href="#Download-the-PDFs"> </a>
+</h3>
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>For simplicity's sake, we'll just use the <code>requests</code> module to download the PDFs sequentially.
+Later, we can see about using <em>asynchronous</em> requests to greatly speed up our downloads, but for now let's just do things one at a time.</p>
+<p>We could do this lazily, with something simple like:</p>
 <div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
-<span class="c1"># Loop through our dates lists</span>
-<span class="k">for</span> <span class="n">gameday</span> <span class="ow">in</span> <span class="n">season_dates</span><span class="p">:</span>
-    <span class="c1"># Construct the URL and download the PDF</span>
-    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">url_stem</span><span class="si">}{</span><span class="n">datetime</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">gameday</span><span class="p">,</span> <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2">"</span><span class="p">)</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">report_time</span><span class="si">}</span><span class="s1">.pdf'</span><span class="p">)</span>
-    <span class="c1"># Write to disk</span>
-    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">datetime</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">gameday</span><span class="p">,</span> <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2">"</span><span class="p">)</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">report_time</span><span class="si">}</span><span class="s1">.pdf'</span><span class="p">,</span> <span class="s1">'wb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+<span class="c1"># Loop through our URL list</span>
+<span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">season_urls</span><span class="p">:</span>
+    <span class="c1"># Download the PDF</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="c1"># Write to disk; Create a filename from the URL</span>
+    <span class="n">filename</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'/'</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+    <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">'wb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
         <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
 </pre></div>
 <p>With the code above, what happens if there's no report for a specific day?
@@ -1000,7 +772,33 @@ We could try to handle the error at that point, but it's probably better to do i
 <p>We'll assume that accessing a URL without a valid injury report PDF will return an <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">HTTP status code</a> of something other than <strong>200</strong>, which is "success" <sup id="fnref-6" class="footnote-ref"><a href="#fn-6">6</a></sup>.
 To handle this, we'll use the <code>requests</code> library's <code>raise_for_status()</code> method, which can raise an exception when we get a non-success status code.
 We can then catch that exception, and skip writing the file.</p>
-<p>Let's add that to the code above, refactor things a skosh to be a little cleaner, and bring in some code from above for clarity:</p>
+<p>Let's add that to the code above:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
+
+<span class="c1"># Loop through our URL lists</span>
+<span class="k">for</span> <span class="n">url</span> <span class="ow">in</span> <span class="n">season_urls</span><span class="p">:</span>
+    <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">resp</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
+    <span class="c1"># This is the exception to catch for non-200 response codes; this won't necessarily catch network errors</span>
+    <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">HTTPError</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'No valid PDF at </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s1">, removing from list'</span><span class="p">)</span>
+        <span class="n">season_dates</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
+    <span class="c1"># The "else" block of a try/except happens if there isn't an exception</span>
+    <span class="k">else</span><span class="p">:</span>
+        <span class="n">filename</span> <span class="o">=</span> <span class="n">url</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s1">'/'</span><span class="p">)[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span>
+        <span class="c1"># Write to disk</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Writing PDF for </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
+        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">'wb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
+            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+</pre></div>
 
 </div>
 </div>
@@ -1017,6 +815,18 @@ We can then catch that exception, and skip writing the file.</p>
 </div>
 </div>
 </div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>One thing we might note is that if we want to download the other injury report times, we'll need to create a new list of URLs.
+That being the case, perhaps it might make sense to construct the URL right before we use it, instead of all at once before hand.
+And while we're at it, perhaps we should make this a function, so we don't have to download all the files in a loop if we don't want to.</p>
+<p>The function should take two parameters, the <code>date</code> to download, and the <code>time</code> of the report (unsurprisingly, these are the two "dynamic" parts of our URL schema.)
+We can use the chunks of code from building our URL list above to build the URL right before we use it.</p>
+
+</div>
+</div>
+</div>
     
     
 <div class="cell border-box-sizing code_cell rendered">
@@ -1024,28 +834,63 @@ We can then catch that exception, and skip writing the file.</p>
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
-<span class="n">url_stem</span> <span class="o">=</span> <span class="s1">'https://ak-static.cms.nba.com/referee/injury/Injury-Report_'</span>
-<span class="n">report_time</span> <span class="o">=</span> <span class="s1">'08PM'</span>
-<span class="c1"># Loop through our dates lists</span>
-<span class="k">for</span> <span class="n">gameday</span> <span class="ow">in</span> <span class="n">season_dates</span><span class="p">:</span>
-    <span class="c1"># Construct a URL</span>
-    <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">url_stem</span><span class="si">}{</span><span class="n">datetime</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">gameday</span><span class="p">,</span> <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2">"</span><span class="p">)</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">report_time</span><span class="si">}</span><span class="s1">.pdf'</span>
-    <span class="c1"># Make the request to download the PDF</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">download_injury_report</span><span class="p">(</span><span class="n">report_date</span><span class="p">,</span> <span class="n">report_time</span><span class="o">=</span><span class="s1">'08PM'</span><span class="p">):</span>
+    <span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">warn</span>
+    <span class="n">url_stem</span> <span class="o">=</span> <span class="s1">'https://ak-static.cms.nba.com/referee/injury/Injury-Report_'</span>
+
+    <span class="n">url</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="n">url_stem</span><span class="si">}{</span><span class="n">datetime</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">report_date</span><span class="p">,</span> <span class="s1">'%Y-%m-</span><span class="si">%d</span><span class="s1">'</span><span class="p">)</span><span class="si">}</span><span class="s2">_</span><span class="si">{</span><span class="n">report_time</span><span class="si">}</span><span class="s2">.pdf"</span>
+    
     <span class="n">resp</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">url</span><span class="p">)</span>
     <span class="k">try</span><span class="p">:</span>
         <span class="n">resp</span><span class="o">.</span><span class="n">raise_for_status</span><span class="p">()</span>
     <span class="c1"># This is the exception to catch for non-200 response codes; this won't necessarily catch network errors</span>
     <span class="k">except</span> <span class="n">requests</span><span class="o">.</span><span class="n">HTTPError</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'No valid PDF on </span><span class="si">{</span><span class="n">gameday</span><span class="si">}</span><span class="s1">, removing from list'</span><span class="p">)</span>
-        <span class="n">season_dates</span><span class="o">.</span><span class="n">remove</span><span class="p">(</span><span class="n">gameday</span><span class="p">)</span>
+        <span class="c1"># Just beccause the caller will have to make sure to handle the "None" case doesn't mean we can't alert them</span>
+        <span class="c1"># stacklevel=2 cribbed from: https://stackoverflow.com/questions/60083173/warnings-module-prints-part-of-warning-twice</span>
+        <span class="n">warn</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Could not download URL </span><span class="si">{</span><span class="n">url</span><span class="si">}</span><span class="s1">'</span><span class="p">,</span> <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
+        <span class="k">return</span> <span class="kc">None</span>
     <span class="c1"># The "else" block of a try/except happens if there isn't an exception</span>
     <span class="k">else</span><span class="p">:</span>
-        <span class="n">filename</span> <span class="o">=</span> <span class="sa">f</span><span class="s1">'</span><span class="si">{</span><span class="n">datetime</span><span class="o">.</span><span class="n">strftime</span><span class="p">(</span><span class="n">gameday</span><span class="p">,</span> <span class="s2">"%Y-%m-</span><span class="si">%d</span><span class="s2">"</span><span class="p">)</span><span class="si">}</span><span class="s1">_</span><span class="si">{</span><span class="n">report_time</span><span class="si">}</span><span class="s1">.pdf'</span>
-        <span class="c1"># Write to disk</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'Writing PDF for </span><span class="si">{</span><span class="n">gameday</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
-        <span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="n">filename</span><span class="p">,</span> <span class="s1">'wb'</span><span class="p">)</span> <span class="k">as</span> <span class="n">f</span><span class="p">:</span>
-            <span class="n">f</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="n">resp</span><span class="o">.</span><span class="n">content</span><span class="p">)</span>
+        <span class="c1"># Return the content to the caller; they can write it to disk or process it</span>
+        <span class="k">return</span> <span class="n">resp</span><span class="o">.</span><span class="n">content</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+</div>
+    
+
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p></p>
+<div class="flash">
+    <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
+    <strong>Note: </strong>You may be surprised that I removed the part that writes the PDF to disk.  I’ll spare you the bloviating, but in general I try to adopt a somewhat "<a href="https://betterprogramming.pub/what-is-a-pure-function-3b4af9352f6f">functional</a>" programming style whenever possible.  Basically, this means I try not to have lots of things happening inside my functions that someone using might not be aware of.  Writing a file to disk certainly qualifies!  Why not let the caller decide what they want to do with it, so we can be sure it’s done "correctly"?
+</div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Let's give our function a shot!
+We'll use one of the dates we generated previously (note that we don't have to provide a time, since we put a default value for the function above).</p>
+
+</div>
+</div>
+</div>
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">season_dates</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">]</span>
 </pre></div>
 
     </div>
@@ -1057,249 +902,43 @@ We can then catch that exception, and skip writing the file.</p>
 
 <div class="output_area">
 
-<div class="output_subarea output_stream output_stdout output_text">
-<pre>Writing PDF for 2021-07-20 00:00:00
-Writing PDF for 2021-07-19 00:00:00
-No valid PDF on 2021-07-18 00:00:00, removing from list
-Writing PDF for 2021-07-16 00:00:00
-No valid PDF on 2021-07-15 00:00:00, removing from list
-Writing PDF for 2021-07-13 00:00:00
-No valid PDF on 2021-07-12 00:00:00, removing from list
-Writing PDF for 2021-07-10 00:00:00
-No valid PDF on 2021-07-09 00:00:00, removing from list
-Writing PDF for 2021-07-07 00:00:00
-Writing PDF for 2021-07-06 00:00:00
-Writing PDF for 2021-07-05 00:00:00
-No valid PDF on 2021-07-04 00:00:00, removing from list
-Writing PDF for 2021-07-02 00:00:00
-Writing PDF for 2021-07-01 00:00:00
-Writing PDF for 2021-06-30 00:00:00
-Writing PDF for 2021-06-29 00:00:00
-Writing PDF for 2021-06-28 00:00:00
-Writing PDF for 2021-06-27 00:00:00
-Writing PDF for 2021-06-26 00:00:00
-Writing PDF for 2021-06-25 00:00:00
-Writing PDF for 2021-06-24 00:00:00
-Writing PDF for 2021-06-23 00:00:00
-Writing PDF for 2021-06-22 00:00:00
-Writing PDF for 2021-06-21 00:00:00
-Writing PDF for 2021-06-20 00:00:00
-Writing PDF for 2021-06-19 00:00:00
-Writing PDF for 2021-06-18 00:00:00
-Writing PDF for 2021-06-17 00:00:00
-Writing PDF for 2021-06-16 00:00:00
-Writing PDF for 2021-06-15 00:00:00
-Writing PDF for 2021-06-14 00:00:00
-Writing PDF for 2021-06-13 00:00:00
-Writing PDF for 2021-06-12 00:00:00
-Writing PDF for 2021-06-11 00:00:00
-Writing PDF for 2021-06-10 00:00:00
-Writing PDF for 2021-06-09 00:00:00
-Writing PDF for 2021-06-08 00:00:00
-Writing PDF for 2021-06-07 00:00:00
-Writing PDF for 2021-06-06 00:00:00
-Writing PDF for 2021-06-05 00:00:00
-Writing PDF for 2021-06-04 00:00:00
-Writing PDF for 2021-06-03 00:00:00
-Writing PDF for 2021-06-02 00:00:00
-Writing PDF for 2021-06-01 00:00:00
-Writing PDF for 2021-05-31 00:00:00
-Writing PDF for 2021-05-30 00:00:00
-Writing PDF for 2021-05-29 00:00:00
-Writing PDF for 2021-05-28 00:00:00
-Writing PDF for 2021-05-27 00:00:00
-Writing PDF for 2021-05-26 00:00:00
-Writing PDF for 2021-05-25 00:00:00
-Writing PDF for 2021-05-24 00:00:00
-Writing PDF for 2021-05-23 00:00:00
-Writing PDF for 2021-05-22 00:00:00
-Writing PDF for 2021-05-21 00:00:00
-Writing PDF for 2021-05-20 00:00:00
-Writing PDF for 2021-05-19 00:00:00
-Writing PDF for 2021-05-18 00:00:00
-Writing PDF for 2021-05-17 00:00:00
-Writing PDF for 2021-05-16 00:00:00
-Writing PDF for 2021-05-15 00:00:00
-Writing PDF for 2021-05-14 00:00:00
-Writing PDF for 2021-05-13 00:00:00
-Writing PDF for 2021-05-12 00:00:00
-Writing PDF for 2021-05-11 00:00:00
-Writing PDF for 2021-05-10 00:00:00
-Writing PDF for 2021-05-09 00:00:00
-Writing PDF for 2021-05-08 00:00:00
-Writing PDF for 2021-05-07 00:00:00
-Writing PDF for 2021-05-06 00:00:00
-Writing PDF for 2021-05-05 00:00:00
-Writing PDF for 2021-05-04 00:00:00
-Writing PDF for 2021-05-03 00:00:00
-Writing PDF for 2021-05-02 00:00:00
-Writing PDF for 2021-05-01 00:00:00
-Writing PDF for 2021-04-30 00:00:00
-Writing PDF for 2021-04-29 00:00:00
-Writing PDF for 2021-04-28 00:00:00
-Writing PDF for 2021-04-27 00:00:00
-Writing PDF for 2021-04-26 00:00:00
-Writing PDF for 2021-04-25 00:00:00
-Writing PDF for 2021-04-24 00:00:00
-Writing PDF for 2021-04-23 00:00:00
-Writing PDF for 2021-04-22 00:00:00
-Writing PDF for 2021-04-21 00:00:00
-Writing PDF for 2021-04-20 00:00:00
-Writing PDF for 2021-04-19 00:00:00
-Writing PDF for 2021-04-18 00:00:00
-Writing PDF for 2021-04-17 00:00:00
-Writing PDF for 2021-04-16 00:00:00
-Writing PDF for 2021-04-15 00:00:00
-Writing PDF for 2021-04-14 00:00:00
-Writing PDF for 2021-04-13 00:00:00
-Writing PDF for 2021-04-12 00:00:00
-Writing PDF for 2021-04-11 00:00:00
-Writing PDF for 2021-04-10 00:00:00
-Writing PDF for 2021-04-09 00:00:00
-Writing PDF for 2021-04-08 00:00:00
-Writing PDF for 2021-04-07 00:00:00
-Writing PDF for 2021-04-06 00:00:00
-Writing PDF for 2021-04-05 00:00:00
-Writing PDF for 2021-04-04 00:00:00
-Writing PDF for 2021-04-03 00:00:00
-Writing PDF for 2021-04-02 00:00:00
-Writing PDF for 2021-04-01 00:00:00
-Writing PDF for 2021-03-31 00:00:00
-Writing PDF for 2021-03-30 00:00:00
-Writing PDF for 2021-03-29 00:00:00
-Writing PDF for 2021-03-28 00:00:00
-Writing PDF for 2021-03-27 00:00:00
-Writing PDF for 2021-03-26 00:00:00
-Writing PDF for 2021-03-25 00:00:00
-Writing PDF for 2021-03-24 00:00:00
-Writing PDF for 2021-03-23 00:00:00
-Writing PDF for 2021-03-22 00:00:00
-Writing PDF for 2021-03-21 00:00:00
-Writing PDF for 2021-03-20 00:00:00
-Writing PDF for 2021-03-19 00:00:00
-Writing PDF for 2021-03-18 00:00:00
-Writing PDF for 2021-03-17 00:00:00
-Writing PDF for 2021-03-16 00:00:00
-Writing PDF for 2021-03-15 00:00:00
-Writing PDF for 2021-03-14 00:00:00
-</pre>
+
+
+<div class="output_text output_subarea output_execute_result">
+<pre>Timestamp('2021-07-18 00:00:00', freq='D')</pre>
+</div>
+
+</div>
+
 </div>
 </div>
+
+</div>
+    
+
+    
+    
+<div class="cell border-box-sizing code_cell rendered">
+<div class="input">
+
+<div class="inner_cell">
+    <div class="input_area">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">resp</span> <span class="o">=</span> <span class="n">download_injury_report</span><span class="p">(</span><span class="n">season_dates</span><span class="p">[</span><span class="o">-</span><span class="mi">3</span><span class="p">])</span>
+</pre></div>
+
+    </div>
+</div>
+</div>
+
+<div class="output_wrapper">
+<div class="output">
 
 <div class="output_area">
 
-<div class="output_subarea output_text output_error">
-<pre>
-<span class="ansi-red-fg">---------------------------------------------------------------------------</span>
-<span class="ansi-red-fg">KeyboardInterrupt</span>                         Traceback (most recent call last)
-<span class="ansi-green-fg">&lt;ipython-input-136-955ec92f21d6&gt;</span> in <span class="ansi-cyan-fg">&lt;module&gt;</span>
-<span class="ansi-green-intense-fg ansi-bold">      7</span>     url <span class="ansi-blue-fg">=</span> <span class="ansi-blue-fg">f'{url_stem}{datetime.strftime(gameday, "%Y-%m-%d")}_{report_time}.pdf'</span>
-<span class="ansi-green-intense-fg ansi-bold">      8</span>     <span class="ansi-red-fg"># Make the request to download the PDF</span>
-<span class="ansi-green-fg">----&gt; 9</span><span class="ansi-red-fg">     </span>resp <span class="ansi-blue-fg">=</span> requests<span class="ansi-blue-fg">.</span>get<span class="ansi-blue-fg">(</span>url<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     10</span>     <span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">     11</span>         resp<span class="ansi-blue-fg">.</span>raise_for_status<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-
-<span class="ansi-green-fg">~/miniconda3/envs/sports/lib/python3.8/site-packages/requests/api.py</span> in <span class="ansi-cyan-fg">get</span><span class="ansi-blue-fg">(url, params, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">     74</span> 
-<span class="ansi-green-intense-fg ansi-bold">     75</span>     kwargs<span class="ansi-blue-fg">.</span>setdefault<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">'allow_redirects'</span><span class="ansi-blue-fg">,</span> <span class="ansi-green-fg">True</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-fg">---&gt; 76</span><span class="ansi-red-fg">     </span><span class="ansi-green-fg">return</span> request<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">'get'</span><span class="ansi-blue-fg">,</span> url<span class="ansi-blue-fg">,</span> params<span class="ansi-blue-fg">=</span>params<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     77</span> 
-<span class="ansi-green-intense-fg ansi-bold">     78</span> 
-
-<span class="ansi-green-fg">~/miniconda3/envs/sports/lib/python3.8/site-packages/requests/api.py</span> in <span class="ansi-cyan-fg">request</span><span class="ansi-blue-fg">(method, url, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">     59</span>     <span class="ansi-red-fg"># cases, and look like a memory leak in others.</span>
-<span class="ansi-green-intense-fg ansi-bold">     60</span>     <span class="ansi-green-fg">with</span> sessions<span class="ansi-blue-fg">.</span>Session<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">as</span> session<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">---&gt; 61</span><span class="ansi-red-fg">         </span><span class="ansi-green-fg">return</span> session<span class="ansi-blue-fg">.</span>request<span class="ansi-blue-fg">(</span>method<span class="ansi-blue-fg">=</span>method<span class="ansi-blue-fg">,</span> url<span class="ansi-blue-fg">=</span>url<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">     62</span> 
-<span class="ansi-green-intense-fg ansi-bold">     63</span> 
-
-<span class="ansi-green-fg">~/miniconda3/envs/sports/lib/python3.8/site-packages/requests/sessions.py</span> in <span class="ansi-cyan-fg">request</span><span class="ansi-blue-fg">(self, method, url, params, data, headers, cookies, files, auth, timeout, allow_redirects, proxies, hooks, stream, verify, cert, json)</span>
-<span class="ansi-green-intense-fg ansi-bold">    540</span>         }
-<span class="ansi-green-intense-fg ansi-bold">    541</span>         send_kwargs<span class="ansi-blue-fg">.</span>update<span class="ansi-blue-fg">(</span>settings<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-fg">--&gt; 542</span><span class="ansi-red-fg">         </span>resp <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>send<span class="ansi-blue-fg">(</span>prep<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>send_kwargs<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    543</span> 
-<span class="ansi-green-intense-fg ansi-bold">    544</span>         <span class="ansi-green-fg">return</span> resp
-
-<span class="ansi-green-fg">~/miniconda3/envs/sports/lib/python3.8/site-packages/requests/sessions.py</span> in <span class="ansi-cyan-fg">send</span><span class="ansi-blue-fg">(self, request, **kwargs)</span>
-<span class="ansi-green-intense-fg ansi-bold">    653</span> 
-<span class="ansi-green-intense-fg ansi-bold">    654</span>         <span class="ansi-red-fg"># Send the request</span>
-<span class="ansi-green-fg">--&gt; 655</span><span class="ansi-red-fg">         </span>r <span class="ansi-blue-fg">=</span> adapter<span class="ansi-blue-fg">.</span>send<span class="ansi-blue-fg">(</span>request<span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">**</span>kwargs<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    656</span> 
-<span class="ansi-green-intense-fg ansi-bold">    657</span>         <span class="ansi-red-fg"># Total elapsed time of the request (approximately)</span>
-
-<span class="ansi-green-fg">~/miniconda3/envs/sports/lib/python3.8/site-packages/requests/adapters.py</span> in <span class="ansi-cyan-fg">send</span><span class="ansi-blue-fg">(self, request, stream, timeout, verify, cert, proxies)</span>
-<span class="ansi-green-intense-fg ansi-bold">    437</span>         <span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    438</span>             <span class="ansi-green-fg">if</span> <span class="ansi-green-fg">not</span> chunked<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">--&gt; 439</span><span class="ansi-red-fg">                 resp = conn.urlopen(
-</span><span class="ansi-green-intense-fg ansi-bold">    440</span>                     method<span class="ansi-blue-fg">=</span>request<span class="ansi-blue-fg">.</span>method<span class="ansi-blue-fg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">    441</span>                     url<span class="ansi-blue-fg">=</span>url<span class="ansi-blue-fg">,</span>
-
-<span class="ansi-green-fg">~/miniconda3/envs/sports/lib/python3.8/site-packages/urllib3/connectionpool.py</span> in <span class="ansi-cyan-fg">urlopen</span><span class="ansi-blue-fg">(self, method, url, body, headers, retries, redirect, assert_same_host, timeout, pool_timeout, release_conn, chunked, body_pos, **response_kw)</span>
-<span class="ansi-green-intense-fg ansi-bold">    697</span> 
-<span class="ansi-green-intense-fg ansi-bold">    698</span>             <span class="ansi-red-fg"># Make the request on the httplib connection object.</span>
-<span class="ansi-green-fg">--&gt; 699</span><span class="ansi-red-fg">             httplib_response = self._make_request(
-</span><span class="ansi-green-intense-fg ansi-bold">    700</span>                 conn<span class="ansi-blue-fg">,</span>
-<span class="ansi-green-intense-fg ansi-bold">    701</span>                 method<span class="ansi-blue-fg">,</span>
-
-<span class="ansi-green-fg">~/miniconda3/envs/sports/lib/python3.8/site-packages/urllib3/connectionpool.py</span> in <span class="ansi-cyan-fg">_make_request</span><span class="ansi-blue-fg">(self, conn, method, url, timeout, chunked, **httplib_request_kw)</span>
-<span class="ansi-green-intense-fg ansi-bold">    443</span>                     <span class="ansi-red-fg"># Python 3 (including for exceptions like SystemExit).</span>
-<span class="ansi-green-intense-fg ansi-bold">    444</span>                     <span class="ansi-red-fg"># Otherwise it looks like a bug in the code.</span>
-<span class="ansi-green-fg">--&gt; 445</span><span class="ansi-red-fg">                     </span>six<span class="ansi-blue-fg">.</span>raise_from<span class="ansi-blue-fg">(</span>e<span class="ansi-blue-fg">,</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    446</span>         <span class="ansi-green-fg">except</span> <span class="ansi-blue-fg">(</span>SocketTimeout<span class="ansi-blue-fg">,</span> BaseSSLError<span class="ansi-blue-fg">,</span> SocketError<span class="ansi-blue-fg">)</span> <span class="ansi-green-fg">as</span> e<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    447</span>             self<span class="ansi-blue-fg">.</span>_raise_timeout<span class="ansi-blue-fg">(</span>err<span class="ansi-blue-fg">=</span>e<span class="ansi-blue-fg">,</span> url<span class="ansi-blue-fg">=</span>url<span class="ansi-blue-fg">,</span> timeout_value<span class="ansi-blue-fg">=</span>read_timeout<span class="ansi-blue-fg">)</span>
-
-<span class="ansi-green-fg">~/miniconda3/envs/sports/lib/python3.8/site-packages/urllib3/packages/six.py</span> in <span class="ansi-cyan-fg">raise_from</span><span class="ansi-blue-fg">(value, from_value)</span>
-
-<span class="ansi-green-fg">~/miniconda3/envs/sports/lib/python3.8/site-packages/urllib3/connectionpool.py</span> in <span class="ansi-cyan-fg">_make_request</span><span class="ansi-blue-fg">(self, conn, method, url, timeout, chunked, **httplib_request_kw)</span>
-<span class="ansi-green-intense-fg ansi-bold">    438</span>                 <span class="ansi-red-fg"># Python 3</span>
-<span class="ansi-green-intense-fg ansi-bold">    439</span>                 <span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">--&gt; 440</span><span class="ansi-red-fg">                     </span>httplib_response <span class="ansi-blue-fg">=</span> conn<span class="ansi-blue-fg">.</span>getresponse<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    441</span>                 <span class="ansi-green-fg">except</span> BaseException <span class="ansi-green-fg">as</span> e<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    442</span>                     <span class="ansi-red-fg"># Remove the TypeError from the exception chain in</span>
-
-<span class="ansi-green-fg">~/miniconda3/envs/sports/lib/python3.8/http/client.py</span> in <span class="ansi-cyan-fg">getresponse</span><span class="ansi-blue-fg">(self)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1345</span>         <span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">   1346</span>             <span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">-&gt; 1347</span><span class="ansi-red-fg">                 </span>response<span class="ansi-blue-fg">.</span>begin<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1348</span>             <span class="ansi-green-fg">except</span> ConnectionError<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">   1349</span>                 self<span class="ansi-blue-fg">.</span>close<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-
-<span class="ansi-green-fg">~/miniconda3/envs/sports/lib/python3.8/http/client.py</span> in <span class="ansi-cyan-fg">begin</span><span class="ansi-blue-fg">(self)</span>
-<span class="ansi-green-intense-fg ansi-bold">    305</span>         <span class="ansi-red-fg"># read until we get a non-100 response</span>
-<span class="ansi-green-intense-fg ansi-bold">    306</span>         <span class="ansi-green-fg">while</span> <span class="ansi-green-fg">True</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">--&gt; 307</span><span class="ansi-red-fg">             </span>version<span class="ansi-blue-fg">,</span> status<span class="ansi-blue-fg">,</span> reason <span class="ansi-blue-fg">=</span> self<span class="ansi-blue-fg">.</span>_read_status<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    308</span>             <span class="ansi-green-fg">if</span> status <span class="ansi-blue-fg">!=</span> CONTINUE<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    309</span>                 <span class="ansi-green-fg">break</span>
-
-<span class="ansi-green-fg">~/miniconda3/envs/sports/lib/python3.8/http/client.py</span> in <span class="ansi-cyan-fg">_read_status</span><span class="ansi-blue-fg">(self)</span>
-<span class="ansi-green-intense-fg ansi-bold">    266</span> 
-<span class="ansi-green-intense-fg ansi-bold">    267</span>     <span class="ansi-green-fg">def</span> _read_status<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">--&gt; 268</span><span class="ansi-red-fg">         </span>line <span class="ansi-blue-fg">=</span> str<span class="ansi-blue-fg">(</span>self<span class="ansi-blue-fg">.</span>fp<span class="ansi-blue-fg">.</span>readline<span class="ansi-blue-fg">(</span>_MAXLINE <span class="ansi-blue-fg">+</span> <span class="ansi-cyan-fg">1</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">,</span> <span class="ansi-blue-fg">"iso-8859-1"</span><span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    269</span>         <span class="ansi-green-fg">if</span> len<span class="ansi-blue-fg">(</span>line<span class="ansi-blue-fg">)</span> <span class="ansi-blue-fg">&gt;</span> _MAXLINE<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    270</span>             <span class="ansi-green-fg">raise</span> LineTooLong<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">"status line"</span><span class="ansi-blue-fg">)</span>
-
-<span class="ansi-green-fg">~/miniconda3/envs/sports/lib/python3.8/socket.py</span> in <span class="ansi-cyan-fg">readinto</span><span class="ansi-blue-fg">(self, b)</span>
-<span class="ansi-green-intense-fg ansi-bold">    667</span>         <span class="ansi-green-fg">while</span> <span class="ansi-green-fg">True</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    668</span>             <span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">--&gt; 669</span><span class="ansi-red-fg">                 </span><span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>_sock<span class="ansi-blue-fg">.</span>recv_into<span class="ansi-blue-fg">(</span>b<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">    670</span>             <span class="ansi-green-fg">except</span> timeout<span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">    671</span>                 self<span class="ansi-blue-fg">.</span>_timeout_occurred <span class="ansi-blue-fg">=</span> <span class="ansi-green-fg">True</span>
-
-<span class="ansi-green-fg">~/miniconda3/envs/sports/lib/python3.8/ssl.py</span> in <span class="ansi-cyan-fg">recv_into</span><span class="ansi-blue-fg">(self, buffer, nbytes, flags)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1239</span>                   <span class="ansi-blue-fg">"non-zero flags not allowed in calls to recv_into() on %s"</span> <span class="ansi-blue-fg">%</span>
-<span class="ansi-green-intense-fg ansi-bold">   1240</span>                   self.__class__)
-<span class="ansi-green-fg">-&gt; 1241</span><span class="ansi-red-fg">             </span><span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>read<span class="ansi-blue-fg">(</span>nbytes<span class="ansi-blue-fg">,</span> buffer<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1242</span>         <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">   1243</span>             <span class="ansi-green-fg">return</span> super<span class="ansi-blue-fg">(</span><span class="ansi-blue-fg">)</span><span class="ansi-blue-fg">.</span>recv_into<span class="ansi-blue-fg">(</span>buffer<span class="ansi-blue-fg">,</span> nbytes<span class="ansi-blue-fg">,</span> flags<span class="ansi-blue-fg">)</span>
-
-<span class="ansi-green-fg">~/miniconda3/envs/sports/lib/python3.8/ssl.py</span> in <span class="ansi-cyan-fg">read</span><span class="ansi-blue-fg">(self, len, buffer)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1097</span>         <span class="ansi-green-fg">try</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">   1098</span>             <span class="ansi-green-fg">if</span> buffer <span class="ansi-green-fg">is</span> <span class="ansi-green-fg">not</span> <span class="ansi-green-fg">None</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-fg">-&gt; 1099</span><span class="ansi-red-fg">                 </span><span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>_sslobj<span class="ansi-blue-fg">.</span>read<span class="ansi-blue-fg">(</span>len<span class="ansi-blue-fg">,</span> buffer<span class="ansi-blue-fg">)</span>
-<span class="ansi-green-intense-fg ansi-bold">   1100</span>             <span class="ansi-green-fg">else</span><span class="ansi-blue-fg">:</span>
-<span class="ansi-green-intense-fg ansi-bold">   1101</span>                 <span class="ansi-green-fg">return</span> self<span class="ansi-blue-fg">.</span>_sslobj<span class="ansi-blue-fg">.</span>read<span class="ansi-blue-fg">(</span>len<span class="ansi-blue-fg">)</span>
-
-<span class="ansi-red-fg">KeyboardInterrupt</span>: </pre>
+<div class="output_subarea output_stream output_stderr output_text">
+<pre>&lt;ipython-input-64-22c96f8a63d8&gt;:1: UserWarning: Could not download URL https://ak-static.cms.nba.com/referee/injury/Injury-Report_2021-07-18_08PM.pdf
+  resp = download_injury_report(season_dates[-3])
+</pre>
 </div>
 </div>
 
@@ -1309,6 +948,15 @@ Writing PDF for 2021-03-14 00:00:00
 </div>
     
 
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Okay, running that was a little underwhelming.<br>
+But barring a network catastrophe</p>
+
+</div>
+</div>
+</div>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
