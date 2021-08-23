@@ -135,21 +135,19 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h1"><a href="#Introduction">Introduction </a>
 <ul>
 <li class="toc-entry toc-h2"><a href="#How-To-Read-This-Post">How To Read This Post </a></li>
-<li class="toc-entry toc-h2"><a href="#Project-Description">Project Description </a>
-<ul>
-<li class="toc-entry toc-h3"><a href="#Setting-Goals">Setting Goals </a>
-<ul>
-<li class="toc-entry toc-h4"><a href="#1.-Fallback-Goal">1. Fallback Goal </a></li>
-<li class="toc-entry toc-h4"><a href="#2.--Baseline-Goal">2.  Baseline Goal </a></li>
-<li class="toc-entry toc-h4"><a href="#3.--Stretch-Goal">3.  Stretch Goal </a></li>
 </ul>
 </li>
-</ul>
-</li>
+<li class="toc-entry toc-h1"><a href="#Project-Description">Project Description </a></li>
+<li class="toc-entry toc-h1"><a href="#Kickstarter-Model™️-Goals">Kickstarter Model™️ Goals </a>
+<ul>
+<li class="toc-entry toc-h2"><a href="#1.-Fallback-Goal">1. Fallback Goal </a></li>
+<li class="toc-entry toc-h2"><a href="#2.--Baseline-Goal">2.  Baseline Goal </a></li>
+<li class="toc-entry toc-h2"><a href="#3.--Stretch-Goal">3.  Stretch Goal </a></li>
 </ul>
 </li>
 <li class="toc-entry toc-h1"><a href="#Fallback-Goal:-Downloading-and-Processing-NBA-Injury-Report-PDFs">Fallback Goal: Downloading and Processing NBA Injury Report PDFs </a>
 <ul>
+<li class="toc-entry toc-h2"><a href="#Divvying-Up-Tasks">Divvying Up Tasks </a></li>
 <li class="toc-entry toc-h2"><a href="#Task-1:-Downloading-The-Injury-Reports">Task 1: Downloading The Injury Reports </a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#Generate-a-List-of-URLs-to-Download">Generate a List of URLs to Download </a>
@@ -160,10 +158,7 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#Download-the-PDFs">Download the PDFs </a></li>
 </ul>
 </li>
-</ul>
-</li>
-<li class="toc-entry toc-h1"><a href="#Extracting-Tables-from-PDF-Files">Extracting Tables from PDF Files </a>
-<ul>
+<li class="toc-entry toc-h2"><a href="#Task-2:-Extracting-Tables-from-PDF-Files">Task 2: Extracting Tables from PDF Files </a></li>
 <li class="toc-entry toc-h2"><a href="#Footnotes">Footnotes </a></li>
 </ul>
 </li>
@@ -197,9 +192,9 @@ window.onload = wrap_img;
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Project-Description">
+<h1 id="Project-Description">
 <a class="anchor" href="#Project-Description" aria-hidden="true"><span class="octicon octicon-link"></span></a>Project Description<a class="anchor-link" href="#Project-Description"> </a>
-</h2>
+</h1>
 <p>It all started with a tweet from basketball analytics legend and Korean cinema aficionado <a href="https://twitter.com/EdKupfer">Ed Kupfer</a>:
 
 </p>
@@ -213,10 +208,10 @@ window.onload = wrap_img;
 </center>
 
 <p>Pretty straightforward, right?</p>
-<h3 id="Setting-Goals">
-<a class="anchor" href="#Setting-Goals" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setting Goals<a class="anchor-link" href="#Setting-Goals"> </a>
-</h3>
-<p>As per The Kickstarter™️ model, we need to define our three goals.
+<h1 id="Kickstarter-Model™️-Goals">
+<a class="anchor" href="#Kickstarter-Model%E2%84%A2%EF%B8%8F-Goals" aria-hidden="true"><span class="octicon octicon-link"></span></a>Kickstarter Model™️ Goals<a class="anchor-link" href="#Kickstarter-Model%E2%84%A2%EF%B8%8F-Goals"> </a>
+</h1>
+<p>As per The Kickstarter Model™️, we need to define our three goals.
 At first blush, we might suggest something like the following:</p>
 <ul>
 <li>Fallback Goal: "Get the PDFs"</li>
@@ -233,9 +228,9 @@ Instead, we'll go with a slightly different approach.</p>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="1.-Fallback-Goal">
+<h2 id="1.-Fallback-Goal">
 <a class="anchor" href="#1.-Fallback-Goal" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. Fallback Goal<a class="anchor-link" href="#1.-Fallback-Goal"> </a>
-</h4>
+</h2>
 <blockquote>
 <p>Download and "lift" the data from the NBA Injury Report PDFs into some sort of machine-readable format (<code>CSV</code>, <code>JSON</code>, etc.)</p>
 </blockquote>
@@ -247,9 +242,9 @@ Instead, we'll go with a slightly different approach.</p>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="2.--Baseline-Goal">
+<h2 id="2.--Baseline-Goal">
 <a class="anchor" href="#2.--Baseline-Goal" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.  Baseline Goal<a class="anchor-link" href="#2.--Baseline-Goal"> </a>
-</h4>
+</h2>
 <blockquote>
 <p>Present the data we obtained above in some sort of webapp/dashboard/etc.</p>
 </blockquote>
@@ -263,9 +258,9 @@ It should be reasonably straightforward (famous last words).</p>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h4 id="3.--Stretch-Goal">
+<h2 id="3.--Stretch-Goal">
 <a class="anchor" href="#3.--Stretch-Goal" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.  Stretch Goal<a class="anchor-link" href="#3.--Stretch-Goal"> </a>
-</h4>
+</h2>
 <blockquote>
 <p>None</p>
 </blockquote>
@@ -306,8 +301,18 @@ If we do it right, perhaps something interesting will fall out, and we can explo
 <a class="anchor" href="#Fallback-Goal:-Downloading-and-Processing-NBA-Injury-Report-PDFs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Fallback Goal: Downloading and Processing NBA Injury Report PDFs<a class="anchor-link" href="#Fallback-Goal:-Downloading-and-Processing-NBA-Injury-Report-PDFs"> </a>
 </h1>
 <p>The Kickstarter Model™️ is there to help us structure our effort wisely, and make productive high level design decisions, but it doesn't really say anything about <em>how</em> to do whatever it is we want to do!
-To that end, once we have our goals, I find it's helpful to spend a little time — <em>before</em> coding! — structuring my thinking about each of the tasks at hand.
-As per the discussion above, for our Fallback Goal, it seems like we already have two "high level" tasks:</p>
+To that end, once we have our goals, I find it's helpful to spend a little time — <em>before</em> coding! — structuring my thinking about each of the tasks at hand.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h2 id="Divvying-Up-Tasks">
+<a class="anchor" href="#Divvying-Up-Tasks" aria-hidden="true"><span class="octicon octicon-link"></span></a>Divvying Up Tasks<a class="anchor-link" href="#Divvying-Up-Tasks"> </a>
+</h2>
+<p>As per the discussion above, for our Fallback Goal, it seems like we already have two "high level" tasks:</p>
 <ol>
 <li>Downloading PDFs</li>
 <li>Processing PDFs.</li>
@@ -1167,9 +1172,9 @@ First, we'll define a <code>data</code> directory to write our files (using the 
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h1 id="Extracting-Tables-from-PDF-Files">
-<a class="anchor" href="#Extracting-Tables-from-PDF-Files" aria-hidden="true"><span class="octicon octicon-link"></span></a>Extracting Tables from PDF Files<a class="anchor-link" href="#Extracting-Tables-from-PDF-Files"> </a>
-</h1>
+<h2 id="Task-2:-Extracting-Tables-from-PDF-Files">
+<a class="anchor" href="#Task-2:-Extracting-Tables-from-PDF-Files" aria-hidden="true"><span class="octicon octicon-link"></span></a>Task 2: Extracting Tables from PDF Files<a class="anchor-link" href="#Task-2:-Extracting-Tables-from-PDF-Files"> </a>
+</h2>
 <p>Now that we have our 205 injury report PDFs (culled from 212 days!), it's time to extract the data in the tables.
 While I've briefly played around with optical character recognition (OCR) tools like <a href="https://github.com/tesseract-ocr/tesseract">Tesseract</a>, strict OCR seemed like a bad fit.
 Other than that, I wasn't sure what tool to use, which means...google to the rescue!</p>
