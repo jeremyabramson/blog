@@ -375,7 +375,7 @@ After some brief googling, it seems like there really isn't a central repository
 <blockquote>
 <p><code>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2021-04-23_01PM.pdf</code></p>
 </blockquote>
-<p>Looks like there's 4 parts to the URL:</p>
+<p>Seems like there's 4 parts to the URL:</p>
 <ol>
 <li>Some boilerplate: <code>https://ak-static.cms.nba.com/referee/injury/Injury-Report_</code>
 </li>
@@ -454,7 +454,7 @@ There's more code coming soon, I promise!)</p>
 We'll use these dates as portion of the URL schema detailed above, but in order to do so, we need to know what range to generate.</p>
 <p>The day before the start of the NBA season until the end of the NBA season seems like a reasonable starting point.
 If we needed to do this for some number of seasons, we'd want to automate this, but for now, let's just copy the dates manually. 
-Perusing the <a href="https://en.wikipedia.org/wiki/2020%E2%80%9321_NBA_season">wikipedia page</a> for the 2020-2021 NBA season, it looks like the season started on December 22, 2020, and <a href="https://www.youtube.com/watch?v=9O920AD-teU">ended</a> on July 20th.
+Perusing the <a href="https://en.wikipedia.org/wiki/2020%E2%80%9321_NBA_season">wikipedia page</a> for the 2020-2021 NBA season, it looks like the season <a href="https://www.espn.com/nba/recap/_/gameId/401266805">started</a> on December 22, 2020, and <a href="https://www.youtube.com/watch?v=9O920AD-teU">ended</a> on July 20th.
 From manual testing, <a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2021-07-20_08PM.pdf">https://ak-static.cms.nba.com/referee/injury/Injury-Report_2021-07-20_08PM.pdf</a> is a valid link, and the next day, unsurprisingly, is not.</p>
 <p>Remembering our "the injury reports can come out the day <em>before</em>" note from above, this gives us our range: <code>December 21, 2020</code> through <code>July 20, 2021</code>.</p>
 
@@ -579,7 +579,7 @@ Let's define variables for the parts of the URL that are static (for now, we may
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Almost, but not quite!
 It looks like our <code>season_dates[0]</code> object is some sort of <code>datetime</code>-y type thing.
-Let's find out exactly:</p>
+But let's find out what Let's find out exactly:</p>
 
 </div>
 </div>
@@ -631,7 +631,7 @@ That being the case, let's just go ahead and try to use the standard method we u
 <p></p>
 <div class="flash flash-success">
     <svg class="octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2.5 1.75a.25.25 0 01.25-.25h8.5a.25.25 0 01.25.25v7.736a.75.75 0 101.5 0V1.75A1.75 1.75 0 0011.25 0h-8.5A1.75 1.75 0 001 1.75v11.5c0 .966.784 1.75 1.75 1.75h3.17a.75.75 0 000-1.5H2.75a.25.25 0 01-.25-.25V1.75zM4.75 4a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-4.5zM4 7.75A.75.75 0 014.75 7h2a.75.75 0 010 1.5h-2A.75.75 0 014 7.75zm11.774 3.537a.75.75 0 00-1.048-1.074L10.7 14.145 9.281 12.72a.75.75 0 00-1.062 1.058l1.943 1.95a.75.75 0 001.055.008l4.557-4.45z"></path></svg>
-    <strong>Tip: </strong>I could never remember which one was which between <code>strftime</code> and <code>strptime</code> until I leared that <code>strftime()</code> is "string <em>from</em> time" and <code>strptime()</code> is "string <em>parse</em> time" ::"The More You Know" star whooshes by::
+    <strong>Tip: </strong>I could never remember which one was which between <code>strftime</code> and <code>strptime</code> until I leared that <code>strftime()</code> is "string <em>from</em> time" and <code>strptime()</code> is "string <em>parse</em> time" (That sound you hear is the "The More You Know" star whoosing by)
 </div>
 
 </div>
