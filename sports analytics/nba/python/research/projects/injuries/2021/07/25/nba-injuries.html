@@ -78,7 +78,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      54 min read
+      56 min read
     
 </span></p>
 
@@ -139,7 +139,7 @@ window.onload = wrap_img;
 <ul>
 <li class="toc-entry toc-h3"><a href="#Setting-Goals">Setting Goals </a>
 <ul>
-<li class="toc-entry toc-h4"><a href="#1.--Fallback-Goal">1.  Fallback Goal </a></li>
+<li class="toc-entry toc-h4"><a href="#1.-Fallback-Goal">1. Fallback Goal </a></li>
 <li class="toc-entry toc-h4"><a href="#2.--Baseline-Goal">2.  Baseline Goal </a></li>
 <li class="toc-entry toc-h4"><a href="#3.--Stretch-Goal">3.  Stretch Goal </a></li>
 </ul>
@@ -150,7 +150,7 @@ window.onload = wrap_img;
 </li>
 <li class="toc-entry toc-h1"><a href="#Fallback-Goal:-Downloading-and-Processing-NBA-Injury-Report-PDFs">Fallback Goal: Downloading and Processing NBA Injury Report PDFs </a>
 <ul>
-<li class="toc-entry toc-h2"><a href="#Downloading-The-Injury-Reports">Downloading The Injury Reports </a>
+<li class="toc-entry toc-h2"><a href="#Task-1:-Downloading-The-Injury-Reports">Task 1: Downloading The Injury Reports </a>
 <ul>
 <li class="toc-entry toc-h3"><a href="#Generate-a-List-of-URLs-to-Download">Generate a List of URLs to Download </a>
 <ul>
@@ -216,15 +216,30 @@ window.onload = wrap_img;
 <h3 id="Setting-Goals">
 <a class="anchor" href="#Setting-Goals" aria-hidden="true"><span class="octicon octicon-link"></span></a>Setting Goals<a class="anchor-link" href="#Setting-Goals"> </a>
 </h3>
-<p>As per The Kickstarter™️ model, let's define our three goals.<br>
-In this instance, we're going to be somewhat aggressive here, since the creation of our dataset involves some [at this point] unknown tooling.</p>
-<h4 id="1.--Fallback-Goal">
-<a class="anchor" href="#1.--Fallback-Goal" aria-hidden="true"><span class="octicon octicon-link"></span></a>1.  Fallback Goal<a class="anchor-link" href="#1.--Fallback-Goal"> </a>
+<p>As per The Kickstarter™️ model, we need to define our three goals.
+At first blush, we might suggest something like the following:</p>
+<ul>
+<li>Fallback Goal: "Get the PDFs"</li>
+<li>Baseline Goal: "Extract data from the PDFs"</li>
+<li>Stretch Goal: "Present the data somehow"</li>
+</ul>
+<p>That's absolutely defensible, and definitely aligns with the major technical "tasks" of the project, which is a nice structural bonus.
+But I'm not sure a directory full of PDFs qualifies as a "dataset" you could pass on to someone else as a contribution.
+Instead, we'll go with a slightly different approach.</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<h4 id="1.-Fallback-Goal">
+<a class="anchor" href="#1.-Fallback-Goal" aria-hidden="true"><span class="octicon octicon-link"></span></a>1. Fallback Goal<a class="anchor-link" href="#1.-Fallback-Goal"> </a>
 </h4>
-<p>This one seems pretty obvious:</p>
 <blockquote>
 <p>Download and "lift" the data from the NBA Injury Report PDFs into some sort of machine-readable format (<code>CSV</code>, <code>JSON</code>, etc.)</p>
 </blockquote>
+<p>Since "getting the data" is kind of the main point of this entire exercise, even though extracting data from the PDFs requires requires some [at this point] unknown tooling, we're going to have both downloading <em>and</em> processing the PDFs be be our Fallback Goal.</p>
 
 </div>
 </div>
@@ -235,10 +250,12 @@ In this instance, we're going to be somewhat aggressive here, since the creation
 <h4 id="2.--Baseline-Goal">
 <a class="anchor" href="#2.--Baseline-Goal" aria-hidden="true"><span class="octicon octicon-link"></span></a>2.  Baseline Goal<a class="anchor-link" href="#2.--Baseline-Goal"> </a>
 </h4>
-<p>This one is a little more open ended, but I think a good option might be:</p>
 <blockquote>
 <p>Present the data we obtained above in some sort of webapp/dashboard/etc.</p>
 </blockquote>
+<p>This now aligns with what we think of as a Baseline Goal:A fully-fledged "deliverable" of some sort that delivers value or insight to the community. Doing this may sound a bit aggressive in terms of complexity, but our "webapp" doesn't need to be all that fancy.
+It's just a "skin" to slice and dice the data we generate from the Fallback Goal.
+It should be reasonably straightforward (famous last words).</p>
 
 </div>
 </div>
@@ -249,12 +266,14 @@ In this instance, we're going to be somewhat aggressive here, since the creation
 <h4 id="3.--Stretch-Goal">
 <a class="anchor" href="#3.--Stretch-Goal" aria-hidden="true"><span class="octicon octicon-link"></span></a>3.  Stretch Goal<a class="anchor-link" href="#3.--Stretch-Goal"> </a>
 </h4>
+<blockquote>
+<p>None</p>
+</blockquote>
 <p>As we were pretty aggressive with our first two goals, I think it's perfectly reasonable to not have a Stretch Goal.
 We could say something vague like "analyze the injury data" but in my opinion, that's actually <em>counterproductive</em>.
 The reason being that the goal of this project isn't really analysis!
 The goal is is unlock some data in one format, and present it to "the user" in another format that's more amenable for <em>their</em> absorption.<br>
-This may not sound very "sexy", but the reality is that this data collection/"chewing"/presenting process is basically <a href="https://www.sportperformanceanalysis.com/article/communication-with-coaches-as-a-performance-analyst">one of the most important things</a> in sports analytics.
-So unless you have a <em>specific</em> analysis in mind, I think it makes sense to not have a Stretch Goal, and to just focus on the first two goals.
+This may not sound very "sexy", but the reality is that this data collection/"chewing"/presenting process is basically <a href="https://www.sportperformanceanalysis.com/article/communication-with-coaches-as-a-performance-analyst">one of the most important things</a> in sports analytics.So unless you have a <em>specific</em> analysis in mind, I think it makes sense to not have a Stretch Goal, and to just focus on the first two goals.
 If we do it right, perhaps something interesting will fall out, and we can explore it at that point!</p>
 
 </div>
@@ -266,8 +285,16 @@ If we do it right, perhaps something interesting will fall out, and we can explo
 <p></p>
 <div class="flash">
     <svg class="octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
-    <strong>Note: </strong>You could make a decent argument for "Downloading the PDFs" as a Fallback Goal, "Process the PDFs into CSVs (or whatever)" as the Baseline Goal and "Build a Webapp/GUI" as the Stretch Goal.
+    <strong>Note: </strong>Again, the point of setting these goals isn’t to spur endless debate or to create another roadblock to starting a project.  It’s just a way of structuring potential future design decisions, and making sure things like feature creep and "great-being-the-enemy-of-good" don’t impede actually delivering on the goals.
 </div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p>Now that we have a conceptual goal framework in which to work, let's get to work!</p>
 
 </div>
 </div>
@@ -278,20 +305,21 @@ If we do it right, perhaps something interesting will fall out, and we can explo
 <h1 id="Fallback-Goal:-Downloading-and-Processing-NBA-Injury-Report-PDFs">
 <a class="anchor" href="#Fallback-Goal:-Downloading-and-Processing-NBA-Injury-Report-PDFs" aria-hidden="true"><span class="octicon octicon-link"></span></a>Fallback Goal: Downloading and Processing NBA Injury Report PDFs<a class="anchor-link" href="#Fallback-Goal:-Downloading-and-Processing-NBA-Injury-Report-PDFs"> </a>
 </h1>
-<p>I find it's helpful to spend a little time — <em>before</em> coding! — structuring my thinking about the tasks at hand.
-By virtue of setting goals above, already have two "high level" tasks:</p>
+<p>The Kickstarter Model™️ is there to help us structure our effort wisely, and make productive high level design decisions, but it doesn't really say anything about <em>how</em> to do whatever it is we want to do!
+To that end, once we have our goals, I find it's helpful to spend a little time — <em>before</em> coding! — structuring my thinking about each of the tasks at hand.
+As per the discussion above, for our Fallback Goal, it seems like we already have two "high level" tasks:</p>
 <ol>
 <li>Downloading PDFs</li>
 <li>Processing PDFs.</li>
 </ol>
 <p>But we can break those down a little further.
 First off, we can't download anything without knowing <em>what</em> to download.
-There doesn't seem to any obvious "central repository" for URLs to injury reports, and since Ed's tweet mentions "just change the date", it seems safe to assume we'll need to build a list of URLs based on dates.
-At this point, I'll note that I'm not sure exactly how to extract the data from the PDFs (minor detail, right?!?)
+Ed's tweet mentions "just change the date", it seems safe to assume we'll need to build a list of URLs based on dates, unless there's some central page with links to all of the injury reports, in which case we can just scrape the URLs from that.</p>
+<p>And, of course, at this point I'm not sure exactly how to extract the data from the PDFs (minor detail, right?!?)
 But I'm pretty confident it <em>can</em> be done, so we'll save a little "Google-fu" for later.
-However, it does seem reasonable to use <code>Pandas</code> to post-process our data once we do get it out of the PDF, since it's tabular.
+However, it does seem reasonable to use <code>Pandas</code> to post-process our data once we do get it out of the PDF, since it's definitely going to be tabular.
 Lastly, we might want to fancy with <a href="https://www.twilio.com/blog/asynchronous-http-requests-in-python-with-aiohttp">asynchronous requests</a> (or perhaps not!  It might not be worth the effort, but let's note it here).</p>
-<p>Taking all of the above into account, our <strong>Fallback Goal</strong> outline might look like this:</p>
+<p>Taking all of the above into account, our <strong>Fallback Goal</strong> task outline might look like this:</p>
 <ol>
 <li>Download PDFs<ol>
 <li>Generate list of URLs (dates) to injury report PDFs</li>
@@ -331,8 +359,8 @@ Lastly, we might want to fancy with <a href="https://www.twilio.com/blog/asynchr
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Downloading-The-Injury-Reports">
-<a class="anchor" href="#Downloading-The-Injury-Reports" aria-hidden="true"><span class="octicon octicon-link"></span></a>Downloading The Injury Reports<a class="anchor-link" href="#Downloading-The-Injury-Reports"> </a>
+<h2 id="Task-1:-Downloading-The-Injury-Reports">
+<a class="anchor" href="#Task-1:-Downloading-The-Injury-Reports" aria-hidden="true"><span class="octicon octicon-link"></span></a>Task 1: Downloading The Injury Reports<a class="anchor-link" href="#Task-1:-Downloading-The-Injury-Reports"> </a>
 </h2>
 <p>Before we can actually do anything interesting with the injury reports, we need to download them.
 To do that, we need to know where there are.
@@ -355,7 +383,7 @@ After some brief googling, it seems like there really isn't a central repository
 <p>We're only interested in the middle two (the date and the time), as the boilerplate URL and the file extension won't change.  From googling<sup id="fnref-2" class="footnote-ref"><a href="#fn-2">2</a></sup> <code>"nba injury report"</code> and clicking on <a href="https://official.nba.com/nba-injury-report-2020-21-season/">the second link</a> it seems like the times may be <code>1:30 PM</code>, <code>5:30 PM</code> and <code>8:30 PM</code>.
 Although from Ed's example, we see a <code>01PM</code> time in the URL, <em>not</em> <code>1:30</code>. 
 So we'll go ahead and assume the appropriate times URL-wise are <code>01PM</code>, <code>05PM</code> and <code>08PM</code>.<br>
-Lastly, for simplicity, let's just focus on the <code>8:30PM</code> file (it's likely to be the most complete anyway).
+Lastly, for simplicity, let's just focus on the <code>8:30PM</code> (or <code>8PM</code>, in URL-speak) file, as it's likely to be the most complete.
 We can download the rest later if we want.</p>
 
 </div>
@@ -401,7 +429,7 @@ Pandas certainly has its issues, but this is one case where it'll make our lives
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">pandas</span> <span class="k">as</span> <span class="nn">pd</span>
 </pre></div>
 
     </div>
@@ -414,16 +442,15 @@ Pandas certainly has its issues, but this is one case where it'll make our lives
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Okay, so that wasn't very satisfying.
-There's more code coming soon, I promise!</p>
+<p>(Okay, so that wasn't very satisfying.
+There's more code coming soon, I promise!)</p>
 <p>We're going to use the <code>pandas.date_range</code> (<a href="https://pandas.pydata.org/docs/reference/api/pandas.date_range.html">docs</a>) function to generate, well, a range of dates.
 We'll use these dates as portion of the URL schema detailed above, but in order to do so, we need to know what range to generate.</p>
 <p>The day before the start of the NBA season until the end of the NBA season seems like a reasonable starting point.
-Determining these dates is going to take some manual effort.
 If we needed to do this for some number of seasons, we'd want to automate this, but for now, let's just copy the dates manually. 
 Perusing the <a href="https://en.wikipedia.org/wiki/2020%E2%80%9321_NBA_season">wikipedia page</a> for the 2020-2021 NBA season, it looks like the season started on December 22, 2020, and <a href="https://www.youtube.com/watch?v=9O920AD-teU">ended</a> on July 20th.
 From manual testing, <a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2021-07-20_08PM.pdf">https://ak-static.cms.nba.com/referee/injury/Injury-Report_2021-07-20_08PM.pdf</a> is a valid link, and the next day, unsurprisingly, is not.</p>
-<p>Remembering our "the injury reports can come out the day <em>before</em>" note from above, this gives us our range.</p>
+<p>Remembering our "the injury reports can come out the day <em>before</em>" note from above, this gives us our range: <code>December 21, 2020</code> through <code>July 20, 2021</code>.</p>
 
 </div>
 </div>
@@ -431,7 +458,7 @@ From manual testing, <a href="https://ak-static.cms.nba.com/referee/injury/Injur
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Checking the <a href="https://pandas.pydata.org/docs/reference/api/pandas.date_range.html">docs</a> for <code>pandas.date_range</code> it seems like there's a ton of parameters, but <code>start</code> and <code>end</code> look like they might be all we need.
+<p>Looking at the <a href="https://pandas.pydata.org/docs/reference/api/pandas.date_range.html">docs</a> for <code>pandas.date_range</code> it there's a ton of parameters we can use, but <code>start</code> and <code>end</code> look like they might be all we need.
 Now, for real this time, let's look at some code!</p>
 
 </div>
@@ -445,6 +472,7 @@ Now, for real this time, let's look at some code!</p>
 <div class="inner_cell">
     <div class="input_area">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="n">season_dates</span> <span class="o">=</span> <span class="n">pd</span><span class="o">.</span><span class="n">date_range</span><span class="p">(</span><span class="n">start</span><span class="o">=</span><span class="s1">'12-21-2020'</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s1">'07-20-2021'</span><span class="p">)</span>
+<span class="c1"># Let's look at the first and last dates in our list</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s1">'The 2020-21 NBA season started on </span><span class="si">{</span><span class="n">season_dates</span><span class="p">[</span><span class="mi">0</span><span class="p">]</span><span class="si">}</span><span class="s1">, and ended on </span><span class="si">{</span><span class="n">season_dates</span><span class="p">[</span><span class="o">-</span><span class="mi">1</span><span class="p">]</span><span class="si">}</span><span class="s1">'</span><span class="p">)</span>
 </pre></div>
 
@@ -472,21 +500,13 @@ Now, for real this time, let's look at some code!</p>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>(It may not look like much, but if you have <em>any</em> idea how obnoxious this would be without <code>pandas</code>, you'll be impressed!)</p>
-<p>It seems like we have our list of dates, and we just need to add them to our URL schema.
-As we saw <a href="https://jeremyabramson.github.io/blog/sports%20analytics/nba/python/research/projects/injuries/2021/07/25/nba-injuries.html#Decoding-the-Filename-Schema-From-the-URL">above</a>, the URL has 4 parts.</p>
+<p>(It may not look like much, but if you have <em>any</em> idea how obnoxious this would be without <code>pandas</code>, you'll be impressed!)
+Now that we have our list of dates, we just need to add them to our URL schema.
+Let's define variables for the parts of the URL that are static (for now, we may want to download other <code>report_time</code> values later):</p>
 <p>As a reminder, the URL's look like this:</p>
 <blockquote>
-<p><a href="https://ak-static.cms.nba.com/referee/injury/Injury-Report_2021-07-20_08PM.pdf">https://ak-static.cms.nba.com/referee/injury/Injury-Report_2021-07-20_08PM.pdf</a></p>
+<p><code>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2021-07-20_08PM.pdf</code></p>
 </blockquote>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p>Let's define variables for the parts of the URL that are static (for now, we may want to download other <code>report_time</code> values later):</p>
 
 </div>
 </div>
@@ -552,7 +572,7 @@ As we saw <a href="https://jeremyabramson.github.io/blog/sports%20analytics/nba/
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>Almost, but not quite!
-It looks like our <code>season_dates[0]</code> object is some sort of date-y type thing.
+It looks like our <code>season_dates[0]</code> object is some sort of <code>datetime</code>-y type thing.
 Let's find out exactly:</p>
 
 </div>
@@ -592,7 +612,8 @@ Let's find out exactly:</p>
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>I admit, I was expecting a standard Python <code>datetime</code> (<a href="https://docs.python.org/3/library/datetime.html#datetime.datetime">docs</a>) object.
+<p>So, it's not quite a standard Python <code>datetime</code> object (<a href="https://docs.python.org/3/library/datetime.html#datetime.datetime">docs</a>).
+But it sure seems like it might behave like one<sup id="fnref-3" class="footnote-ref"><a href="#fn-3">3</a></sup>.
 That being the case, let's just go ahead and try to use the standard method we use to process Python dates into strings: <code>strftime()</code>.</p>
 
 </div>
@@ -604,7 +625,7 @@ That being the case, let's just go ahead and try to use the standard method we u
 <p></p>
 <div class="flash flash-success">
     <svg class="octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2.5 1.75a.25.25 0 01.25-.25h8.5a.25.25 0 01.25.25v7.736a.75.75 0 101.5 0V1.75A1.75 1.75 0 0011.25 0h-8.5A1.75 1.75 0 001 1.75v11.5c0 .966.784 1.75 1.75 1.75h3.17a.75.75 0 000-1.5H2.75a.25.25 0 01-.25-.25V1.75zM4.75 4a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-4.5zM4 7.75A.75.75 0 014.75 7h2a.75.75 0 010 1.5h-2A.75.75 0 014 7.75zm11.774 3.537a.75.75 0 00-1.048-1.074L10.7 14.145 9.281 12.72a.75.75 0 00-1.062 1.058l1.943 1.95a.75.75 0 001.055.008l4.557-4.45z"></path></svg>
-    <strong>Tip: </strong>I could never remember which one was which, until I leared that <code>strftime()</code> is "string <em>from</em> time" and <code>strptime()</code> is "string <em>parse</em> time"
+    <strong>Tip: </strong>I could never remember which one was which between <code>strftime</code> and <code>strptime</code> until I leared that <code>strftime()</code> is "string <em>from</em> time" and <code>strptime()</code> is "string <em>parse</em> time" ::"The More You Know" star whooshes by::
 </div>
 
 </div>
@@ -614,7 +635,7 @@ That being the case, let's just go ahead and try to use the standard method we u
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>From our sample URL, it looks like we need things in a <code>YYYY-MM-DD</code> format.
-Luckily, that's a relatively simple format string, but if you want to try it out and be sure, <a href="https://www.strfti.me">this interactive site</a> is super cool.</p>
+Luckily, that's a relatively simple format string, but if you want to try it out and be sure, <a href="https://www.strfti.me">this interactive site for Python datetime format strings</a> is super cool.</p>
 
 </div>
 </div>
@@ -710,7 +731,7 @@ Luckily, that's a relatively simple format string, but if you want to try it out
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Or, if you prefer a list comprehension, which seems reasonable here:</p>
+<p>Or, if a list comprehension if you prefer (which seems reasonable here, since we're <em>building</em> a list):</p>
 
 </div>
 </div>
@@ -815,10 +836,22 @@ Or if there's a network error, either with the server or our own internet?</p>
 <p>In general, it's a good idea to program a little defensively when accessing network assets, especially in cases like this, where there's a high likelihood of accessing an "invalid" URL (i.e. one with nothing on the other end to download).
 It's easy to imagine the downstream PDF processing — that we haven't written yet 🙂 — breaking when it tries to open an empty file, for example.
 We could try to handle the error at that point, but it's probably better to do it here, and only write valid files<sup id="fnref-5" class="footnote-ref"><a href="#fn-5">5</a></sup>.</p>
-<p>We'll assume that accessing a URL without a valid injury report PDF will return an <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">HTTP status code</a> of something other than <strong>200</strong>, which is "success" <sup id="fnref-6" class="footnote-ref"><a href="#fn-6">6</a></sup>.
+<p>We'll assume that accessing a URL with a valid injury report on the other end will return <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">HTTP status code</a> <strong>200</strong> ("Success!"), and one without a PDF will return something else<sup id="fnref-6" class="footnote-ref"><a href="#fn-6">6</a></sup>.
 To handle this, we'll use the <code>requests</code> library's <code>raise_for_status()</code> method, which can raise an exception when we get a non-success status code.
 We can then catch that exception, and skip writing the file.</p>
 <p>Let's add that to the code above:</p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p></p>
+<div class="flash flash-success">
+    <svg class="octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2.5 1.75a.25.25 0 01.25-.25h8.5a.25.25 0 01.25.25v7.736a.75.75 0 101.5 0V1.75A1.75 1.75 0 0011.25 0h-8.5A1.75 1.75 0 001 1.75v11.5c0 .966.784 1.75 1.75 1.75h3.17a.75.75 0 000-1.5H2.75a.25.25 0 01-.25-.25V1.75zM4.75 4a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-4.5zM4 7.75A.75.75 0 014.75 7h2a.75.75 0 010 1.5h-2A.75.75 0 014 7.75zm11.774 3.537a.75.75 0 00-1.048-1.074L10.7 14.145 9.281 12.72a.75.75 0 00-1.062 1.058l1.943 1.95a.75.75 0 001.055.008l4.557-4.45z"></path></svg>
+    <strong>Tip: </strong>You’ll see some code that explicitly <em>tests</em> for a specific <code>status code</code> code using an <code>if</code> statement, but this is almost always a job for a <code>try/except</code> block.  One of the core "Pythonic" tenets is "Ask for forgiveness, not permission".  
+</div>
 
 </div>
 </div>
@@ -880,7 +913,8 @@ We can use the chunks of code from building our URL list above to construct the 
 
 <div class="inner_cell">
     <div class="input_area">
-<div class=" highlight hl-ipython3"><pre><span></span><span class="k">def</span> <span class="nf">download_injury_report</span><span class="p">(</span><span class="n">report_date</span><span class="p">,</span> <span class="n">report_time</span><span class="o">=</span><span class="s1">'08PM'</span><span class="p">):</span>
+<div class=" highlight hl-ipython3"><pre><span></span><span class="kn">import</span> <span class="nn">requests</span>
+<span class="k">def</span> <span class="nf">download_injury_report</span><span class="p">(</span><span class="n">report_date</span><span class="p">,</span> <span class="n">report_time</span><span class="o">=</span><span class="s1">'08PM'</span><span class="p">):</span>
     <span class="c1"># So we can alert an interactive user if something goes wrong</span>
     <span class="kn">from</span> <span class="nn">warnings</span> <span class="kn">import</span> <span class="n">warn</span>
     <span class="n">url_stem</span> <span class="o">=</span> <span class="s1">'https://ak-static.cms.nba.com/referee/injury/Injury-Report_'</span>
@@ -916,7 +950,7 @@ We can use the chunks of code from building our URL list above to construct the 
 <p></p>
 <div class="flash">
     <svg class="octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info octicon octicon-info" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M8 1.5a6.5 6.5 0 100 13 6.5 6.5 0 000-13zM0 8a8 8 0 1116 0A8 8 0 010 8zm6.5-.25A.75.75 0 017.25 7h1a.75.75 0 01.75.75v2.75h.25a.75.75 0 010 1.5h-2a.75.75 0 010-1.5h.25v-2h-.25a.75.75 0 01-.75-.75zM8 6a1 1 0 100-2 1 1 0 000 2z"></path></svg>
-    <strong>Note: </strong>You may be surprised that I removed the part that writes the PDF to disk.  I’ll spare you the bloviating, but in general I try to adopt a somewhat "<a href="https://betterprogramming.pub/what-is-a-pure-function-3b4af9352f6f">functional</a>" programming style whenever possible.  Basically, this means I try not to have lots of things happening inside my functions that someone using might not be aware of.  Writing a file to disk certainly qualifies!  Why not let the caller decide what they want to do with the response, so we can be sure it’s done "correctly"?
+    <strong>Note: </strong>You may be surprised that I removed the part that writes the PDF to disk.  I’ll spare you the bloviating, but in general I try to adopt a somewhat "<a href="https://betterprogramming.pub/what-is-a-pure-function-3b4af9352f6f">functional</a>" programming style whenever possible.  Basically, this means I try not to have lots of things happening inside my functions that someone using them might not be aware of (in this context, these things are called "side effects").  A function called <code>download_injury_report</code> should basically just do that (and nothing else).  If we want to save the report we can do that too, but we should be explicit about where and how that is happening.  By returning the response object, we can let the caller — us, but us outside this function! — decide what to do with it.
 </div>
 
 </div>
@@ -984,7 +1018,7 @@ We'll use one of the dates we generated previously (note that we don't have to p
 <div class="output_area">
 
 <div class="output_subarea output_stream output_stderr output_text">
-<pre>&lt;ipython-input-78-22c96f8a63d8&gt;:1: UserWarning: Could not download URL https://ak-static.cms.nba.com/referee/injury/Injury-Report_2021-07-18_08PM.pdf
+<pre>&lt;ipython-input-24-22c96f8a63d8&gt;:1: UserWarning: Could not download URL https://ak-static.cms.nba.com/referee/injury/Injury-Report_2021-07-18_08PM.pdf
   resp = download_injury_report(season_dates[-3])
 </pre>
 </div>
@@ -1062,8 +1096,8 @@ First, we'll define a <code>data</code> directory to write our files (using the 
 <div class="text_cell_render border-box-sizing rendered_html">
 <p></p>
 <div class="flash flash-success">
-    <svg class="octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2.5 1.75a.25.25 0 01.25-.25h8.5a.25.25 0 01.25.25v7.736a.75.75 0 101.5 0V1.75A1.75 1.75 0 0011.25 0h-8.5A1.75 1.75 0 001 1.75v11.5c0 .966.784 1.75 1.75 1.75h3.17a.75.75 0 000-1.5H2.75a.25.25 0 01-.25-.25V1.75zM4.75 4a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-4.5zM4 7.75A.75.75 0 014.75 7h2a.75.75 0 010 1.5h-2A.75.75 0 014 7.75zm11.774 3.537a.75.75 0 00-1.048-1.074L10.7 14.145 9.281 12.72a.75.75 0 00-1.062 1.058l1.943 1.95a.75.75 0 001.055.008l4.557-4.45z"></path></svg>
-    <strong>Tip: </strong>If you don’t have <code>tqdm</code> installed (for shame!), <code>conda install -c conda-forge tqdm</code> (or <code>pip install tqdm</code> if you <em>must</em>) will do the trick
+    <svg class="octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist octicon octicon-checklist" viewbox="0 0 16 16" version="1.1" width="16" height="16" aria-hidden="true"><path fill-rule="evenodd" d="M2.5 1.75a.25.25 0 01.25-.25h8.5a.25.25 0 01.25.25v7.736a.75.75 0 101.5 0V1.75A1.75 1.75 0 0011.25 0h-8.5A1.75 1.75 0 001 1.75v11.5c0 .966.784 1.75 1.75 1.75h3.17a.75.75 0 000-1.5H2.75a.25.25 0 01-.25-.25V1.75zM4.75 4a.75.75 0 000 1.5h4.5a.75.75 0 000-1.5h-4.5zM4 7.75A.75.75 0 014.75 7h2a.75.75 0 010 1.5h-2A.75.75 0 014 7.75zm11.774 3.537a.75.75 0 00-1.048-1.074L10.7 14.145 9.281 12.72a.75.75 0 00-1.062 1.058l1.943 1.95a.75.75 0 001.055.008l4.557-4.45z"></path></svg>
+    <strong>Tip: </strong>If you don’t have <code>tqdm</code> installed (for shame!), <code>conda install -c conda-forge tqdm</code> (or <code>pip install tqdm</code> if you <em>must</em>) will do the trick.  You <em>are</em> using a Conda environment for this, right?!?
 </div>
 
 </div>
@@ -6567,6 +6601,15 @@ processing injury_reports/Injury-Report_2021-07-20_08PM.pdf
 <div class="text_cell_render border-box-sizing rendered_html">
 <p></p>
 <div class="footnotes"><p id="fn-3">3. 'Decoding the NBA schedule' would certainly be something we could have added to our outline.  Even something as seemingly simple as 'download the PDFs' requires a number of steps that might not be readily apparent!<a href="#fnref-3" class="footnote footnotes">↩</a></p></div>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p></p>
+<div class="footnotes"><p id="fn-3">3. The notion that 'something <em>is</em> (e.g.) a list because it behaves like a list' is basically the meaning behind (&lt;a href=<a href="#fnref-3" class="footnote footnotes">↩</a></p></div>
 
 </div>
 </div>
