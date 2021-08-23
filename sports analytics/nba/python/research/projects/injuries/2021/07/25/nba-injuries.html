@@ -218,9 +218,9 @@ At first blush, we might suggest something like the following:</p>
 <li>Baseline Goal: "Extract data from the PDFs"</li>
 <li>Stretch Goal: "Present the data somehow"</li>
 </ul>
-<p>That's absolutely defensible, and definitely aligns with the major technical "tasks" of the project, which is a nice structural bonus.
+<p>That's absolutely defensible, and has the bonus of structurally aligning with the major technical "tasks" of the project.
 But I'm not sure a directory full of PDFs qualifies as a "dataset" you could pass on to someone else as a contribution.
-Instead, we'll go with a slightly different approach.</p>
+Instead, we'll go with a slightly different approach (but feel free to use the above if it works better for you).</p>
 
 </div>
 </div>
@@ -234,7 +234,8 @@ Instead, we'll go with a slightly different approach.</p>
 <blockquote>
 <p>Download and "lift" the data from the NBA Injury Report PDFs into some sort of machine-readable format (<code>CSV</code>, <code>JSON</code>, etc.)</p>
 </blockquote>
-<p>Since "getting the data" is kind of the main point of this entire exercise, even though extracting data from the PDFs requires requires some [at this point] unknown tooling, we're going to have both downloading <em>and</em> processing the PDFs be be our Fallback Goal.</p>
+<p>Since "getting the data" is kind of the main point of this entire exercise, even though extracting data from the PDFs requires requires some [at this point] unknown tooling, we're going to have both downloading <em>and</em> processing the PDFs be be our Fallback Goal.
+If we don't do anything else, or if nothing else "works", at least we'll have accomplished something useful that we can share with the community.</p>
 
 </div>
 </div>
@@ -248,9 +249,9 @@ Instead, we'll go with a slightly different approach.</p>
 <blockquote>
 <p>Present the data we obtained above in some sort of webapp/dashboard/etc.</p>
 </blockquote>
-<p>This now aligns with what we think of as a Baseline Goal:A fully-fledged "deliverable" of some sort that delivers value or insight to the community. Doing this may sound a bit aggressive in terms of complexity, but our "webapp" doesn't need to be all that fancy.
+<p>Structuring things this way now aligns with what we normally consider a "Baseline" Goal:A fully-fledged "deliverable" of some sort that provides value to the community.Doing this may sound a bit aggressive in terms of complexity, but our "webapp" doesn't need to be all that fancy.
 It's just a "skin" to slice and dice the data we generate from the Fallback Goal.
-It should be reasonably straightforward (famous last words).</p>
+It <em>should</em> be reasonably straightforward<sup id="fnref-10" class="footnote-ref"><a href="#fn-10">10</a></sup>.</p>
 
 </div>
 </div>
@@ -265,11 +266,11 @@ It should be reasonably straightforward (famous last words).</p>
 <p>None</p>
 </blockquote>
 <p>As we were pretty aggressive with our first two goals, I think it's perfectly reasonable to not have a Stretch Goal.
-We could say something vague like "analyze the injury data" but in my opinion, that's actually <em>counterproductive</em>.
+Normally, you might think to say something vague like "analyze the injury data", but in my opinion, that's actually <em>counterproductive</em>.
 The reason being that the goal of this project isn't really analysis!
 The goal is is unlock some data in one format, and present it to "the user" in another format that's more amenable for <em>their</em> absorption.<br>
 This may not sound very "sexy", but the reality is that this data collection/"chewing"/presenting process is basically <a href="https://www.sportperformanceanalysis.com/article/communication-with-coaches-as-a-performance-analyst">one of the most important things</a> in sports analytics.So unless you have a <em>specific</em> analysis in mind, I think it makes sense to not have a Stretch Goal, and to just focus on the first two goals.
-If we do it right, perhaps something interesting will fall out, and we can explore it at that point!</p>
+If we do this right, perhaps something interesting will fall out of our dashboard, and we can explore it at that point.</p>
 
 </div>
 </div>
@@ -289,7 +290,7 @@ If we do it right, perhaps something interesting will fall out, and we can explo
 <div class="cell border-box-sizing text_cell rendered">
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
-<p>Now that we have a conceptual goal framework in which to work, let's get to work!</p>
+<p>Now that we have a conceptual goal framework in which to work, let's get to it!</p>
 
 </div>
 </div>
@@ -369,7 +370,7 @@ Lastly, we might want to fancy with <a href="https://www.twilio.com/blog/asynchr
 </h2>
 <p>Before we can actually do anything interesting with the injury reports, we need to download them.
 To do that, we need to know where there are.
-After some brief googling, it seems like there really isn't a central repository for these reports, and they're just uploaded one at a time<sup id="fnref-1" class="footnote-ref"><a href="#fn-1">1</a></sup>.</p>
+After some brief googling, it seems like there really isn't a central repository for these reports, and they're just uploaded one at a time<sup id="fnref-20" class="footnote-ref"><a href="#fn-20">20</a></sup>.</p>
 <p>The one example URL from Ed's tweet looks like this:</p>
 <blockquote>
 <p><code>https://ak-static.cms.nba.com/referee/injury/Injury-Report_2021-04-23_01PM.pdf</code></p>
@@ -385,7 +386,7 @@ After some brief googling, it seems like there really isn't a central repository
 <li>The file extension: <code>.pdf</code>
 </li>
 </ol>
-<p>We're only interested in the middle two (the date and the time), as the boilerplate URL and the file extension won't change.  From googling<sup id="fnref-2" class="footnote-ref"><a href="#fn-2">2</a></sup> <code>"nba injury report"</code> and clicking on <a href="https://official.nba.com/nba-injury-report-2020-21-season/">the second link</a> it seems like the times may be <code>1:30 PM</code>, <code>5:30 PM</code> and <code>8:30 PM</code>.
+<p>We're only interested in the middle two (the date and the time), as the boilerplate URL and the file extension won't change.  From googling<sup id="fnref-30" class="footnote-ref"><a href="#fn-30">30</a></sup> <code>"nba injury report"</code> and clicking on <a href="https://official.nba.com/nba-injury-report-2020-21-season/">the second link</a> it seems like the times may be <code>1:30 PM</code>, <code>5:30 PM</code> and <code>8:30 PM</code>.
 Although from Ed's example, we see a <code>01PM</code> time in the URL, <em>not</em> <code>1:30</code>. 
 So we'll go ahead and assume the appropriate times URL-wise are <code>01PM</code>, <code>05PM</code> and <code>08PM</code>.<br>
 Lastly, for simplicity, let's just focus on the <code>8:30PM</code> (or <code>8PM</code>, in URL-speak) file, as it's likely to be the most complete.
@@ -402,13 +403,13 @@ We can download the rest later if we want.</p>
 </h3>
 <p>Google helped us sort out what we might use for the <code>time</code> portion of the URL, but the <code>date</code> part is actually a little more complicated than we might like, as we need to know the specific URL of each injury report we want to download.
 According to the <a href="https://official.nba.com/nba-injury-report-2020-21-season/">official NBA annoucement</a>, the dates we're interested in are actually the day <em>before</em> game days, except on the second days of back-to-backs, in which case presumably the injury report comes out the day of the game.</p>
-<p>This all sounds complicated, and if there's one thing I've learned about projects like this it's that nothing saps enthusiasm like complication and extra effort that doesn't "feel" like it's in the service of what we're trying to  accomplish<sup id="fnref-3" class="footnote-ref"><a href="#fn-3">3</a></sup>.</p>
+<p>This all sounds complicated, and if there's one thing I've learned about projects like this it's that nothing saps enthusiasm like complication and extra effort that doesn't "feel" like it's in the service of what we're trying to  accomplish<sup id="fnref-40" class="footnote-ref"><a href="#fn-40">40</a></sup>.</p>
 <p>So, given what we know, it seems as if we have two options:</p>
 <ol>
 <li>Get a copy of the NBA schedule, and try to download reports for days we know there's a game</li>
 <li>Just start downloading [a range of?] dates and see what we get</li>
 </ol>
-<p>There's nothing wrong with taking a stab at option 1 here, but this project is about injury reports, not the NBA schedule, so we'll start with option 2<sup id="fnref-4" class="footnote-ref"><a href="#fn-4">4</a></sup>.</p>
+<p>There's nothing wrong with taking a stab at option 1 here, but this project is about injury reports, not the NBA schedule, so we'll start with option 2<sup id="fnref-50" class="footnote-ref"><a href="#fn-50">50</a></sup>.</p>
 
 </div>
 </div>
@@ -618,7 +619,7 @@ Let's find out exactly:</p>
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p>So, it's not quite a standard Python <code>datetime</code> object (<a href="https://docs.python.org/3/library/datetime.html#datetime.datetime">docs</a>).
-But it sure seems like it might behave like one<sup id="fnref-3" class="footnote-ref"><a href="#fn-3">3</a></sup>.
+But it sure seems like it might behave like one<sup id="fnref-60" class="footnote-ref"><a href="#fn-60">60</a></sup>.
 That being the case, let's just go ahead and try to use the standard method we use to process Python dates into strings: <code>strftime()</code>.</p>
 
 </div>
@@ -840,8 +841,8 @@ Later, we can see about using <em>asynchronous</em> requests to greatly speed up
 Or if there's a network error, either with the server or our own internet?</p>
 <p>In general, it's a good idea to program a little defensively when accessing network assets, especially in cases like this, where there's a high likelihood of accessing an "invalid" URL (i.e. one with nothing on the other end to download).
 It's easy to imagine the downstream PDF processing — that we haven't written yet 🙂 — breaking when it tries to open an empty file, for example.
-We could try to handle the error at that point, but it's probably better to do it here, and only write valid files<sup id="fnref-5" class="footnote-ref"><a href="#fn-5">5</a></sup>.</p>
-<p>We'll assume that accessing a URL with a valid injury report on the other end will return <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">HTTP status code</a> <strong>200</strong> ("Success!"), and one without a PDF will return something else<sup id="fnref-6" class="footnote-ref"><a href="#fn-6">6</a></sup>.
+We could try to handle the error at that point, but it's probably better to do it here, and only write valid files<sup id="fnref-70" class="footnote-ref"><a href="#fn-70">70</a></sup>.</p>
+<p>We'll assume that accessing a URL with a valid injury report on the other end will return <a href="https://en.wikipedia.org/wiki/List_of_HTTP_status_codes">HTTP status code</a> <strong>200</strong> ("Success!"), and one without a PDF will return something else<sup id="fnref-80" class="footnote-ref"><a href="#fn-80">80</a></sup>.
 To handle this, we'll use the <code>requests</code> library's <code>raise_for_status()</code> method, which can raise an exception when we get a non-success status code.
 We can then catch that exception, and skip writing the file.</p>
 <p>Let's add that to the code above:</p>
@@ -1091,7 +1092,7 @@ Let's download a valid PDF and write it to disk:</p>
 <p>If you've cloned this notebook and are running it, you should have a copy of <code>Injury-Report_2020-12-21_08PM.pdf</code> in the <code>_notebooks</code> directory of the repo.</p>
 <p>Now let's download the season's worth, but putting something like the above back in a loop.
 We'll make two small modifications though, using two of the best and most indispensable libraries in the modern Python ecosystem.
-First, we'll define a <code>data</code> directory to write our files (using the sublime <code>pathlib</code>), so we don't clutter our <code>_notebooks</code> directory, and secondly, we'll use the <em>amazing</em> <a href="https://github.com/tqdm/tqdm">tqdm</a> to monitor our progress, instead of printing a status message<sup id="fnref-8" class="footnote-ref"><a href="#fn-8">8</a></sup>.</p>
+First, we'll define a <code>data</code> directory to write our files (using the sublime <code>pathlib</code>), so we don't clutter our <code>_notebooks</code> directory, and secondly, we'll use the <em>amazing</em> <a href="https://github.com/tqdm/tqdm">tqdm</a> to monitor our progress, instead of printing a status message<sup id="fnref-90" class="footnote-ref"><a href="#fn-90">90</a></sup>.</p>
 
 </div>
 </div>
@@ -6587,7 +6588,7 @@ processing injury_reports/Injury-Report_2021-07-20_08PM.pdf
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p></p>
-<div class="footnotes"><p id="fn-1">1. If you happen to find a central place for these, let me know!<a href="#fnref-1" class="footnote footnotes">↩</a></p></div>
+<div class="footnotes"><p id="fn-10">10. Famous last words<a href="#fnref-10" class="footnote footnotes">↩</a></p></div>
 
 </div>
 </div>
@@ -6596,7 +6597,7 @@ processing injury_reports/Injury-Report_2021-07-20_08PM.pdf
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p></p>
-<div class="footnotes"><p id="fn-2">2. I'm going to try my best to show the provenance of as much insight as I can here.  I had no idea when the injury reports came out, so I googled it.  Don't be ashamed to do likewise if there's something you need to know!<a href="#fnref-2" class="footnote footnotes">↩</a></p></div>
+<div class="footnotes"><p id="fn-20">20. If you happen to find a central place for these, let me know!<a href="#fnref-20" class="footnote footnotes">↩</a></p></div>
 
 </div>
 </div>
@@ -6605,7 +6606,7 @@ processing injury_reports/Injury-Report_2021-07-20_08PM.pdf
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p></p>
-<div class="footnotes"><p id="fn-3">3. 'Decoding the NBA schedule' would certainly be something we could have added to our outline.  Even something as seemingly simple as 'download the PDFs' requires a number of steps that might not be readily apparent!<a href="#fnref-3" class="footnote footnotes">↩</a></p></div>
+<div class="footnotes"><p id="fn-30">30. I'm going to try my best to show the provenance of as much insight as I can here.  I had no idea when the injury reports came out, so I googled it.  Don't be ashamed to do likewise if there's something you need to know!<a href="#fnref-30" class="footnote footnotes">↩</a></p></div>
 
 </div>
 </div>
@@ -6614,7 +6615,7 @@ processing injury_reports/Injury-Report_2021-07-20_08PM.pdf
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p></p>
-<div class="footnotes"><p id="fn-3">3. The notion that 'something <em>is</em> (e.g.) a list because it behaves like a list' is basically the meaning behind (&lt;a href=<a href="#fnref-3" class="footnote footnotes">↩</a></p></div>
+<div class="footnotes"><p id="fn-40">40. 'Decoding the NBA schedule' would certainly be something we could have added to our outline.  This just shows that something as seemingly simple as 'download the PDFs' requires a number of steps that might not be readily apparent!<a href="#fnref-40" class="footnote footnotes">↩</a></p></div>
 
 </div>
 </div>
@@ -6623,7 +6624,7 @@ processing injury_reports/Injury-Report_2021-07-20_08PM.pdf
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p></p>
-<div class="footnotes"><p id="fn-4">4. ...and sincerely apologize to Adam Silver next time we run into him for the extra traffic on the <a href="https://nba.com">nba.com</a> servers.<a href="#fnref-4" class="footnote footnotes">↩</a></p></div>
+<div class="footnotes"><p id="fn-50">50. ...and sincerely apologize to Adam Silver next time we run into him for the extra traffic on the <a href="https://nba.com">nba.com</a> servers.<a href="#fnref-50" class="footnote footnotes">↩</a></p></div>
 
 </div>
 </div>
@@ -6632,7 +6633,7 @@ processing injury_reports/Injury-Report_2021-07-20_08PM.pdf
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p></p>
-<div class="footnotes"><p id="fn-5">5. Ideally we would <em><a href="https://www.geeksforgeeks.org/python-list-comprehensions-vs-generator-expressions/">generate</a></em> the list versus building it all at once, but conceptually it's the same thing<a href="#fnref-5" class="footnote footnotes">↩</a></p></div>
+<div class="footnotes"><p id="fn-60">60. The notion that 'something <em>is</em> (e.g.) a list because it behaves like a list' is basically the meaning behind &lt;a href=<a href="#fnref-60" class="footnote footnotes">↩</a></p></div>
 
 </div>
 </div>
@@ -6641,7 +6642,7 @@ processing injury_reports/Injury-Report_2021-07-20_08PM.pdf
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p></p>
-<div class="footnotes"><p id="fn-6">6. From manual inspection of the HTTP headers, it looks like nba.com returns a 403 ('Forbidden') when there isn't a valid PDF<a href="#fnref-6" class="footnote footnotes">↩</a></p></div>
+<div class="footnotes"><p id="fn-70">70. If you're thinking 'You should do both', you get a gold star!<a href="#fnref-70" class="footnote footnotes">↩</a></p></div>
 
 </div>
 </div>
@@ -6650,7 +6651,7 @@ processing injury_reports/Injury-Report_2021-07-20_08PM.pdf
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p></p>
-<div class="footnotes"><p id="fn-7">7. If you're thinking 'You should do both', you get a gold star!<a href="#fnref-7" class="footnote footnotes">↩</a></p></div>
+<div class="footnotes"><p id="fn-80">80. From manual inspection of the HTTP headers, it looks like nba.com returns a 403 ('Forbidden') when there isn't a valid PDF<a href="#fnref-80" class="footnote footnotes">↩</a></p></div>
 
 </div>
 </div>
@@ -6659,7 +6660,7 @@ processing injury_reports/Injury-Report_2021-07-20_08PM.pdf
 <div class="inner_cell">
 <div class="text_cell_render border-box-sizing rendered_html">
 <p></p>
-<div class="footnotes"><p id="fn-8">8. Or, we could explore the wonderful world of logging!<a href="#fnref-8" class="footnote footnotes">↩</a></p></div>
+<div class="footnotes"><p id="fn-90">90. Or, we could explore the wonderful world of &lt;a href=<a href="#fnref-90" class="footnote footnotes">↩</a></p></div>
 
 </div>
 </div>
@@ -6676,11 +6677,6 @@ processing injury_reports/Injury-Report_2021-07-20_08PM.pdf
 And another {% fn 2 %}
 {{ 'This is the footnote.' | fndetail: 1 }}
 {{ 'This is the other footnote. You can even have a [link](www.github.com)!' | fndetail: 2 }}</code></pre>
-<p>For example, here is a footnote <sup id="fnref-10" class="footnote-ref"><a href="#fn-10">10</a></sup>.</p>
-<p>And another <sup id="fnref-11" class="footnote-ref"><a href="#fn-11">11</a></sup></p>
-<p></p>
-<div class="footnotes"><p id="fn-10">10. This is the footnote.<a href="#fnref-10" class="footnote footnotes">↩</a></p></div>
-<div class="footnotes"><p id="fn-11">11. This is the other footnote. You can even have a <a href="www.github.com">link</a>!<a href="#fnref-11" class="footnote footnotes">↩</a></p></div>
 
 </div>
 </div>
