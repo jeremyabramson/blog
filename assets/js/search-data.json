@@ -2,10 +2,10 @@
   
     
         "post0": {
-            "title": "Title",
+            "title": "Footnotes suck",
             "content": "Blah blab blah . For example, here is a footnote 1. . And another 2 . 1. This is the footnote.↩ . 2. This is the other footnote. You can even have a link!↩ .",
-            "url": "https://jeremyabramson.github.io/blog/2021/08/02/testing.html",
-            "relUrl": "/2021/08/02/testing.html",
+            "url": "https://jeremyabramson.github.io/blog/stuff%20that%20sucks/2021/08/02/testing.html",
+            "relUrl": "/stuff%20that%20sucks/2021/08/02/testing.html",
             "date": " • Aug 2, 2021"
         }
         
