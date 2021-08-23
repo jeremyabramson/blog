@@ -3,7 +3,7 @@
     
         "post0": {
             "title": "Footnotes Are Broken?",
-            "content": "This is literally verbatim from the sample notebook . For example, here is a footnote 1. . And another 2 . 1. This is the footnote.↩ . 2. This is the other footnote. You can even have a link!↩ .",
+            "content": "This is literally verbatim from the sample notebook . For example, here is a footnote 1. . And another 2 . And yet again 3 . 1. This is the footnote.↩ . 2. This is the other footnote. You can even have a link!↩ . 3. This is the other footnote. You can even have a ANOTHER link!↩ .",
             "url": "https://jeremyabramson.github.io/blog/broken%20footnotes/2021/08/02/testing.html",
             "relUrl": "/broken%20footnotes/2021/08/02/testing.html",
             "date": " • Aug 2, 2021"
