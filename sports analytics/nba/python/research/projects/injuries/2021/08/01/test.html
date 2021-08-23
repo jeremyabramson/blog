@@ -78,7 +78,7 @@ window.onload = wrap_img;
        • <span class="read-time" title="Estimated read time">
     
     
-      14 min read
+      12 min read
     
 </span></p>
 
@@ -158,7 +158,6 @@ window.onload = wrap_img;
 <li class="toc-entry toc-h3"><a href="#Download-the-PDFs">Download the PDFs </a></li>
 </ul>
 </li>
-<li class="toc-entry toc-h2"><a href="#Footnotes">Footnotes </a></li>
 </ul>
 </li>
 </ul><!--
@@ -176,7 +175,16 @@ window.onload = wrap_img;
 <h1 id="Introduction">
 <a class="anchor" href="#Introduction" aria-hidden="true"><span class="octicon octicon-link"></span></a>Introduction<a class="anchor-link" href="#Introduction"> </a>
 </h1>
-<p>Fooooootnote<sup id="fnref-100" class="footnote-ref"><a href="#fn-100">100</a></sup></p>
+<p>Fooooootnote<sup id="fnref-1" class="footnote-ref"><a href="#fn-1">1</a></sup></p>
+
+</div>
+</div>
+</div>
+<div class="cell border-box-sizing text_cell rendered">
+<div class="inner_cell">
+<div class="text_cell_render border-box-sizing rendered_html">
+<p></p>
+<div class="footnotes"><p id="fn-1">1. This is a &lt;a href=<a href="#fnref-1" class="footnote footnotes">↩</a></p></div>
 
 </div>
 </div>
@@ -847,112 +855,6 @@ We could try to handle the error at that point, but it's probably better to do i
 To handle this, we'll use the <code>requests</code> library's <code>raise_for_status()</code> method, which can raise an exception when we get a non-success status code.
 We can then catch that exception, and skip writing the file.</p>
 <p>Let's add that to the code above:</p>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p></p>
-<div class="footnotes"><p id="fn-100">100. If you're thinking 'You should do both', you get a gold star!<a href="#fnref-100" class="footnote footnotes">↩</a></p></div>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p></p>
-<div class="footnotes"><p id="fn-1">1. Famous last &lt;a href=<a href="#fnref-1" class="footnote footnotes">↩</a></p></div>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p></p>
-<div class="footnotes"><p id="fn-2">2. If you happen to find a central place for these, let me &lt;a href=<a href="#fnref-2" class="footnote footnotes">↩</a></p></div>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p></p>
-<div class="footnotes"><p id="fn-30">30. I'm going to try my best to show the provenance of as much insight as I can here.  I had no idea when the injury reports came out, so I googled it.  Don't be ashamed to do likewise if there's something you need to know!<a href="#fnref-30" class="footnote footnotes">↩</a></p></div>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p></p>
-<div class="footnotes"><p id="fn-40">40. 'Decoding the NBA schedule' would certainly be something we could have added to our outline.  This just shows that something as seemingly simple as 'download the PDFs' requires a number of steps that might not be readily apparent!<a href="#fnref-40" class="footnote footnotes">↩</a></p></div>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p></p>
-<div class="footnotes"><p id="fn-50">50. ...and if we happen to run into Adam Silver at a Christmas party, be sure to apologize for the extra traffic on the NBA.com servers<a href="#fnref-50" class="footnote footnotes">↩</a></p></div>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p></p>
-<div class="footnotes"><p id="fn-60">60. The notion that 'something is (e.g.) a list because it behaves like a list' is basically the meaning behind &lt;a href=<a href="#fnref-60" class="footnote footnotes">↩</a></p></div>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p></p>
-<div class="footnotes"><p id="fn-70">70. If you're thinking 'You should do both', you get a gold star!<a href="#fnref-70" class="footnote footnotes">↩</a></p></div>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p></p>
-<div class="footnotes"><p id="fn-80">80. From manual inspection of the HTTP headers, it looks like nba.com returns a 403 ('Forbidden') when there isn't a valid PDF<a href="#fnref-80" class="footnote footnotes">↩</a></p></div>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<p></p>
-<div class="footnotes"><p id="fn-90">90. Or, we could explore the wonderful world of &lt;a href=<a href="#fnref-90" class="footnote footnotes">↩</a></p></div>
-
-</div>
-</div>
-</div>
-<div class="cell border-box-sizing text_cell rendered">
-<div class="inner_cell">
-<div class="text_cell_render border-box-sizing rendered_html">
-<h2 id="Footnotes">
-<a class="anchor" href="#Footnotes" aria-hidden="true"><span class="octicon octicon-link"></span></a>Footnotes<a class="anchor-link" href="#Footnotes"> </a>
-</h2>
-<p>You can have footnotes in notebooks, however the syntax is different compared to markdown documents. <a href="https://github.com/fastai/fastpages/blob/master/_fastpages_docs/NOTEBOOK_FOOTNOTES.md">This guide provides more detail about this syntax</a>, which looks like this:</p>
-
-<pre><code>For example, here is a footnote {% fn 1 %}.
-And another {% fn 2 %}
-{{ 'This is the footnote.' | fndetail: 1 }}
-{{ 'This is the other footnote. You can even have a [link](www.github.com)!' | fndetail: 2 }}</code></pre>
 
 </div>
 </div>
